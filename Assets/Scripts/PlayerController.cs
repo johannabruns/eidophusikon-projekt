@@ -27,12 +27,12 @@ public class PlayerController : NetworkBehaviour
             // Der Host (Server) startet exakt auf deinen Koordinaten
             if (IsServer)
             {
-                transform.position = new Vector3(-6.81f, 0.8f, 0f); 
+                transform.position = new Vector3(-6.51f, 2.31f, 0f); 
             }
             // Der Client startet ein bisschen weiter rechts, damit sie nicht ineinander stecken!
             else
             {
-                transform.position = new Vector3(-5.81f, 0.8f, 0f); 
+                transform.position = new Vector3(-0.61f, -3.36f, 0f); 
             }
 
             // Kamera-Code (die fehlerhafte Doppelung wurde entfernt):
