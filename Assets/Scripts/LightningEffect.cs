@@ -6,6 +6,7 @@ public class LightningEffect : MonoBehaviour
     [Header("Die Grafiken (Hier reinziehen!)")]
     public GameObject blitzBild;
     public GameObject blitzeinschlagBild;
+    public AudioSource donnerSound;
 
     [Header("Timings (in Sekunden)")]
     public float warteBisEinschlag = 0.1f; // Wie lange ist NUR der kleine Blitz zu sehen?
@@ -35,6 +36,9 @@ public class LightningEffect : MonoBehaviour
 
         // 2. Den großen Einschlag dazu schalten (kleiner Blitz bleibt an)
         if (blitzeinschlagBild != null) blitzeinschlagBild.SetActive(true);
+
+        // Donner-Sound abspielen
+        if (donnerSound != null) donnerSound.Play();
 
         // Wieder kurz warten...
         yield return new WaitForSeconds(dauerZusammenSichtbar);

@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 4160173167560045219}
   - component: {fileID: 1146707814344458156}
   - component: {fileID: -1746529390080588466}
+  - component: {fileID: 8053307985174582724}
+  - component: {fileID: 8840201038555732194}
   m_Layer: 0
   m_Name: Player_Maschinist
   m_TagString: Player
@@ -254,3 +256,41 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   moveSpeed: 5
   jumpForce: 10
+--- !u!95 &8053307985174582724
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 867162316881312040}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: eb02bd6d99a9df84090407c55c72eb44, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8840201038555732194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 867162316881312040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51437669d6b45cc41a2abe4d9dc6c519, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SimplePlayerAnim
+  ShowTopMostFoldoutHeaderGroup: 1
+  anim: {fileID: 8053307985174582724}
+  rb: {fileID: 1280936448298233847}
+  spriteRenderer: {fileID: 5420983343762328087}

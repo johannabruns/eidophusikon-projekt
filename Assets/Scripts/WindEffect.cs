@@ -6,7 +6,10 @@ public class WindEffect : MonoBehaviour
     public float windSpeed = 15f; 
     
     [Tooltip("Wie viele Meter soll der Wind nach rechts fliegen, bevor er verschwindet?")]
-    public float travelDistance = 40f; 
+    public float travelDistance = 10f; 
+
+    [Header("Sound")]
+    public AudioSource windSound; // NEU: Hier kommt der Wind-Sound rein
 
     private Vector3 startPosition;
     private bool isBlowing = false;
@@ -21,7 +24,13 @@ public class WindEffect : MonoBehaviour
     {
         transform.position = startPosition; 
         gameObject.SetActive(true);         
-        isBlowing = true;                   
+        isBlowing = true;      
+
+        // NEU: Sound abspielen, wenn der Wind startet!
+        if (windSound != null)
+        {
+            windSound.Play();
+        }             
     }
 
     private void Update()
@@ -39,6 +48,11 @@ public class WindEffect : MonoBehaviour
             {
                 isBlowing = false;
                 gameObject.SetActive(false);
+
+                // NEU: Sound stoppen, wenn der Wind endet!
+                if (windSound != null)                {
+                    windSound.Stop();
+                }
             }
         }
     }
