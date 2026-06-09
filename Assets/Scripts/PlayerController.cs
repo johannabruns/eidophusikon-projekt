@@ -7,6 +7,7 @@ public class PlayerController : NetworkBehaviour
     public float jumpForce = 8f;
     private Rigidbody2D rb;
 
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -53,10 +54,11 @@ public class PlayerController : NetworkBehaviour
         float moveInput = Input.GetAxisRaw("Horizontal");
         rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
 
+        // Wir speichern kurz, ob wir auf dem Boden sind (macht den Code lesbarer)
+        bool isGrounded = Mathf.Abs(rb.linearVelocity.y) < 0.05f;
+
         // 2. Sprung-Logik (Leertaste oder W)
-        // Wir erlauben den Sprung nur, wenn die Kugel sich vertikal fast gar nicht bewegt (Y-Velocity nahe 0),
-        // damit man nicht unendlich oft in der Luft springen und fliegen kann.
-        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)) && Mathf.Abs(rb.linearVelocity.y) < 0.05f)
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)) && isGrounded)
         {
             rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
         }
