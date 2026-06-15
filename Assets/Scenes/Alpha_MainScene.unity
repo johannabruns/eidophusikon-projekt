@@ -661,7 +661,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &144700657
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2597,7 +2597,7 @@ RectTransform:
   m_Father: {fileID: 800627024}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3274,7 +3274,7 @@ MonoBehaviour:
   NetworkConfig:
     ProtocolVersion: 0
     NetworkTransport: {fileID: 629277439}
-    PlayerPrefab: {fileID: 867162316881312040, guid: 8ab9ebd4d68318c438bd4acb38ef5545, type: 3}
+    PlayerPrefab: {fileID: 5975899742129238210, guid: 77aeebd7790d5f44daeb2390ce390189, type: 3}
     Prefabs:
       NetworkPrefabsLists:
       - {fileID: 11400000, guid: 5ced21b9a9b4b46498769acc50a38b49, type: 2}
