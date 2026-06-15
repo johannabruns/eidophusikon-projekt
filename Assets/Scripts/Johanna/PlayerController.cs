@@ -7,7 +7,6 @@ public class PlayerController : NetworkBehaviour
     public float jumpForce = 8f;
     private Rigidbody2D rb;
 
-
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -36,8 +35,8 @@ public class PlayerController : NetworkBehaviour
                 transform.position = new Vector3(-0.61f, -3.36f, 0f); 
             }
 
-            // Kamera-Code (die fehlerhafte Doppelung wurde entfernt):
-            NetworkCameraFollow camFollow = Camera.main.GetComponent<NetworkCameraFollow>();
+            // NEU: Hier sucht der Spieler jetzt nach unserem neuen "DynamicCameraFollow"-Skript!
+            DynamicCameraFollow camFollow = Camera.main.GetComponent<DynamicCameraFollow>();
             if (camFollow != null)
             {
                 camFollow.SetTarget(this.transform);
