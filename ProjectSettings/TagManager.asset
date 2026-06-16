@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Ladder
   layers:
   - Default
   - TransparentFX
@@ -11,9 +12,9 @@ TagManager:
   - 
   - Water
   - UI
-  - f
-  - 
-  - 
+  - Ground
+  - Player
+  - Raycast
   - 
   - 
   - 
@@ -38,8 +39,26 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 3956867735
+    locked: 0
+  - name: Middleground
+    uniqueID: 440035835
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Inteactibles
+    uniqueID: 1818748079
+    locked: 0
+  - name: Player
+    uniqueID: 3021921941
+    locked: 0
+  - name: Foreground
+    uniqueID: 2191501583
+    locked: 0
+  - name: Overlay
+    uniqueID: 3106492951
     locked: 0
   m_RenderingLayers:
   - Default
