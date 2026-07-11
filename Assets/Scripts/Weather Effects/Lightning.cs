@@ -38,6 +38,7 @@ public class Lightning : NetworkBehaviour
     [Rpc(SendTo.Everyone)]
     public void StrikeVisualsRpc(float distance, float impactY)
     {
+        Debug.Log($"Lightning struck with distance {distance}");
         lightningSprite.size = new Vector2(lightningSprite.size.x, distance);
         lightningImpactObj.transform.position = new Vector3(transform.position.x, impactY, 0f);
 
