@@ -10,6 +10,7 @@ public abstract class Interactible : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
+        // Ensure the range collider is set to trigger and disable the UI initially
         if (range == null)
             range = GetComponent<Collider2D>();
 

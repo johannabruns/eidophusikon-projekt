@@ -1,6 +1,7 @@
+using Unity.Netcode;
 using UnityEngine;
 
-public class Movable : MonoBehaviour
+public class Movable : NetworkBehaviour
 {
     public Transform PointA;
     public Transform PointB;
@@ -11,7 +12,7 @@ public class Movable : MonoBehaviour
 
     public bool moveOnAwake = false;
 
-    public bool IsMoving { get; private set; } = false;
+    public bool Automovement { get; private set; } = false;
 
     void Start()
     {
@@ -21,26 +22,34 @@ public class Movable : MonoBehaviour
             StartMovement();
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        if (IsMoving)
-        {
+        // Check if the object has reached the target position and switch to the other point
+        if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
+            targetPosition = targetPosition == PointA.position ? PointB.position : PointA.position;
 
-            if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
-                targetPosition = targetPosition == PointA.position ? PointB.position : PointA.position;
+        if (Automovement) Move();
+    }
 
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+    public void Move()
+    {
+        transform.position = Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+    }
 
-        }
+    public void Move(float value)
+    {
+        Vector3 targetPosition = value < 0 ? PointA.position : PointB.position;
+
+        transform.position = Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
     }
 
     public void StartMovement()
     {
-        IsMoving = true;
+        Automovement = true;
     }
     public void StopMovement()
     {
-        IsMoving = false;
+        Automovement = false;
     }
 
     private void OnDrawGizmos()

@@ -94,6 +94,14 @@ public class Wind : NetworkBehaviour
         direction.Value = newDirection;
     }
 
+    public void ToggleDirection()
+    {
+        if (direction.Value == WindDirection.LeftToRight)
+            SetDirection(WindDirection.RightToLeft);
+        else
+            SetDirection(WindDirection.LeftToRight);
+    }
+
     private IEnumerator DirectionChangeTransition(WindDirection newDirection)
     {
         StopWind();

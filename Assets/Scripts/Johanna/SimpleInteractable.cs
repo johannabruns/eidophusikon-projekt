@@ -3,6 +3,7 @@ using Unity.Netcode;
 
 public class SimpleInteractable : NetworkBehaviour
 {
+    /*
     [Header("UI")]
     public GameObject pressFPrompt; 
 
@@ -25,14 +26,17 @@ public class SimpleInteractable : NetworkBehaviour
 
     void Update()
     {
+        
         if (isPlayerInRange && Input.GetKeyDown(KeyCode.F))
         {
             if (isEarthquakeLever) TriggerEarthquakeServerRpc();
             if (isWindWheel) TriggerWindServerRpc();
             if (isBell) TriggerBellServerRpc(); // NEU: Glocke rufen
         }
+        
     }
 
+    
     [ServerRpc(RequireOwnership = false)]
     private void TriggerEarthquakeServerRpc() { TriggerEarthquakeClientRpc(); }
 
@@ -42,6 +46,7 @@ public class SimpleInteractable : NetworkBehaviour
     // NEU: ServerRpc für die Glocke
     [ServerRpc(RequireOwnership = false)]
     private void TriggerBellServerRpc() { TriggerBellClientRpc(); }
+    
 
     [ClientRpc]
     private void TriggerWindClientRpc()
@@ -120,4 +125,5 @@ public class SimpleInteractable : NetworkBehaviour
             }
         }
     }
+    */
 }

@@ -63,6 +63,28 @@ public class PlayerMovement : NetworkBehaviour
         jumpControls.action.performed -= Jump;
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!IsOwner) return;
+
+        if (collision.gameObject.CompareTag("Ladder"))
+        {
+            IsOnLadder = true;
+            rigidBody.gravityScale = 0f;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (!IsOwner) return;
+
+        if (collision.gameObject.CompareTag("Ladder"))
+        {
+            IsOnLadder = false;
+            rigidBody.gravityScale = gravityScale;
+        }
+    }
+
     private void Update()
     {
         if (!IsOwner) return;
@@ -74,14 +96,13 @@ public class PlayerMovement : NetworkBehaviour
 
     void FixedUpdate()
     {
-        if(IsOwner)
-        {
-            rigidBody.linearVelocity = new Vector2(MovementDirection.x * moveSpeed, rigidBody.linearVelocity.y);
+        if (!IsOwner) return;
 
-            if(IsOnLadder)
-            {
-                rigidBody.linearVelocity = new Vector2(rigidBody.linearVelocity.x, LadderVertical * moveSpeed * 0.75f);
-            }
+        rigidBody.linearVelocity = new Vector2(MovementDirection.x * moveSpeed, rigidBody.linearVelocity.y);
+
+        if (IsOnLadder)
+        {
+            rigidBody.linearVelocity = new Vector2(rigidBody.linearVelocity.x, LadderVertical * moveSpeed * 0.75f);
         }
     }
 
@@ -103,23 +124,5 @@ public class PlayerMovement : NetworkBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(groundCheckPoint.position, groundCheckSize);
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.gameObject.CompareTag("Ladder"))
-        {
-            IsOnLadder = true;
-            rigidBody.gravityScale = 0f;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ladder"))
-        {
-            IsOnLadder = false;
-            rigidBody.gravityScale = gravityScale;
-        }
     }
 }

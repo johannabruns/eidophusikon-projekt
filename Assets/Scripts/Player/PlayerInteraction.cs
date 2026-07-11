@@ -26,6 +26,7 @@ public class PlayerInteraction : NetworkBehaviour
     public bool IsCarryingItem => carriedItem != null;
 
     public float AxisValue { get; private set; }
+    private float previousAxisValue = 0f;
 
 
     private void OnEnable()
@@ -59,8 +60,9 @@ public class PlayerInteraction : NetworkBehaviour
 
         if (CurrentInteractible is Wheel wheel)
         {
-            if (AxisValue == 0)
+            if (AxisValue == 0 && AxisValue != previousAxisValue)
             {
+                Debug.Log("Stopping wheel");
                 wheel.Stop();
                 return;
             }
@@ -72,8 +74,9 @@ public class PlayerInteraction : NetworkBehaviour
             RaycastHit2D hit = Physics2D.GetRayIntersection(ray, 50f, raycastHits);
 
             // Check if the collider hit is the wheel's collider
-            if (hit.collider != null && hit.collider == wheel.wheelCollider)
+            if (AxisValue != 0 && hit.collider != null && hit.collider == wheel.wheelCollider)
             {
+                Debug.Log("Turning Wheel");
                 wheel.Turn(AxisValue);
             }
         }
@@ -165,6 +168,7 @@ public class PlayerInteraction : NetworkBehaviour
     {
         AxisValue = axisControls.action.ReadValue<float>();
         AxisInteract(AxisValue);
+        previousAxisValue = AxisValue;
     }
 
     private void FixedUpdate()
