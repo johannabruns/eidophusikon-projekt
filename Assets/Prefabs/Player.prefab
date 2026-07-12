@@ -117,7 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 2978567280
+  GlobalObjectIdHash: 2067960717
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -252,7 +252,7 @@ MonoBehaviour:
   groundCheckSize: {x: 0.41, y: 0.1}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 1088
 --- !u!114 &7901125426285865559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -569,7 +569,7 @@ CircleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2

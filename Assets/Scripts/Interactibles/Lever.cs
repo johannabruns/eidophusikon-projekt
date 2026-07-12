@@ -51,6 +51,5 @@ public class Lever : SimpleInteractible
     {
         animator.SetBool("enabled", current);
         audioSource.PlayOneShot(clip);
-        Debug.Log($"Lever is now {(current ? "enabled" : "disabled")}");
     }
 }

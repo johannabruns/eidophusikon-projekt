@@ -56,7 +56,6 @@ public class Carryable : NetworkBehaviour
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     public void RequestPickUpServerRpc(RpcParams rpcParams = default)
     {
-        Debug.Log($"RequestPickUpServerRpc called by {rpcParams.Receive.SenderClientId} for {NetworkObject.name}");
         if (isCarried.Value) return; // someone already has it
 
         ulong requestingClientId = rpcParams.Receive.SenderClientId;

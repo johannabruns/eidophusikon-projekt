@@ -301,7 +301,7 @@ Transform:
   m_GameObject: {fileID: 5569187352817606503}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -14.39, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -352,9 +352,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: -1376069489
-  m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingLayerID: -1273045355
+  m_SortingLayer: 2
+  m_SortingOrder: 0
   m_Sprite: {fileID: -9204343751905074325, guid: 5f72ffa28923ece4d9d8a235f17898ad, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -378,6 +378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26363301fa342e146bb8e71845441b14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Movable
+  ShowTopMostFoldoutHeaderGroup: 1
   PointA: {fileID: 7629446701118827879}
   PointB: {fileID: 901977327037611771}
   moveSpeed: 2
@@ -394,7 +395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 678749872
+  GlobalObjectIdHash: 163673211
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -593,7 +594,7 @@ Transform:
   m_GameObject: {fileID: 6877249256347896995}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.79, y: 0, z: 0}
+  m_LocalPosition: {x: 7.24, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -624,7 +625,7 @@ Transform:
   m_GameObject: {fileID: 8426764361776678465}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.3, y: 0, z: 0}
+  m_LocalPosition: {x: -17.47, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

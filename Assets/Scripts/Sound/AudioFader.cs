@@ -20,6 +20,7 @@ public static class AudioFader
 
     public static IEnumerator FadeIn(AudioSource audioSource, float FadeTime)
     {
+        Debug.Log("Fading in audio source: " + audioSource.name);
         float startVolume = audioSource.volume;
         audioSource.volume = 0f;
 
@@ -37,6 +38,7 @@ public static class AudioFader
 
     public static IEnumerator FadeIn(AudioSource audioSource, float FadeTime, float finalVolume)
     {
+        Debug.Log("Fading in audio source: " + audioSource.name);
         audioSource.volume = 0f;
 
         audioSource.Play();
@@ -53,6 +55,7 @@ public static class AudioFader
 
     public static IEnumerator FadeIn(AudioSource audioSource, float FadeTime, float finalVolume, float initialVolume)
     {
+        Debug.Log("Fading in audio source: " + audioSource.name);
         audioSource.volume = initialVolume;
 
         audioSource.Play();

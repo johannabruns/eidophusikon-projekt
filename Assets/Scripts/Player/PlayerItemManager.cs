@@ -32,7 +32,6 @@ public class PlayerItemManager : NetworkBehaviour
 
     public void PickUpItem(GameObject obj)
     {
-        Debug.Log($"Player {OwnerClientId} attempting to pick up {obj.name}");
         if (!IsOwner) return; // only the local player who pressed the button should ever call this
         if (CarriedItem != null) return;
         if (!obj.TryGetComponent(out Carryable carryable)) return;
