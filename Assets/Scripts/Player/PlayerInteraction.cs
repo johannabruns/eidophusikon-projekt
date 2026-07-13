@@ -66,11 +66,10 @@ public class PlayerInteraction : NetworkBehaviour
     {
         if (!IsOwner) return;
 
-        if (CurrentInteractible is Wheel wheel)
+        if (CurrentInteractible is AxisInteractible wheel)
         {
             if (AxisValue == 0 && AxisValue != previousAxisValue)
             {
-                Debug.Log("Stopping wheel");
                 wheel.Stop();
                 return;
             }
@@ -84,7 +83,6 @@ public class PlayerInteraction : NetworkBehaviour
             // Check if the collider hit is the wheel's collider
             if (AxisValue != 0 && hit.collider != null && hit.collider == wheel.wheelCollider)
             {
-                Debug.Log("Turning Wheel");
                 wheel.Turn(AxisValue);
             }
         }

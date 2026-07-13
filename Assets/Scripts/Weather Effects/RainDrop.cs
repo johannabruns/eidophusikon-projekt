@@ -14,13 +14,9 @@ public class RainDrop : NetworkBehaviour
     {
         if (collision.isTrigger) return;
 
-        if(collision.gameObject.CompareTag("Flower"))
+        if(collision.gameObject.TryGetComponent(out IRainTarget target))
         {
-            GameObject flower = collision.gameObject;
-            if (flower.TryGetComponent(out BoolStateObject script))
-            {
-                script.SetActive();
-            }
+            target.OnRainHit();
         }
 
         else Destroy(gameObject);

@@ -31,7 +31,6 @@ public class ButtonInteractible : SimpleInteractible
 
     private void OnPressLocal()
     {
-        Debug.Log($"Button has been Interacted with");
         animator.SetTrigger("Activate");
         audioSource.PlayOneShot(soundEffect);
     }

@@ -6,7 +6,6 @@ TagManager:
   tags:
   - Ladder
   - Carryable
-  - Flower
   - DestroyOnCollide
   layers:
   - Default

@@ -34,7 +34,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4828641600629425591
 SpriteRenderer:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -78,9 +77,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 397563407
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
-  m_MaskInteraction: 0
   m_Sprite: {fileID: -417143176, guid: 153521607c6f92647a2375961d8f7418, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -90,6 +88,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &5870907734152553349
 GameObject:
@@ -136,8 +135,8 @@ GameObject:
   - component: {fileID: 4805805050408065659}
   - component: {fileID: 2823090229979047300}
   - component: {fileID: 1840020723958319697}
-  - component: {fileID: 3787489281879372991}
   - component: {fileID: 6722071330221276190}
+  - component: {fileID: 3787489281879372991}
   m_Layer: 2
   m_Name: Wheel
   m_TagString: Untagged
@@ -318,26 +317,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &3787489281879372991
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6189931728622911457}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 561f79d1a652543408859774830afe25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Wheel
-  ShowTopMostFoldoutHeaderGroup: 1
-  range: {fileID: 4805805050408065659}
-  UI: {fileID: 5870907734152553349}
-  target: {fileID: 0}
-  wheelTransform: {fileID: 7142067021933429940}
-  wheelCollider: {fileID: 794395906432907760}
-  audioSource: {fileID: 1840020723958319697}
-  soundEffect: {fileID: 8300000, guid: 11aae8d81ab895f4cb60b92ddaf2e12d, type: 3}
 --- !u!114 &6722071330221276190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -350,7 +329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3926874610
+  GlobalObjectIdHash: 1020596099
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -363,6 +342,27 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &3787489281879372991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6189931728622911457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3daa1b5a671c179478664125991575e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Wheel
+  ShowTopMostFoldoutHeaderGroup: 1
+  range: {fileID: 4805805050408065659}
+  UI: {fileID: 5870907734152553349}
+  player: {fileID: 0}
+  target: {fileID: 0}
+  wheelTransform: {fileID: 7142067021933429940}
+  wheelCollider: {fileID: 794395906432907760}
+  audioSource: {fileID: 1840020723958319697}
+  soundEffect: {fileID: 8300000, guid: 11aae8d81ab895f4cb60b92ddaf2e12d, type: 3}
 --- !u!1 &7110349114728960643
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,7 +397,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 15}
 --- !u!212 &2892679155392243984
 SpriteRenderer:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -441,9 +440,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -754373271
-  m_SortingLayer: 4
+  m_SortingLayer: 0
   m_SortingOrder: 0
-  m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: e842281e7de014a47a80695a25014d1d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -453,6 +451,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &7532798745358476251
 GameObject:
@@ -488,7 +487,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -15}
 --- !u!212 &5323859318641905739
 SpriteRenderer:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -532,9 +530,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -754373271
-  m_SortingLayer: 4
+  m_SortingLayer: 0
   m_SortingOrder: 0
-  m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: e842281e7de014a47a80695a25014d1d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
@@ -544,6 +541,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &9205507215798426735
 GameObject:
@@ -581,7 +579,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5126376129630450114
 SpriteRenderer:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -625,9 +622,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 397563407
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 1
-  m_MaskInteraction: 0
   m_Sprite: {fileID: 240847124, guid: 153521607c6f92647a2375961d8f7418, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -637,6 +633,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!58 &794395906432907760
 CircleCollider2D:

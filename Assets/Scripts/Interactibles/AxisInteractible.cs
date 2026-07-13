@@ -1,7 +1,7 @@
 using Unity.Netcode;
 using UnityEngine;
 
-public class Wheel : Interactible
+public class AxisInteractible : Interactible
 {
     public Movable target;
     public Transform wheelTransform;

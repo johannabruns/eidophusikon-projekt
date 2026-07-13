@@ -12,24 +12,24 @@ public class BoolStateObject : NetworkBehaviour
     [SerializeField] private AudioClip inactiveSound;
     [SerializeField] private AudioClip activeSound;
 
-    NetworkVariable<bool> isFlipped = new NetworkVariable<bool>(false);
+    NetworkVariable<bool> isActive = new NetworkVariable<bool>(false);
 
     public UnityEvent onInactive;
     public UnityEvent onActive;
 
     private void OnEnable()
     {
-        isFlipped.OnValueChanged += OnStateChange;
+        isActive.OnValueChanged += OnStateChange;
     }
 
     private void OnDisable()
     {
-        isFlipped.OnValueChanged -= OnStateChange;
+        isActive.OnValueChanged -= OnStateChange;
     }
 
     public override void OnNetworkSpawn()
     {
-        SetSprite(isFlipped.Value);
+        SetSprite(isActive.Value);
     }
 
 
@@ -43,47 +43,35 @@ public class BoolStateObject : NetworkBehaviour
     [Rpc(SendTo.Server)]
     private void ToggleStateRpc()
     {
-        isFlipped.Value = !isFlipped.Value;
+        isActive.Value = !isActive.Value;
         
-        if (isFlipped.Value)
+        if (isActive.Value)
             onActive.Invoke();
         else
             onInactive.Invoke();
     }
 
-    public void SetActive()
+    public void SetActive(bool value)
     {
         if (!IsOwner)
             return;
 
-        if (isFlipped.Value)
+        if (isActive.Value == value)
             return;
 
-        SetActiveRpc();
+        SetActiveRpc(value);
     }
 
     [Rpc(SendTo.Server)]
-    private void SetActiveRpc()
+    private void SetActiveRpc(bool value)
     {
-        isFlipped.Value = true;
-        onActive.Invoke();
-    }
+        isActive.Value = value;
 
-    public void SetInactive()
-    {
-        if (!IsOwner)
-            return;
+        if (isActive.Value)
+            onActive.Invoke();
 
-        if (!isFlipped.Value)
-            return;
-        SetInactiveRpc();
-    }
-
-    [Rpc(SendTo.Server)]
-    private void SetInactiveRpc()
-    {
-        isFlipped.Value = false;
-        onInactive.Invoke();
+        else if (!isActive.Value)
+            onInactive.Invoke();
     }
 
     private void OnStateChange(bool previous, bool current)

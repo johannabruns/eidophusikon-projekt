@@ -1,6 +1,8 @@
 using Unity.Netcode;
+using Unity.Netcode.Components;
 using UnityEngine;
 
+[RequireComponent(typeof(NetworkTransform))]
 public class Movable : NetworkBehaviour
 {
     public Transform PointA;
