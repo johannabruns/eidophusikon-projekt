@@ -4,15 +4,14 @@ using UnityEngine;
 public class AxisInteractible : Interactible
 {
     public Movable target;
-    public Transform wheelTransform;
-    public Collider2D wheelCollider;
+    public Collider2D rayTargetCollider;
     public AudioSource audioSource;
     public AudioClip soundEffect;
 
     // Synced automatically to every client; server is the only writer.
-    private NetworkVariable<float> axisInput = new NetworkVariable<float>(0f);
+    protected NetworkVariable<float> axisInput = new NetworkVariable<float>(0f);
 
-    private float previousAxisValue = 0f;
+    protected float previousAxisValue = 0f;
 
     private void Start()
     {
@@ -26,7 +25,8 @@ public class AxisInteractible : Interactible
 
         // Every peer (host + clients) drives its own local visuals/audio
         // off the synced value, at its own framerate.
-        HandleFeedback(axisInput.Value);
+        AudioFeedback(axisInput.Value);
+        VisualFeedback(axisInput.Value);
     }
 
     public void Turn(float axisValue) => SetAxisServerRpc(axisValue);
@@ -38,21 +38,17 @@ public class AxisInteractible : Interactible
         axisInput.Value = axisValue;
     }
 
-    private void HandleFeedback(float axisValue)
+    private void AudioFeedback(float axisValue)
     {
         if (axisValue < 0)
         {
             if (previousAxisValue > axisValue || !audioSource.isPlaying)
                 audioSource.Play();
-            if (target.transform.position != target.PointA.position)
-                wheelTransform.Rotate(0, 0, -axisValue * target.moveSpeed * Time.deltaTime * 30);
         }
         else if (axisValue > 0)
         {
             if (previousAxisValue < axisValue || !audioSource.isPlaying)
                 audioSource.Play();
-            if (target.transform.position != target.PointB.position)
-                wheelTransform.Rotate(0, 0, -axisValue * target.moveSpeed * Time.deltaTime * 30);
         }
         else if (audioSource.isPlaying)
         {
@@ -60,5 +56,9 @@ public class AxisInteractible : Interactible
         }
 
         previousAxisValue = axisValue;
+    }
+
+    protected virtual void VisualFeedback(float axisValue)
+    {
     }
 }

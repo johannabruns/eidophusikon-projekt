@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 2823090229979047300}
   - component: {fileID: 1840020723958319697}
   - component: {fileID: 6722071330221276190}
-  - component: {fileID: 3787489281879372991}
+  - component: {fileID: 674027185328568017}
   m_Layer: 2
   m_Name: Wheel
   m_TagString: Untagged
@@ -342,7 +342,7 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
---- !u!114 &3787489281879372991
+--- !u!114 &674027185328568017
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -351,7 +351,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6189931728622911457}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3daa1b5a671c179478664125991575e3, type: 3}
+  m_Script: {fileID: 11500000, guid: 5eef9817a307b794b9221325a22802c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Wheel
   ShowTopMostFoldoutHeaderGroup: 1
@@ -359,10 +359,10 @@ MonoBehaviour:
   UI: {fileID: 5870907734152553349}
   player: {fileID: 0}
   target: {fileID: 0}
-  wheelTransform: {fileID: 7142067021933429940}
-  wheelCollider: {fileID: 794395906432907760}
+  rayTargetCollider: {fileID: 794395906432907760}
   audioSource: {fileID: 1840020723958319697}
   soundEffect: {fileID: 8300000, guid: 11aae8d81ab895f4cb60b92ddaf2e12d, type: 3}
+  wheelTransform: {fileID: 7142067021933429940}
 --- !u!1 &7110349114728960643
 GameObject:
   m_ObjectHideFlags: 0

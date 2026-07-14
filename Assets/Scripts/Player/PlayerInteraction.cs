@@ -66,11 +66,11 @@ public class PlayerInteraction : NetworkBehaviour
     {
         if (!IsOwner) return;
 
-        if (CurrentInteractible is AxisInteractible wheel)
+        if (CurrentInteractible is AxisInteractible axisInteractible)
         {
             if (AxisValue == 0 && AxisValue != previousAxisValue)
             {
-                wheel.Stop();
+                axisInteractible.Stop();
                 return;
             }
 
@@ -81,9 +81,9 @@ public class PlayerInteraction : NetworkBehaviour
             RaycastHit2D hit = Physics2D.GetRayIntersection(ray, 50f, raycastHits);
 
             // Check if the collider hit is the wheel's collider
-            if (AxisValue != 0 && hit.collider != null && hit.collider == wheel.wheelCollider)
+            if (AxisValue != 0 && hit.collider != null && hit.collider == axisInteractible.rayTargetCollider)
             {
-                wheel.Turn(AxisValue);
+                axisInteractible.Turn(AxisValue);
             }
         }
     }

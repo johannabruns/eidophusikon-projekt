@@ -2808,10 +2808,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 414570418}
     m_Modifications:
+    - target: {fileID: 674027185328568017, guid: 191c43d9fe9f9964abb15d4d3ff5039c, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 216734391}
     - target: {fileID: 3787489281879372991, guid: 191c43d9fe9f9964abb15d4d3ff5039c, type: 3}
       propertyPath: target
       value: 
       objectReference: {fileID: 216734391}
+    - target: {fileID: 4805805050408065659, guid: 191c43d9fe9f9964abb15d4d3ff5039c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6189931728622911457, guid: 191c43d9fe9f9964abb15d4d3ff5039c, type: 3}
       propertyPath: m_Name
       value: Wheel
@@ -4074,13 +4082,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1878532466 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3787489281879372991, guid: 191c43d9fe9f9964abb15d4d3ff5039c, type: 3}
+  m_CorrespondingSourceObject: {fileID: 674027185328568017, guid: 191c43d9fe9f9964abb15d4d3ff5039c, type: 3}
   m_PrefabInstance: {fileID: 1878532464}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3daa1b5a671c179478664125991575e3, type: 3}
+  m_Script: {fileID: 11500000, guid: 5eef9817a307b794b9221325a22802c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Wheel
 --- !u!1 &1896923119
@@ -4228,6 +4236,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 414570418}
     m_Modifications:
+    - target: {fileID: 674027185328568017, guid: 191c43d9fe9f9964abb15d4d3ff5039c, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 8744940311433957256}
     - target: {fileID: 3787489281879372991, guid: 191c43d9fe9f9964abb15d4d3ff5039c, type: 3}
       propertyPath: target
       value: 
