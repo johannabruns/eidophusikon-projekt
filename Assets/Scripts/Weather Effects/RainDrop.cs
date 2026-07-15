@@ -7,11 +7,14 @@ public class RainDrop : NetworkBehaviour
 
     private void FixedUpdate()
     {
+        if (!IsServer) return;
         rb.MovePosition(rb.position + Vector2.down * Time.fixedDeltaTime * 5f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!IsServer) return;
+
         if (collision.isTrigger) return;
 
         if(collision.gameObject.TryGetComponent(out IRainTarget target))
@@ -19,7 +22,8 @@ public class RainDrop : NetworkBehaviour
             target.OnRainHit();
         }
 
-        else Destroy(gameObject);
+        else 
+            NetworkObject.Despawn();
     }
 
 }

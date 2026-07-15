@@ -35,8 +35,6 @@ public class BoolStateObject : NetworkBehaviour
 
     public void ToggleState()
     {
-        if (!IsOwner)
-            return;
         ToggleStateRpc();
     }
 
@@ -53,18 +51,14 @@ public class BoolStateObject : NetworkBehaviour
 
     public void SetActive(bool value)
     {
-        if (!IsOwner)
-            return;
-
-        if (isActive.Value == value)
-            return;
-
         SetActiveRpc(value);
     }
 
     [Rpc(SendTo.Server)]
     private void SetActiveRpc(bool value)
     {
+        if (isActive.Value == value)
+            return;
         isActive.Value = value;
 
         if (isActive.Value)

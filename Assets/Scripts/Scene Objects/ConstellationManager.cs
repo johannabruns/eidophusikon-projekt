@@ -25,15 +25,16 @@ public class ConstellationManager : NetworkBehaviour
             star.reachedPosition.OnValueChanged += OnStarPositionChanged;
         }
 
-        alignedStars.Value = stars.FindAll(s => s.reachedPosition.Value).Count;
-        isAligned.Value = alignedStars.Value == stars.Count;
+        if (IsServer)
+        {
+            alignedStars.Value = stars.FindAll(s => s.reachedPosition.Value).Count;
+            isAligned.Value = alignedStars.Value == stars.Count;
+        }
 
         isAligned.OnValueChanged += OnConstellationAligned;
+        currentStarIndex.OnValueChanged += OnCurrentStarIndexChanged;
 
-        if(stars[currentStarIndex.Value].gameObject.TryGetComponent(out Movable target)) 
-        {
-            axisInteractible.target = target;
-        }
+        UpdateTargetStar(currentStarIndex.Value);
     }
 
     public override void OnNetworkDespawn()
@@ -44,10 +45,13 @@ public class ConstellationManager : NetworkBehaviour
         }
 
         isAligned.OnValueChanged -= OnConstellationAligned;
+        currentStarIndex.OnValueChanged -= OnCurrentStarIndexChanged;
     }
 
     private void OnStarPositionChanged(bool previous, bool current)
     {
+        if (!IsServer) return;
+
         if (current)
         {
             alignedStars.Value++;
@@ -85,15 +89,21 @@ public class ConstellationManager : NetworkBehaviour
             return;
 
         currentStarIndex.Value = currentStarIndex.Value == stars.Count - 1 ? 0 : currentStarIndex.Value + 1;
-
-        if (stars[currentStarIndex.Value].gameObject.TryGetComponent(out Movable target))
-        {
-            axisInteractible.target = target;
-        }
     }
+
+    private void UpdateTargetStar(int index)
+    {
+        if (stars[index].gameObject.TryGetComponent(out Movable target))
+            axisInteractible.target = target;
+    }
+    private void OnCurrentStarIndexChanged(int previous, int current) => UpdateTargetStar(current);
+
 
     private void FixedUpdate()
     {
+        if (stars.Count == 0)
+            return;
+
         currentStarIndicator.position = stars[currentStarIndex.Value].transform.position;
     }
 }

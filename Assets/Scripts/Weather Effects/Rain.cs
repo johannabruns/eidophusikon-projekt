@@ -25,8 +25,6 @@ public class Rain : NetworkBehaviour
     public List<Transform> spawnPoints;
     private List<RainDropSpawner> spawners = new List<RainDropSpawner>();
 
-    //private float cooldownTimer = 0f;
-
     public NetworkVariable<bool> isActive = new NetworkVariable<bool>(false);
 
     public override void OnNetworkSpawn()
@@ -55,26 +53,13 @@ public class Rain : NetworkBehaviour
 
         if (isActive.Value)
         {
-            /*
-            if(cooldownTimer <= 0f)
-            {
-                foreach(Transform spawnPoint in spawnPoints)
-                {
-                    Instantiate(rainDropPrefab, spawnPoint.position, Quaternion.identity);
-                }
-                cooldownTimer = 0.35f;
-            }
-            else
-            {
-                cooldownTimer -= Time.deltaTime;
-            }
-            */
-
             foreach (RainDropSpawner spawner in spawners)
             {
                 if (spawner.cooldown <= 0f)
                 {
-                    Instantiate(rainDropPrefab, spawner.spawnPoint.position, Quaternion.identity);
+                    GameObject drop = Instantiate(rainDropPrefab, spawner.spawnPoint.position, Quaternion.identity);
+                    drop.GetComponent<NetworkObject>().Spawn(true);
+
                     spawner.cooldown = GetRandomSpawnInterval();
                 }
                 else

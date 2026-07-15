@@ -14,6 +14,13 @@ public class Star : BoolStateObject
         reachedPosition.OnValueChanged += OnReachedPositionChanged;
     }
 
+    public override void OnNetworkDespawn()
+    {
+        base.OnNetworkDespawn();
+
+        reachedPosition.OnValueChanged -= OnReachedPositionChanged;
+    }
+
     private void OnReachedPositionChanged(bool previous, bool current)
     {
         SetActive(current);
