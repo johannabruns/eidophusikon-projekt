@@ -8,7 +8,7 @@ public class PlayerAnimations : NetworkBehaviour
     private PlayerMovement playerMovement;
     private SpriteRenderer spriteRenderer;
 
-    private NetworkVariable<bool> networkFlipX = new(false,NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<bool> networkFlipX = new(false,NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     public override void OnNetworkSpawn()
     {

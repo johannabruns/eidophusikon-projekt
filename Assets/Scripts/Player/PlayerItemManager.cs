@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 
 // This sits on a child of the PlayerObject, so it shares the PlayerObject's
@@ -9,10 +10,12 @@ public class PlayerItemManager : NetworkBehaviour
 {
     public Vector2 carryOffset = new(1, 0); //the position at which the carried item should be held relative to the player
     public PlayerMovement playerMovement;
+    public PlayerAnimations playerAnimations;
 
     public List<GameObject> itemsInRange = new(); //all items that are currently in range of the player
 
     public GameObject CarriedItem { get; private set; } = null; //The item currently being carried by the player
+    private Carryable carriedItemScript = null; //The Carryable component of the item currently being carried by the player
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -34,6 +37,7 @@ public class PlayerItemManager : NetworkBehaviour
     {
         if (!IsOwner) return; // only the local player who pressed the button should ever call this
         if (CarriedItem != null) return;
+
         if (!obj.TryGetComponent(out Carryable carryable)) return;
         if (carryable.isCarried.Value) return;
 
@@ -42,6 +46,7 @@ public class PlayerItemManager : NetworkBehaviour
         // pickup actually goes through - Carryable applies the resulting
         // physics/visual state itself via its NetworkVariable callback.
         CarriedItem = obj;
+        carriedItemScript = carryable;
         carryable.RequestPickUpServerRpc();
     }
 
@@ -53,6 +58,7 @@ public class PlayerItemManager : NetworkBehaviour
         if (CarriedItem.TryGetComponent(out Carryable carryable))
             carryable.RequestDropServerRpc();
 
+        carriedItemScript = null;
         CarriedItem = null;
     }
 
@@ -67,6 +73,8 @@ public class PlayerItemManager : NetworkBehaviour
 
         if (horizontalMovement != 0)
             carryOffset = new Vector2(Mathf.Abs(carryOffset.x) * Mathf.Sign(horizontalMovement), carryOffset.y);
+
+        carriedItemScript.flip.Value = playerAnimations.networkFlipX.Value;
 
         Vector2 carryPos = transform.position + (Vector3)carryOffset;
         CarriedItem.transform.position = carryPos;

@@ -8,10 +8,13 @@ using UnityEngine.InputSystem;
 public class PlayerInteraction : NetworkBehaviour
 {
     [Header("Dependencies")]
-    public InputActionReference buttonPressControls;
+    public InputActionReference interactionControls;
+    public InputActionReference useControls;
     public InputActionReference axisControls;
-    public PlayerMovement playerMovement;
-    public PlayerItemManager playerItemManager;
+
+    [Space]
+    public PlayerMovement movement;
+    public PlayerItemManager itemManager;
 
     [Header("Configuration")]
     public LayerMask raycastHits;
@@ -25,11 +28,11 @@ public class PlayerInteraction : NetworkBehaviour
 
     private void OnEnable()
     {
-        buttonPressControls.action.performed += ButtonPressInteract;
+        interactionControls.action.performed += ButtonPressInteract;
     }
     private void OnDisable()
     {
-        buttonPressControls.action.performed -= ButtonPressInteract;
+        interactionControls.action.performed -= ButtonPressInteract;
     }
 
     /// <summary>
@@ -40,15 +43,15 @@ public class PlayerInteraction : NetworkBehaviour
     {
         if (!IsOwner) return;
 
-        if(playerItemManager.CarriedItem != null)
+        if(itemManager.CarriedItem != null)
         {
-            playerItemManager.DropItem();
+            itemManager.DropItem();
             return;
         }
 
-        if (playerItemManager.itemsInRange.Count > 0)
+        if (itemManager.itemsInRange.Count > 0)
         {
-            playerItemManager.PickUpItem(playerItemManager.itemsInRange[0]);
+            itemManager.PickUpItem(itemManager.itemsInRange[0]);
             return;
         }
 
@@ -56,6 +59,12 @@ public class PlayerInteraction : NetworkBehaviour
         {
             interactible.OnInteract();
         }
+    }
+
+    private void UseInteract(InputAction.CallbackContext obj)
+    {
+        if (!IsOwner) return;
+
     }
 
     /// <summary>

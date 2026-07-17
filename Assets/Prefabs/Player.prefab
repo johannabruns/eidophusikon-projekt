@@ -117,7 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 2067960717
+  GlobalObjectIdHash: 2978567280
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -266,6 +266,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimations
   ShowTopMostFoldoutHeaderGroup: 1
+  networkFlipX:
+    UpdateTraits:
+      MinSecondsBetweenUpdates: 0
+      MaxSecondsBetweenUpdates: 0
+    m_InternalValue: 0
 --- !u!114 &3580027223466984765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,10 +284,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   ShowTopMostFoldoutHeaderGroup: 1
-  buttonPressControls: {fileID: -2696803245201334253, guid: ab1026e838e097b45901bfd0713dc178, type: 3}
+  interactionControls: {fileID: -2696803245201334253, guid: ab1026e838e097b45901bfd0713dc178, type: 3}
+  useControls: {fileID: 7150152625097960233, guid: ab1026e838e097b45901bfd0713dc178, type: 3}
   axisControls: {fileID: -334197225559625531, guid: ab1026e838e097b45901bfd0713dc178, type: 3}
-  playerMovement: {fileID: 5457717075247234311}
-  playerItemManager: {fileID: 6944066976500538575}
+  movement: {fileID: 5457717075247234311}
+  itemManager: {fileID: 6944066976500538575}
   raycastHits:
     serializedVersion: 2
     m_Bits: 256
@@ -602,8 +608,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerItemManager
   ShowTopMostFoldoutHeaderGroup: 1
-  carryOffset: {x: 0.79, y: 0}
+  carryOffset: {x: 0.45, y: 0}
   playerMovement: {fileID: 5457717075247234311}
+  playerAnimations: {fileID: 7901125426285865559}
   itemsInRange: []
 --- !u!1 &8214597503106574253
 GameObject:
