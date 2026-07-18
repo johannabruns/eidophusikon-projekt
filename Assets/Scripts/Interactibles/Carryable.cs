@@ -32,6 +32,8 @@ public class Carryable : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
+        gameObject.tag = "Carryable";
+
         NetworkTransform networkTransform = GetComponent<NetworkTransform>();
         networkTransform.AuthorityMode = NetworkTransform.AuthorityModes.Owner;
 

@@ -534,7 +534,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Rain
   ShowTopMostFoldoutHeaderGroup: 1
   rainDropPrefab: {fileID: 8720862323183967085, guid: 975d2763aae977b4c875ba0b1f8b0da0, type: 3}
-  constantInverval: 0
+  maxSpawnInterval: 0.1
+  constantInverval: 1
   audioSource: {fileID: 2182796976704650891}
   spawnPoints:
   - {fileID: 7178673678228289463}

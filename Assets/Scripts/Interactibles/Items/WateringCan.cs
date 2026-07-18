@@ -16,7 +16,9 @@ public class WateringCan : Usable, IRainTarget
     private void SetWateringCanStateRpc(bool isFull)
     {
         this.isFull.Value = isFull;
-        Debug.Log($"Watering can state set to: {isFull}");
+
+        if(!this.isFull.Value)
+            Debug.Log($"Watering can state set to: {isFull}");
     }
 
     public override void OnUse()
