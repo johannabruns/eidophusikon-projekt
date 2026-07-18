@@ -60,7 +60,7 @@ public class Carryable : NetworkBehaviour
         gameObject.layer = carried ? LayerMask.NameToLayer("Default") : uncarriedLayer;
 
         if (rb != null)      
-            rb.simulated = !carried;
+            rb.bodyType = carried ? RigidbodyType2D.Kinematic: RigidbodyType2D.Dynamic;
         
         if (col != null)
             col.excludeLayers = carried ? LayerMask.GetMask("Player") : 0;

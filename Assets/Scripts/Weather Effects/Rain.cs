@@ -19,6 +19,7 @@ public class Rain : NetworkBehaviour
     }
 
     public GameObject rainDropPrefab;
+    public float maxSpawnInterval = 0.5f;
     public bool constantInverval = false;
     public AudioSource audioSource;
     private Coroutine soundFade;
@@ -34,7 +35,7 @@ public class Rain : NetworkBehaviour
 
         foreach(Transform spawnPoint in spawnPoints)
         {
-            float initialCooldown = constantInverval ? 0.25f : GetRandomSpawnInterval();
+            float initialCooldown = constantInverval ? maxSpawnInterval : GetRandomSpawnInterval();
             spawners.Add(new RainDropSpawner(spawnPoint, initialCooldown));
         }
     }
@@ -59,7 +60,7 @@ public class Rain : NetworkBehaviour
                     GameObject drop = Instantiate(rainDropPrefab, spawner.spawnPoint.position, Quaternion.identity);
                     drop.GetComponent<NetworkObject>().Spawn(true);
 
-                    spawner.cooldown = constantInverval ? 0.25f : GetRandomSpawnInterval();
+                    spawner.cooldown = constantInverval ? maxSpawnInterval : GetRandomSpawnInterval();
                 }
                 else
                 {
@@ -110,6 +111,6 @@ public class Rain : NetworkBehaviour
 
     private float GetRandomSpawnInterval()
     {
-        return Random.Range(0.1f, 0.5f);
+        return Random.Range(0.1f, maxSpawnInterval);
     }
 }

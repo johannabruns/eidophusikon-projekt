@@ -20,6 +20,7 @@ public class PlayerItemManager : NetworkBehaviour
 
     public GameObject CarriedItem { get; private set; } = null; //The item currently being carried by the player
     private Carryable carriedItemScript = null; //The Carryable component of the item currently being carried by the player
+    private Rigidbody2D carriedItemRigidbody = null; //The Rigidbody2D component of the item currently being carried by the player
 
     private bool hasSyncedCarryPosition = false;
 
@@ -57,8 +58,12 @@ public class PlayerItemManager : NetworkBehaviour
         if (!obj.TryGetComponent(out Carryable carryable)) return;
         if (carryable.isCarried.Value) return;
 
+        if (!obj.TryGetComponent(out Rigidbody2D rb)) return;
+
         CarriedItem = obj;
         carriedItemScript = carryable;
+        carriedItemRigidbody = rb;
+
         hasSyncedCarryPosition = false;
         carryable.RequestPickUpServerRpc();
     }
@@ -84,7 +89,7 @@ public class PlayerItemManager : NetworkBehaviour
             usable.OnUse();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (!IsOwner) return;
 
@@ -106,7 +111,7 @@ public class PlayerItemManager : NetworkBehaviour
         }
         else
         {
-            CarriedItem.transform.position = carryPos;
+            carriedItemRigidbody.MovePosition(carryPos);
         }
     }
 
