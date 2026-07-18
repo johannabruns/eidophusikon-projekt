@@ -285,7 +285,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   ShowTopMostFoldoutHeaderGroup: 1
   interactionControls: {fileID: -2696803245201334253, guid: ab1026e838e097b45901bfd0713dc178, type: 3}
-  useControls: {fileID: 7150152625097960233, guid: ab1026e838e097b45901bfd0713dc178, type: 3}
   axisControls: {fileID: -334197225559625531, guid: ab1026e838e097b45901bfd0713dc178, type: 3}
   movement: {fileID: 5457717075247234311}
   itemManager: {fileID: 6944066976500538575}
@@ -608,7 +607,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerItemManager
   ShowTopMostFoldoutHeaderGroup: 1
-  carryOffset: {x: 0.45, y: 0}
+  useControls: {fileID: 7150152625097960233, guid: ab1026e838e097b45901bfd0713dc178, type: 3}
+  carryOffset: {x: 0.27, y: -0.23}
   playerMovement: {fileID: 5457717075247234311}
   playerAnimations: {fileID: 7901125426285865559}
   itemsInRange: []

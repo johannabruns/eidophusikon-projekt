@@ -9,7 +9,6 @@ public class PlayerInteraction : NetworkBehaviour
 {
     [Header("Dependencies")]
     public InputActionReference interactionControls;
-    public InputActionReference useControls;
     public InputActionReference axisControls;
 
     [Space]
@@ -59,12 +58,6 @@ public class PlayerInteraction : NetworkBehaviour
         {
             interactible.OnInteract();
         }
-    }
-
-    private void UseInteract(InputAction.CallbackContext obj)
-    {
-        if (!IsOwner) return;
-
     }
 
     /// <summary>

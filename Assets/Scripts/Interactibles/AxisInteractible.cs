@@ -1,6 +1,9 @@
 using Unity.Netcode;
 using UnityEngine;
 
+/// <summary>
+/// Interactible for moving GameObjects. target Objects needs a Movable component.
+/// </summary>
 public class AxisInteractible : Interactible
 {
     public Movable target;
@@ -58,6 +61,9 @@ public class AxisInteractible : Interactible
         previousAxisValue = axisValue;
     }
 
+    /// <summary>
+    /// Child classes can override this method to provide visual feedback based on the axis value. This method is called every frame in Update().
+    /// </summary>
     protected virtual void VisualFeedback(float axisValue)
     {
     }

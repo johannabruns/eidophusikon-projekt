@@ -1,8 +1,11 @@
-using System.Diagnostics;
 using Unity.Netcode;
 using Unity.Netcode.Components;
 using UnityEngine;
 
+
+/// <summary>
+/// A component that allows a GameObject to be picked up and carried by a player.
+/// </summary>
 [RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(NetworkTransform))]
@@ -17,12 +20,14 @@ public class Carryable : NetworkBehaviour
     private Rigidbody2D rb;
     private Collider2D col;
     private int uncarriedLayer;
+    private Vector3 originalScale;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
         uncarriedLayer = gameObject.layer;
+        originalScale = transform.localScale;
     }
 
     public override void OnNetworkSpawn()
@@ -58,24 +63,22 @@ public class Carryable : NetworkBehaviour
             rb.simulated = !carried;
         
         if (col != null)
-            col.enabled = !carried;
-
-        if(IsOwner)
-            transform.rotation = Quaternion.Euler(0f, 0f, rotationOnPickup);
+            col.excludeLayers = carried ? LayerMask.GetMask("Player") : 0;
     }
 
     public void Flip(bool previous, bool current)
     {
+        float xScale = Mathf.Abs(originalScale.x);
+
         if (current)
         {
-            transform.localScale = new Vector3(-1, 1, 1);
-            if(IsOwner) transform.rotation = Quaternion.Euler(0f, 0f, -rotationOnPickup);
+            transform.localScale = new Vector3(-xScale, originalScale.y, originalScale.z);
+            if (IsOwner) transform.rotation = Quaternion.Euler(0f, 0f, -rotationOnPickup);
         }
-          
         else
         {
-            transform.localScale = new Vector3(1, 1, 1);
-            if(IsOwner)transform.rotation = Quaternion.Euler(0f, 0f, rotationOnPickup);
+            transform.localScale = new Vector3(xScale, originalScale.y, originalScale.z);
+            if (IsOwner) transform.rotation = Quaternion.Euler(0f, 0f, rotationOnPickup);
         }
     }
 
@@ -90,6 +93,7 @@ public class Carryable : NetworkBehaviour
         carrierClientId.Value = requestingClientId;
 
         NetworkObject.ChangeOwnership(requestingClientId);
+        ApplyPickupRotationRpc(RpcTarget.Single(requestingClientId, RpcTargetUse.Temp));
     }
 
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
@@ -107,8 +111,12 @@ public class Carryable : NetworkBehaviour
             NetworkObject.RemoveOwnership();
     }
 
-    private void Update()
+    [Rpc(SendTo.SpecifiedInParams)]
+    private void ApplyPickupRotationRpc(RpcParams rpcParams = default)
     {
-        UnityEngine.Debug.Log(transform.rotation.z);
+        Debug.Log("Appliy Rotation upon Pickup");
+        float rotation = flip.Value ? -rotationOnPickup : rotationOnPickup;
+        transform.rotation = Quaternion.Euler(0f, 0f, rotation);
+        Physics2D.SyncTransforms();
     }
 }

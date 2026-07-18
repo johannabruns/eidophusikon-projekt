@@ -107,7 +107,7 @@ TextureImporter:
         y: 95
         width: 533
         height: 1858
-      alignment: 0
+      alignment: 9
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 

@@ -1,14 +1,18 @@
 using System.Collections.Generic;
 using Unity.Netcode;
+using Unity.Netcode.Components;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 // This sits on a child of the PlayerObject, so it shares the PlayerObject's
 // NetworkObject - IsOwner here means "this is the local player who owns the
 // character", same as it does on PlayerInteraction.
 public class PlayerItemManager : NetworkBehaviour
 {
+    public InputActionReference useControls;
     public Vector2 carryOffset = new(1, 0); //the position at which the carried item should be held relative to the player
+
     public PlayerMovement playerMovement;
     public PlayerAnimations playerAnimations;
 
@@ -16,6 +20,18 @@ public class PlayerItemManager : NetworkBehaviour
 
     public GameObject CarriedItem { get; private set; } = null; //The item currently being carried by the player
     private Carryable carriedItemScript = null; //The Carryable component of the item currently being carried by the player
+
+    private bool hasSyncedCarryPosition = false;
+
+    private void OnEnable()
+    {
+        useControls.action.performed += UseItem;
+    }
+
+    private void OnDisable()
+    {
+        useControls.action.performed -= UseItem;
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -35,18 +51,15 @@ public class PlayerItemManager : NetworkBehaviour
 
     public void PickUpItem(GameObject obj)
     {
-        if (!IsOwner) return; // only the local player who pressed the button should ever call this
+        if (!IsOwner) return;
         if (CarriedItem != null) return;
 
         if (!obj.TryGetComponent(out Carryable carryable)) return;
         if (carryable.isCarried.Value) return;
 
-        // Optimistically remember it locally so movement/UI can react
-        // immediately. The server is still the one deciding whether the
-        // pickup actually goes through - Carryable applies the resulting
-        // physics/visual state itself via its NetworkVariable callback.
         CarriedItem = obj;
         carriedItemScript = carryable;
+        hasSyncedCarryPosition = false;
         carryable.RequestPickUpServerRpc();
     }
 
@@ -62,22 +75,39 @@ public class PlayerItemManager : NetworkBehaviour
         CarriedItem = null;
     }
 
+    private void UseItem(InputAction.CallbackContext obj)
+    {
+        if (!IsOwner) return;
+        if (CarriedItem == null) return;
+
+        if (CarriedItem.TryGetComponent(out Usable usable))
+            usable.OnUse();
+    }
+
     private void Update()
     {
-        // No longer physics-driven (Carryable disables the rigidbody's
-        // simulation while carried), so this can run every frame instead of
-        // every fixed step, and just push the transform directly.
-        if (CarriedItem == null || !IsOwner) return;
+        if (!IsOwner) return;
 
-        float horizontalMovement = playerMovement.MovementDirection.x;
+        //calculate carry position based on whether the player is facing left or right
+        Vector2 carryOffset = playerAnimations.networkFlipX.Value ?
+            new(-this.carryOffset.x, this.carryOffset.y) : this.carryOffset;
 
-        if (horizontalMovement != 0)
-            carryOffset = new Vector2(Mathf.Abs(carryOffset.x) * Mathf.Sign(horizontalMovement), carryOffset.y);
+        if (CarriedItem == null) return;
 
+        //flip the carried item to match the player's facing direction
         carriedItemScript.flip.Value = playerAnimations.networkFlipX.Value;
 
         Vector2 carryPos = transform.position + (Vector3)carryOffset;
-        CarriedItem.transform.position = carryPos;
+
+        if (!hasSyncedCarryPosition)
+        {
+            CarriedItem.GetComponent<NetworkTransform>().Teleport(carryPos, CarriedItem.transform.rotation, CarriedItem.transform.localScale);
+            hasSyncedCarryPosition = true;
+        }
+        else
+        {
+            CarriedItem.transform.position = carryPos;
+        }
     }
 
     private void OnDrawGizmos()

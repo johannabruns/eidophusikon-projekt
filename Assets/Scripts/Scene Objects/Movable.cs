@@ -2,7 +2,11 @@ using Unity.Netcode;
 using Unity.Netcode.Components;
 using UnityEngine;
 
+/// <summary>
+/// A component that allows a GameObject to move between two points (PointA and PointB) either automatically or based on input.
+/// </summary>
 [RequireComponent(typeof(NetworkTransform))]
+
 public class Movable : NetworkBehaviour
 {
     public Transform PointA;

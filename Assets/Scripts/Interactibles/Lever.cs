@@ -2,6 +2,9 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// An interactible lever that can be toggled on and off, triggering events when its state changes.
+/// </summary>
 public class Lever : SimpleInteractible
 {
     public NetworkVariable<bool> isEnabled = new NetworkVariable<bool>(false);

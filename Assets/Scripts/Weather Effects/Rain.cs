@@ -19,30 +19,29 @@ public class Rain : NetworkBehaviour
     }
 
     public GameObject rainDropPrefab;
+    public bool constantInverval = false;
     public AudioSource audioSource;
     private Coroutine soundFade;
 
     public List<Transform> spawnPoints;
     private List<RainDropSpawner> spawners = new List<RainDropSpawner>();
 
-    public NetworkVariable<bool> isActive = new NetworkVariable<bool>(false);
+    public NetworkVariable<bool> isRaining = new NetworkVariable<bool>(false);
 
     public override void OnNetworkSpawn()
     {
-        isActive.OnValueChanged += OnIsActiveChanged;
+        isRaining.OnValueChanged += OnIsActiveChanged;
 
         foreach(Transform spawnPoint in spawnPoints)
         {
-            float initialCooldown = GetRandomSpawnInterval();
+            float initialCooldown = constantInverval ? 0.25f : GetRandomSpawnInterval();
             spawners.Add(new RainDropSpawner(spawnPoint, initialCooldown));
         }
-          
-        
     }
 
     public override void OnNetworkDespawn()
     {
-        isActive.OnValueChanged -= OnIsActiveChanged;
+        isRaining.OnValueChanged -= OnIsActiveChanged;
     }
 
     private void Update()
@@ -51,7 +50,7 @@ public class Rain : NetworkBehaviour
             return;
 
 
-        if (isActive.Value)
+        if (isRaining.Value)
         {
             foreach (RainDropSpawner spawner in spawners)
             {
@@ -60,7 +59,7 @@ public class Rain : NetworkBehaviour
                     GameObject drop = Instantiate(rainDropPrefab, spawner.spawnPoint.position, Quaternion.identity);
                     drop.GetComponent<NetworkObject>().Spawn(true);
 
-                    spawner.cooldown = GetRandomSpawnInterval();
+                    spawner.cooldown = constantInverval ? 0.25f : GetRandomSpawnInterval();
                 }
                 else
                 {
@@ -73,7 +72,7 @@ public class Rain : NetworkBehaviour
     [Rpc(SendTo.Server)]
     public void ToggleRainRpc()
     {
-        isActive.Value = !isActive.Value;
+        isRaining.Value = !isRaining.Value;
     }
 
     private void OnDrawGizmos()
