@@ -1,0 +1,498 @@
+fileFormatVersion: 2
+guid: 11c7d82b618653c4387ccd96a125e8fb
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7548326481941513787
+    second: "Zeichenfl\xE4che 1 Kopie 7_0"
+  - first:
+      213: 2296719165396192603
+    second: "Zeichenfl\xE4che 1 Kopie 7_1"
+  - first:
+      213: 43057145187486099
+    second: "Zeichenfl\xE4che 1 Kopie 7_2"
+  - first:
+      213: 1911092364681146189
+    second: "Zeichenfl\xE4che 1 Kopie 7_3"
+  - first:
+      213: 6667851662211932835
+    second: "Zeichenfl\xE4che 1 Kopie 7_4"
+  - first:
+      213: -7240062042457363604
+    second: "Zeichenfl\xE4che 1 Kopie 7_5"
+  - first:
+      213: 5100947806068774427
+    second: "Zeichenfl\xE4che 1 Kopie 7_6"
+  - first:
+      213: 2549447989964571663
+    second: "Zeichenfl\xE4che 1 Kopie 7_7"
+  - first:
+      213: -6226699363221299414
+    second: "Zeichenfl\xE4che 1 Kopie 7_8"
+  - first:
+      213: -1205394033655015871
+    second: "Zeichenfl\xE4che 1 Kopie 7_9"
+  - first:
+      213: -7728177088837982860
+    second: "Zeichenfl\xE4che 1 Kopie 7_10"
+  - first:
+      213: 2462631930768450306
+    second: "Zeichenfl\xE4che 1 Kopie 7_11"
+  - first:
+      213: 4391153565836056722
+    second: "Zeichenfl\xE4che 1 Kopie 7_12"
+  - first:
+      213: -5487128526973995160
+    second: "Zeichenfl\xE4che 1 Kopie 7_13"
+  - first:
+      213: -6938405166209430891
+    second: "Zeichenfl\xE4che 1 Kopie 7_14"
+  - first:
+      213: 1048191531817479642
+    second: "Zeichenfl\xE4che 1 Kopie 7_15"
+  - first:
+      213: -6611221841932904613
+    second: "Zeichenfl\xE4che 1 Kopie 7_16"
+  - first:
+      213: 2950793751351482298
+    second: "Zeichenfl\xE4che 1 Kopie 7_17"
+  - first:
+      213: 283933839841109553
+    second: "Zeichenfl\xE4che 1 Kopie 7_18"
+  - first:
+      213: 5683721945926822475
+    second: "Zeichenfl\xE4che 1 Kopie 7_19"
+  - first:
+      213: -6100758829812805079
+    second: "Zeichenfl\xE4che 1 Kopie 7_20"
+  - first:
+      213: 3810965447782316268
+    second: "Zeichenfl\xE4che 1 Kopie 7_21"
+  - first:
+      213: -1548026424701926634
+    second: "Zeichenfl\xE4che 1 Kopie 7_22"
+  - first:
+      213: 8289996084606553969
+    second: "Zeichenfl\xE4che 1 Kopie 7_23"
+  - first:
+      213: -5919721347957643585
+    second: "Zeichenfl\xE4che 1 Kopie 7_24"
+  - first:
+      213: 6489512922527005935
+    second: "Zeichenfl\xE4che 1 Kopie 7_25"
+  - first:
+      213: -1944339279938263159
+    second: "Zeichenfl\xE4che 1 Kopie 7_26"
+  - first:
+      213: 6546614467548919711
+    second: "Zeichenfl\xE4che 1 Kopie 7_27"
+  - first:
+      213: 7690010057081357419
+    second: "Zeichenfl\xE4che 1 Kopie 7_28"
+  - first:
+      213: 7031773606146844313
+    second: "Zeichenfl\xE4che 1 Kopie 7_29"
+  - first:
+      213: 2688766721957282340
+    second: "Zeichenfl\xE4che 1 Kopie 7_30"
+  - first:
+      213: -8993505496183000313
+    second: "Zeichenfl\xE4che 1 Kopie 7_31"
+  - first:
+      213: 2361661913876223741
+    second: "Zeichenfl\xE4che 1 Kopie 7_32"
+  - first:
+      213: 8686290822708352635
+    second: "Zeichenfl\xE4che 1 Kopie 7_33"
+  - first:
+      213: -1041353558937598243
+    second: "Zeichenfl\xE4che 1 Kopie 7_34"
+  - first:
+      213: 3432695193836963697
+    second: "Zeichenfl\xE4che 1 Kopie 7_35"
+  - first:
+      213: -5751877350582487308
+    second: "Zeichenfl\xE4che 1 Kopie 7_36"
+  - first:
+      213: -5422655042447174818
+    second: "Zeichenfl\xE4che 1 Kopie 7_37"
+  - first:
+      213: -1677276472563381987
+    second: "Zeichenfl\xE4che 1 Kopie 7_38"
+  - first:
+      213: 1575451021094293386
+    second: "Zeichenfl\xE4che 1 Kopie 7_39"
+  - first:
+      213: 8545338980027466776
+    second: "Zeichenfl\xE4che 1 Kopie 7_40"
+  - first:
+      213: -8626973121590430889
+    second: "Zeichenfl\xE4che 1 Kopie 7_41"
+  - first:
+      213: -1242526897787555901
+    second: "Zeichenfl\xE4che 1 Kopie 7_42"
+  - first:
+      213: 6607619337668210836
+    second: "Zeichenfl\xE4che 1 Kopie 7_43"
+  - first:
+      213: -5574144785287271260
+    second: "Zeichenfl\xE4che 1 Kopie 7_44"
+  - first:
+      213: -1277633004522781322
+    second: "Zeichenfl\xE4che 1 Kopie 7_45"
+  - first:
+      213: -2821792134087231999
+    second: "Zeichenfl\xE4che 1 Kopie 7_46"
+  - first:
+      213: -4403274057007965872
+    second: "Zeichenfl\xE4che 1 Kopie 7_47"
+  - first:
+      213: -8030729723869324419
+    second: "Zeichenfl\xE4che 1 Kopie 7_48"
+  - first:
+      213: -3872545465423680967
+    second: "Zeichenfl\xE4che 1 Kopie 7_49"
+  - first:
+      213: 1792189003932657912
+    second: "Zeichenfl\xE4che 1 Kopie 7_50"
+  - first:
+      213: -8153112838158867316
+    second: "Zeichenfl\xE4che 1 Kopie 7_51"
+  - first:
+      213: -4383906971496360894
+    second: "Zeichenfl\xE4che 1 Kopie 7_52"
+  - first:
+      213: 5649345032438467240
+    second: "Zeichenfl\xE4che 1 Kopie 7_53"
+  - first:
+      213: -8560630871281321600
+    second: "Zeichenfl\xE4che 1 Kopie 7_54"
+  - first:
+      213: -2483382164878347704
+    second: "Zeichenfl\xE4che 1 Kopie 7_55"
+  - first:
+      213: -3550946539621201168
+    second: "Zeichenfl\xE4che 1 Kopie 7_56"
+  - first:
+      213: 4952914212016032317
+    second: "Zeichenfl\xE4che 1 Kopie 7_57"
+  - first:
+      213: -258114873625480785
+    second: "Zeichenfl\xE4che 1 Kopie 7_58"
+  - first:
+      213: -6859420459662483840
+    second: "Zeichenfl\xE4che 1 Kopie 7_59"
+  - first:
+      213: -8687988934496073442
+    second: "Zeichenfl\xE4che 1 Kopie 7_60"
+  - first:
+      213: -7515013631879203477
+    second: "Zeichenfl\xE4che 1 Kopie 7_61"
+  - first:
+      213: -8466554952400751463
+    second: "Zeichenfl\xE4che 1 Kopie 7_62"
+  - first:
+      213: -6663224732166283158
+    second: "Zeichenfl\xE4che 1 Kopie 7_63"
+  - first:
+      213: 674568132161926549
+    second: "Zeichenfl\xE4che 1 Kopie 7_64"
+  - first:
+      213: -3589543520138354706
+    second: "Zeichenfl\xE4che 1 Kopie 7_65"
+  - first:
+      213: -7493527393968206865
+    second: "Zeichenfl\xE4che 1 Kopie 7_66"
+  - first:
+      213: -5323348354007062035
+    second: "Zeichenfl\xE4che 1 Kopie 7_67"
+  - first:
+      213: 1320851478216786223
+    second: "Zeichenfl\xE4che 1 Kopie 7_68"
+  - first:
+      213: -9149625512625827257
+    second: "Zeichenfl\xE4che 1 Kopie 7_69"
+  - first:
+      213: 1596111666091897644
+    second: "Zeichenfl\xE4che 1 Kopie 7_70"
+  - first:
+      213: -5617902668359517249
+    second: "Zeichenfl\xE4che 1 Kopie 7_71"
+  - first:
+      213: 3383983060208867780
+    second: "Zeichenfl\xE4che 1 Kopie 7_72"
+  - first:
+      213: 2159410937844616831
+    second: "Zeichenfl\xE4che 1 Kopie 7_73"
+  - first:
+      213: -6556541766234079880
+    second: "Zeichenfl\xE4che 1 Kopie 7_74"
+  - first:
+      213: 3991262237488679105
+    second: "Zeichenfl\xE4che 1 Kopie 7_75"
+  - first:
+      213: 1998385637055889382
+    second: "Zeichenfl\xE4che 1 Kopie 7_76"
+  - first:
+      213: 1674389332675841599
+    second: "Zeichenfl\xE4che 1 Kopie 7_77"
+  - first:
+      213: -8433049556033206126
+    second: "Zeichenfl\xE4che 1 Kopie 7_78"
+  - first:
+      213: -5810378975229921028
+    second: "Zeichenfl\xE4che 1 Kopie 7_79"
+  - first:
+      213: -4242071580718371498
+    second: "Zeichenfl\xE4che 1 Kopie 7_80"
+  - first:
+      213: -6398904125084847048
+    second: "Zeichenfl\xE4che 1 Kopie 7_81"
+  - first:
+      213: -7451275027491353199
+    second: "Zeichenfl\xE4che 1 Kopie 7_82"
+  - first:
+      213: 3446146518766658888
+    second: "Zeichenfl\xE4che 1 Kopie 7_83"
+  - first:
+      213: 5178832052775578756
+    second: "Zeichenfl\xE4che 1 Kopie 7_84"
+  - first:
+      213: 1021030330581034137
+    second: "Zeichenfl\xE4che 1 Kopie 7_85"
+  - first:
+      213: 6977908327869616301
+    second: "Zeichenfl\xE4che 1 Kopie 7_86"
+  - first:
+      213: -1990584069210903770
+    second: "Zeichenfl\xE4che 1 Kopie 7_87"
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 750
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: DirtPile_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 2048
+        height: 2049
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b73773484b2cbfd41a62627966de0523
+      internalID: 314864304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DirtPile_1
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 0
+        width: 2048
+        height: 2049
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9cb05380bf39a7c4385248ece6c57ef1
+      internalID: 385543455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DirtPile_2
+      rect:
+        serializedVersion: 2
+        x: 4096
+        y: 0
+        width: 2048
+        height: 2049
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5de3b9206256cb947af15b14771b3210
+      internalID: -60943541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DirtPile_3
+      rect:
+        serializedVersion: 2
+        x: 6144
+        y: 0
+        width: 2048
+        height: 2049
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d34ecdde9c6ea594b9c5af6ca2ba2ffa
+      internalID: -671831899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DirtPile_4
+      rect:
+        serializedVersion: 2
+        x: 8192
+        y: 0
+        width: 2048
+        height: 2049
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b16322ac1b800d468e9b3f5e68d8bc2
+      internalID: 1525822829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: dd8df7c3bc1821f44940dc5ddd0a33e0
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":5.0,"y":1.0},"gridSpriteSize":{"x":2048.0,"y":2049.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      DirtPile_0: 314864304
+      DirtPile_1: 385543455
+      DirtPile_2: -60943541
+      DirtPile_3: -671831899
+      DirtPile_4: 1525822829
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

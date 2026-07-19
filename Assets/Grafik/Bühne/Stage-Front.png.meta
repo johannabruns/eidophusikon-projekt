@@ -1,19 +1,10 @@
 fileFormatVersion: 2
-guid: 61d26cfd71c66fa4ab7d36609950c7f2
+guid: 28a286fbeda612a4eaaeac1271867ceb
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6737724048487822203
-    second: man_0
-  - first:
-      213: -6102451206531921958
-    second: man_1
-  - first:
-      213: -9063596418544571488
-    second: man_2
-  - first:
-      213: 8238122796709039737
-    second: man_3
+      213: 3223011102664597596
+    second: Stage-Front_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -105,30 +96,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: man_0
+      name: Stage-Front_0
       rect:
         serializedVersion: 2
-        x: 181
-        y: 2057
-        width: 662
-        height: 2040
+        x: 0
+        y: 0
+        width: 1920
+        height: 1080
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,74 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b7339b8f254318d50800000000000000
-      internalID: 6737724048487822203
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: man_1
-      rect:
-        serializedVersion: 2
-        x: 1035
-        y: 2282
-        width: 1002
-        height: 1815
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ad7c287b5fcbf4ba0800000000000000
-      internalID: -6102451206531921958
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: man_2
-      rect:
-        serializedVersion: 2
-        x: 181
-        y: 9
-        width: 812
-        height: 2041
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0abe52d0413a73280800000000000000
-      internalID: -9063596418544571488
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: man_3
-      rect:
-        serializedVersion: 2
-        x: 1025
-        y: 25
-        width: 865
-        height: 2025
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 97ec3e14901b35270800000000000000
-      internalID: 8238122796709039737
+      spriteID: c50a679858f6abc20800000000000000
+      internalID: 3223011102664597596
       vertices: []
       indices: 
       edges: []
@@ -223,10 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      man_0: 6737724048487822203
-      man_1: -6102451206531921958
-      man_2: -9063596418544571488
-      man_3: 8238122796709039737
+      Stage-Front_0: 3223011102664597596
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

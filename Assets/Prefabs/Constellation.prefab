@@ -278,8 +278,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 1947787903
-  InScenePlacedSourceGlobalObjectIdHash: 0
+  GlobalObjectIdHash: 1898633089
+  InScenePlacedSourceGlobalObjectIdHash: 621139303
   DeferredDespawnTick: 0
   Ownership: 1
   AlwaysReplicateAsRoot: 0
@@ -469,7 +469,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5096225557739980086, guid: 7281815dc6549b64d9eb06dadbed8c82, type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 1914916229
+      value: 1984510702
+      objectReference: {fileID: 0}
+    - target: {fileID: 5096225557739980086, guid: 7281815dc6549b64d9eb06dadbed8c82, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 621139303
       objectReference: {fileID: 0}
     - target: {fileID: 7827179946568861458, guid: 7281815dc6549b64d9eb06dadbed8c82, type: 3}
       propertyPath: m_LocalPosition.x
@@ -551,7 +555,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5096225557739980086, guid: 7281815dc6549b64d9eb06dadbed8c82, type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 1371639615
+      value: 820491669
+      objectReference: {fileID: 0}
+    - target: {fileID: 5096225557739980086, guid: 7281815dc6549b64d9eb06dadbed8c82, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 621139303
       objectReference: {fileID: 0}
     - target: {fileID: 9041963575136585322, guid: 7281815dc6549b64d9eb06dadbed8c82, type: 3}
       propertyPath: m_Name
@@ -628,7 +636,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5096225557739980086, guid: 7281815dc6549b64d9eb06dadbed8c82, type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 669786696
+      value: 2247522372
+      objectReference: {fileID: 0}
+    - target: {fileID: 5096225557739980086, guid: 7281815dc6549b64d9eb06dadbed8c82, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 621139303
       objectReference: {fileID: 0}
     - target: {fileID: 9041963575136585322, guid: 7281815dc6549b64d9eb06dadbed8c82, type: 3}
       propertyPath: m_Name

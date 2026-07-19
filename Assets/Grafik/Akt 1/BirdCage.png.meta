@@ -1,7 +1,13 @@
 fileFormatVersion: 2
-guid: ea3cf8246a025f04280801d259ad1221
+guid: f14313a2115518745929d0c6e4b9ac7d
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 5688738642410397427
+    second: "Zeichenfl\xE4che 1 Kopie 9_0"
+  - first:
+      213: 780886889405707986
+    second: "Zeichenfl\xE4che 1 Kopie 9_1"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -39,16 +45,16 @@ TextureImporter:
     mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: 0
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 150
+  spritePixelsToUnits: 800
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -97,13 +103,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: curtain_0
+      name: BirdCage_0
       rect:
         serializedVersion: 2
-        x: 97
-        y: 705
-        width: 781
-        height: 1376
+        x: 0
+        y: 0
+        width: 2048
+        height: 2048
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -112,20 +118,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6dbfcbf0063cd2e469df3772d0ac14a5
-      internalID: 1260286589
+      spriteID: d14e2bfc952969240b14da2672b57219
+      internalID: 1566129527
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: curtain_1
+      name: BirdCage_1
       rect:
         serializedVersion: 2
-        x: 1213
-        y: 705
-        width: 646
-        height: 1333
+        x: 2048
+        y: 0
+        width: 2048
+        height: 2048
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,74 +140,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: af7cce485d878a844b33daeddd093bc9
-      internalID: -990810722
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: curtain_2
-      rect:
-        serializedVersion: 2
-        x: 59
-        y: 2132
-        width: 1853
-        height: 1612
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1b5ea708d96115e489bdae14b672352d
-      internalID: -1861804813
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: curtain_3
-      rect:
-        serializedVersion: 2
-        x: 2109
-        y: 3040
-        width: 1938
-        height: 130
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9c5172d8c6dc040499863dcd859d9ab3
-      internalID: 2092960052
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: curtain_4
-      rect:
-        serializedVersion: 2
-        x: 2110
-        y: 3304
-        width: 1937
-        height: 407
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: de08d4e9f9791f4418e9e73e7491a201
-      internalID: 93213652
+      spriteID: f1afd1fcc333cb944bdb35a39b99113c
+      internalID: -299112622
       vertices: []
       indices: 
       edges: []
@@ -210,7 +150,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: bcf83ff117c5060498f6a67593f081a9
+    spriteID: c4b90a3b75696154da5d12ad85250bd6
     internalID: 0
     vertices: []
     indices: 
@@ -218,13 +158,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":2.0,"y":1.0},"gridSpriteSize":{"x":2048.0,"y":2048.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      curtain_0: 1260286589
-      curtain_1: -990810722
-      curtain_2: -1861804813
-      curtain_3: 2092960052
-      curtain_4: 93213652
+      BirdCage_0: 1566129527
+      BirdCage_1: -299112622
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -114,7 +114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 4098229179
+  GlobalObjectIdHash: 217485239
   InScenePlacedSourceGlobalObjectIdHash: 1205243269
   DeferredDespawnTick: 0
   Ownership: 1
@@ -156,6 +156,7 @@ MonoBehaviour:
       MinSecondsBetweenUpdates: 0
       MaxSecondsBetweenUpdates: 0
     m_InternalValue: 0
+  range: 1.14
   anim: {fileID: 4518772482388754834}
   audioSource: {fileID: 901708757781230050}
   onUseSound: {fileID: 8300000, guid: 7803f7f51afadc34ba2cf8d8504bfc8e, type: 3}
@@ -380,9 +381,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: -2103465713
-  m_SortingLayer: 3
-  m_SortingOrder: 0
+  m_SortingLayerID: -1273045355
+  m_SortingLayer: 2
+  m_SortingOrder: 1
   m_Sprite: {fileID: -3766519690804746565, guid: 4d706bb80076857448d014be8cfd75ab, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

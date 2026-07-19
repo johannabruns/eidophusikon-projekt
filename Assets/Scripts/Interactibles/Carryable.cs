@@ -61,9 +61,18 @@ public class Carryable : NetworkBehaviour
     {
         gameObject.layer = carried ? LayerMask.NameToLayer("Default") : uncarriedLayer;
 
-        if (rb != null)      
+        if (rb != null)
+        {
             rb.bodyType = carried ? RigidbodyType2D.Kinematic: RigidbodyType2D.Dynamic;
-        
+
+            if(carried)
+            {
+                rb.angularVelocity = 0f;
+                rb.linearVelocity = Vector2.zero;
+            }
+        }
+
+        // Exclude the player layer from the collider when carried to prevent collisions with the player
         if (col != null)
             col.excludeLayers = carried ? LayerMask.GetMask("Player") : 0;
     }
@@ -116,7 +125,6 @@ public class Carryable : NetworkBehaviour
     [Rpc(SendTo.SpecifiedInParams)]
     private void ApplyPickupRotationRpc(RpcParams rpcParams = default)
     {
-        Debug.Log("Appliy Rotation upon Pickup");
         float rotation = flip.Value ? -rotationOnPickup : rotationOnPickup;
         transform.rotation = Quaternion.Euler(0f, 0f, rotation);
         Physics2D.SyncTransforms();
