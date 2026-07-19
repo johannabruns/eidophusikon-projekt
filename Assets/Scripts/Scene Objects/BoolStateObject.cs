@@ -4,8 +4,6 @@ using UnityEngine.Events;
 
 public class BoolStateObject : NetworkBehaviour
 {
-    [SerializeField] private string id;
-    [Space]
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Sprite inactiveSprite;
     [SerializeField] private Sprite activeSprite;
