@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: a8228fb2c7b464041b7755bbc1733f0b
+guid: 815c50f8e88ebfc44a13f9cd29b3c906
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7136874429828599120
-    second: Hover@2x_0
+      213: 3431917820393240261
+    second: zahlenkombination_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Hover@2x_0
+      name: zahlenkombination_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 272
         y: 0
-        width: 392
-        height: 168
+        width: 757
+        height: 253
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 05d808c2b754b0360800000000000000
-      internalID: 7136874429828599120
+      spriteID: 5c63fd6131f90af20800000000000000
+      internalID: 3431917820393240261
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Hover@2x_0: 7136874429828599120
+      zahlenkombination_0: 3431917820393240261
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

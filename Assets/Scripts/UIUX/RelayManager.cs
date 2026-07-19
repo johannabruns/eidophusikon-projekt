@@ -7,7 +7,6 @@ using Unity.Services.Authentication;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using TMPro;
-using UnityEngine.UI;
 
 public class RelayManager : MonoBehaviour
 {
@@ -19,17 +18,15 @@ public class RelayManager : MonoBehaviour
     public TMP_InputField codeEingabeFeld; 
     public TextMeshProUGUI codeAnzeigeText; 
 
-    [Header("Lade-Sequenz")]
-    public TextMeshProUGUI statusText; 
-    public Slider loadingBar; 
+    [Header("Lade-Sequenz (BETA)")]
+    public LoadingScreen loadingScreen; 
 
-    // Das Schloss: Verhindert, dass das Drehbuch durch Netzwerk-Echos doppelt abläuft
     private bool isStarting = false; 
 
     async void Start()
     {
-        statusText.gameObject.SetActive(false);
-        if (loadingBar != null) loadingBar.gameObject.SetActive(false);
+        // Ladescreen beim Start direkt unsichtbar machen
+        if (loadingScreen != null) loadingScreen.HideLoadingScreen();
 
         await UnityServices.InitializeAsync();
         if (!AuthenticationService.Instance.IsSignedIn)
@@ -102,7 +99,6 @@ public class RelayManager : MonoBehaviour
 
     private void OnPlayerConnected(ulong clientId)
     {
-        // Wenn das Drehbuch schon läuft, breche hier ab!
         if (isStarting) return; 
 
         if (NetworkManager.Singleton.IsHost && clientId != NetworkManager.Singleton.LocalClientId)
@@ -119,34 +115,33 @@ public class RelayManager : MonoBehaviour
 
     private IEnumerator StartGameSequence()
     {
-        // 1. Karton ausblenden (nimmt jetzt Eingabefeld und Texte automatisch mit!)
+        // 1. Eingabefelder ausblenden
         if (buttonContainer != null) buttonContainer.SetActive(false);
-
-        // 2. Lade-UI einschalten
-        if (statusText != null) statusText.gameObject.SetActive(true);
-        if (loadingBar != null) 
+        
+        // 2. Unseren Beta-Ladescreen aktivieren (würfelt Artwork und setzt Balken auf 0)
+        if (loadingScreen != null) 
         {
-            loadingBar.gameObject.SetActive(true);
-            loadingBar.value = 0f; 
+            loadingScreen.ShowLoadingScreen();
         }
 
-        // 3. Den Balken panzern und elegant füllen
+        // 3. Den Stop-Motion Balken füllen
         float ladeDauer = 3.0f;
         float verstrichneZeit = 0f;
 
         while (verstrichneZeit < ladeDauer)
         {
-            // Der Ruckler-Schutz: Niemals mehr als 0.1 Sekunden pro Frame aufschlagen
             verstrichneZeit += Mathf.Min(Time.deltaTime, 0.1f); 
             
-            if (loadingBar != null)
+            if (loadingScreen != null)
             {
-                loadingBar.value = verstrichneZeit / ladeDauer;
+                float aktuellerFortschritt = verstrichneZeit / ladeDauer;
+                loadingScreen.UpdateProgress(aktuellerFortschritt);
             }
             yield return null; 
         }
 
         // 4. Panel weg, Spiel starten!
+        if (loadingScreen != null) loadingScreen.HideLoadingScreen();
         if (startMenuPanel != null) startMenuPanel.SetActive(false);
     }
 }
