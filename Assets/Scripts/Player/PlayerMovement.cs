@@ -2,6 +2,7 @@ using System;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Unity.Cinemachine;
 
 public class PlayerMovement : NetworkBehaviour 
 {
@@ -37,20 +38,16 @@ public class PlayerMovement : NetworkBehaviour
             // Der Host (Server) startet exakt auf deinen Koordinaten
             if (IsServer)
             {
-                transform.position = new Vector3(-6.51f, 2.31f, 0f);
+                transform.position = new Vector3(-24f, -4.23f, 0f);
             }
             // Der Client startet ein bisschen weiter rechts, damit sie nicht ineinander stecken!
             else
             {
-                transform.position = new Vector3(-0.61f, -3.36f, 0f);
+                transform.position = new Vector3(-26f, -4.23f, 0f);
             }
 
-            // NEU: Hier sucht der Spieler jetzt nach unserem neuen "DynamicCameraFollow"-Skript!
-            DynamicCameraFollow camFollow = Camera.main.GetComponent<DynamicCameraFollow>();
-            if (camFollow != null)
-            {
-                camFollow.SetTarget(this.transform);
-            }
+            CameraScript camScript = Camera.main.GetComponent<CameraScript>();
+            camScript.trackingTarget = transform;
         }
     }
 
