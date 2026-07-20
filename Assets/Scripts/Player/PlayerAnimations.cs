@@ -10,7 +10,9 @@ public class PlayerAnimations : NetworkBehaviour
 
     public NetworkVariable<bool> networkFlipX = new(false,NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
-    public override void OnNetworkSpawn()
+    // FIX 1: Wir nutzen Awake() statt OnNetworkSpawn(). 
+    // Awake feuert sofort in der allerersten Millisekunde, in der das Objekt existiert.
+    private void Awake()
     {
         playerMovement = GetComponent<PlayerMovement>();
         animator = GetComponent<Animator>();
@@ -19,6 +21,10 @@ public class PlayerAnimations : NetworkBehaviour
 
     void Update()
     {
+        // FIX 2: Der Netzwerk-Türsteher. 
+        // Bricht Update() sofort ab, wenn der Spieler vom Netzwerk noch nicht freigegeben ist.
+        if (!IsSpawned) return;
+
         if (IsOwner)
         {
             Vector2 movementDirection = playerMovement.MovementDirection;
