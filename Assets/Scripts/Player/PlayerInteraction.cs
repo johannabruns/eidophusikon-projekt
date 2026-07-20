@@ -35,14 +35,35 @@ public class PlayerInteraction : NetworkBehaviour
     }
 
     /// <summary>
-    /// Manages interaction with simple interactibles
+    /// Manages interaction with simple interactibles (und unseren neuen Sockets!)
     /// </summary>
-    /// <param name="obj"></param>
     private void ButtonPressInteract(InputAction.CallbackContext obj)
     {
         if (!IsOwner) return;
 
-        if(itemManager.CarriedItem != null)
+        // --- NEU: Unsere Socket-Logik ---
+        if (CurrentInteractible is ItemSocket socket)
+        {
+            // Fall 1: Hineinlegen (Spieler hat ein Item, es passt und Socket ist leer)
+            if (itemManager.CarriedItem != null && socket.IstLeer)
+            {
+                Carryable carryable = itemManager.CarriedItem.GetComponent<Carryable>();
+                if (carryable.itemCategory == socket.erlaubteKategorie)
+                {
+                    itemManager.InsertIntoSocket(socket);
+                    return; // Erfolgreich eingeklinkt, brich hier ab!
+                }
+            }
+            // Fall 2: Herausholen (Spieler hat leere Hände und im Socket steckt etwas)
+            else if (itemManager.CarriedItem == null && !socket.IstLeer)
+            {
+                itemManager.TakeFromSocket(socket);
+                return; // Erfolgreich herausgeholt, brich hier ab!
+            }
+        }
+
+        // --- ALTE LOKI-LOGIK (greift, wenn wir an keinem Socket stehen) ---
+        if (itemManager.CarriedItem != null)
         {
             itemManager.DropItem();
             return;
@@ -59,7 +80,7 @@ public class PlayerInteraction : NetworkBehaviour
             interactible.OnInteract();
         }
     }
-
+    
     /// <summary>
     /// Manages interaction with interactibles that require axis input
     /// </summary>

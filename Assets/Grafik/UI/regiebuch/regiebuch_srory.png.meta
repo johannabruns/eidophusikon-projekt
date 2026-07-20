@@ -1,0 +1,572 @@
+fileFormatVersion: 2
+guid: a3178e0c20bd11d4e9f9457848267ce5
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -9103097031049843815
+    second: regiebuch_srory_0
+  - first:
+      213: -123639440514938023
+    second: regiebuch_srory_1
+  - first:
+      213: -726592239571576617
+    second: regiebuch_srory_2
+  - first:
+      213: -2357118378913945105
+    second: regiebuch_srory_3
+  - first:
+      213: -725779324298876274
+    second: regiebuch_srory_4
+  - first:
+      213: -1388951326708453437
+    second: regiebuch_srory_5
+  - first:
+      213: -1876847797126859322
+    second: regiebuch_srory_6
+  - first:
+      213: 1464969158920366841
+    second: regiebuch_srory_7
+  - first:
+      213: -7530107938536047351
+    second: regiebuch_srory_8
+  - first:
+      213: -7515058162410030073
+    second: regiebuch_srory_9
+  - first:
+      213: -3604173757463376850
+    second: regiebuch_srory_10
+  - first:
+      213: -8396661055956980135
+    second: regiebuch_srory_11
+  - first:
+      213: 6340715469799312121
+    second: regiebuch_srory_12
+  - first:
+      213: -4181364586890877687
+    second: regiebuch_srory_13
+  - first:
+      213: -716591161542466054
+    second: regiebuch_srory_14
+  - first:
+      213: 3391547393308099200
+    second: regiebuch_srory_15
+  - first:
+      213: -6681040885507214123
+    second: regiebuch_srory_16
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: regiebuch_srory_0
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 38
+        width: 1404
+        height: 1042
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99b6c540b7d4ba180800000000000000
+      internalID: -9103097031049843815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_srory_1
+      rect:
+        serializedVersion: 2
+        x: 1666
+        y: 985
+        width: 62
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95b01eb759eb84ef0800000000000000
+      internalID: -123639440514938023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_srory_2
+      rect:
+        serializedVersion: 2
+        x: 1580
+        y: 850
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d8d7cf2530aae5f0800000000000000
+      internalID: -726592239571576617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_srory_3
+      rect:
+        serializedVersion: 2
+        x: 1577
+        y: 604
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe92a4ba255d94fd0800000000000000
+      internalID: -2357118378913945105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_srory_4
+      rect:
+        serializedVersion: 2
+        x: 429
+        y: 38
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8aa7d5cc838de5f0800000000000000
+      internalID: -725779324298876274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_srory_5
+      rect:
+        serializedVersion: 2
+        x: 436
+        y: 38
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3cf2c39902479bce0800000000000000
+      internalID: -1388951326708453437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_srory_6
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 38
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c577ca5fd814f5e0800000000000000
+      internalID: -1876847797126859322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_srory_7
+      rect:
+        serializedVersion: 2
+        x: 475
+        y: 38
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9fae95430bd945410800000000000000
+      internalID: 1464969158920366841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_srory_8
+      rect:
+        serializedVersion: 2
+        x: 606
+        y: 38
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90db533e9beaf7790800000000000000
+      internalID: -7530107938536047351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_srory_9
+      rect:
+        serializedVersion: 2
+        x: 845
+        y: 38
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70c7623fa6625b790800000000000000
+      internalID: -7515058162410030073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_srory_10
+      rect:
+        serializedVersion: 2
+        x: 1047
+        y: 38
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2c4c9530176bfdc0800000000000000
+      internalID: -3604173757463376850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_srory_11
+      rect:
+        serializedVersion: 2
+        x: 1107
+        y: 38
+        width: 10
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95ee35cc141197b80800000000000000
+      internalID: -8396661055956980135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_srory_12
+      rect:
+        serializedVersion: 2
+        x: 1150
+        y: 38
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9fa463f002fbef750800000000000000
+      internalID: 6340715469799312121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_srory_13
+      rect:
+        serializedVersion: 2
+        x: 1235
+        y: 38
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 905a8f1ef0fc8f5c0800000000000000
+      internalID: -4181364586890877687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_srory_14
+      rect:
+        serializedVersion: 2
+        x: 1317
+        y: 38
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af5a31f92282e06f0800000000000000
+      internalID: -716591161542466054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_srory_15
+      rect:
+        serializedVersion: 2
+        x: 1338
+        y: 38
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08208019262311f20800000000000000
+      internalID: 3391547393308099200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_srory_16
+      rect:
+        serializedVersion: 2
+        x: 1467
+        y: 38
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d43b7956bc2843a0800000000000000
+      internalID: -6681040885507214123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      regiebuch_srory_0: -9103097031049843815
+      regiebuch_srory_1: -123639440514938023
+      regiebuch_srory_10: -3604173757463376850
+      regiebuch_srory_11: -8396661055956980135
+      regiebuch_srory_12: 6340715469799312121
+      regiebuch_srory_13: -4181364586890877687
+      regiebuch_srory_14: -716591161542466054
+      regiebuch_srory_15: 3391547393308099200
+      regiebuch_srory_16: -6681040885507214123
+      regiebuch_srory_2: -726592239571576617
+      regiebuch_srory_3: -2357118378913945105
+      regiebuch_srory_4: -725779324298876274
+      regiebuch_srory_5: -1388951326708453437
+      regiebuch_srory_6: -1876847797126859322
+      regiebuch_srory_7: 1464969158920366841
+      regiebuch_srory_8: -7530107938536047351
+      regiebuch_srory_9: -7515058162410030073
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

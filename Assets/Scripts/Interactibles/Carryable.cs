@@ -6,11 +6,17 @@ using UnityEngine;
 /// <summary>
 /// A component that allows a GameObject to be picked up and carried by a player.
 /// </summary>
+/// 
+
 [RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(NetworkTransform))]
 public class Carryable : NetworkBehaviour
 {
+    
+    [Header("Item Typ")]
+    public ItemCategory itemCategory = ItemCategory.None;
+    
     public float rotationOnPickup = 0f; // the rotation to set on the object when it is picked up
     // Server is authoritative over both - clients only ever read these.
     public NetworkVariable<bool> isCarried = new(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);

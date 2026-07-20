@@ -8,20 +8,20 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 1
-    path: Assets/Scenes/Stage 1.unity
-    guid: 618e00bd7663ce647bf33aae15eb78e8
-  - enabled: 1
-    path: Assets/Scenes/Test.unity
-    guid: 1503b03443643d7408ba353710b51c84
   - enabled: 0
-    path: Assets/Scenes/MVP_Scene.unity
+    path: Assets/Scenes/Old/MVP_Scene.unity
     guid: a0471deee5202e14586c00c1ae93bc0a
   - enabled: 0
-    path: Assets/Scenes/Alpha_MainScene.unity
-    guid: a376a97f1af82b24183a048e1c055fd6
+    path: Assets/Scenes/Old/Test.unity
+    guid: 1503b03443643d7408ba353710b51c84
   - enabled: 0
-    path: Assets/Scenes/Stage.unity
+    path: Assets/Scenes/Old/Alpha_MainScene.unity
+    guid: a376a97f1af82b24183a048e1c055fd6
+  - enabled: 1
+    path: Assets/Scenes/Start.unity
+    guid: b6c8216c8719a0e4887cef348dbca83a
+  - enabled: 1
+    path: Assets/Scenes/MainScene.unity
     guid: cb13a69a4393f0146b0db14dee9a5478
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

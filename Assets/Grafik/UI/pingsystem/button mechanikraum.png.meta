@@ -1,0 +1,676 @@
+fileFormatVersion: 2
+guid: 6bfbb27510e9c7740ac6a45ecf165121
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4598502691954821414
+    second: button mechanikraum_0
+  - first:
+      213: -4911029097811476475
+    second: button mechanikraum_1
+  - first:
+      213: -6607374404016400029
+    second: button mechanikraum_2
+  - first:
+      213: 7845155883163207939
+    second: button mechanikraum_3
+  - first:
+      213: -6842739797918733996
+    second: button mechanikraum_4
+  - first:
+      213: -1908409047788231495
+    second: button mechanikraum_5
+  - first:
+      213: -2895976607335333790
+    second: button mechanikraum_6
+  - first:
+      213: -7984681617088933587
+    second: button mechanikraum_7
+  - first:
+      213: 7489315195415244052
+    second: button mechanikraum_8
+  - first:
+      213: -2489147727959215080
+    second: button mechanikraum_9
+  - first:
+      213: -7266709833584347386
+    second: button mechanikraum_10
+  - first:
+      213: 1407998244310248466
+    second: button mechanikraum_11
+  - first:
+      213: 8032688451843600870
+    second: button mechanikraum_12
+  - first:
+      213: 1221060433567932949
+    second: button mechanikraum_13
+  - first:
+      213: 411112745925857709
+    second: button mechanikraum_14
+  - first:
+      213: -8033000462792647829
+    second: button mechanikraum_15
+  - first:
+      213: -1185063094348425547
+    second: button mechanikraum_16
+  - first:
+      213: -2965967761400771392
+    second: button mechanikraum_17
+  - first:
+      213: 206949406042099826
+    second: button mechanikraum_18
+  - first:
+      213: 6821603651954714122
+    second: button mechanikraum_19
+  - first:
+      213: 2517850038913272366
+    second: button mechanikraum_20
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: button mechanikraum_0
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 94
+        width: 1942
+        height: 1795
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad6fa536a26de20c0800000000000000
+      internalID: -4598502691954821414
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button mechanikraum_1
+      rect:
+        serializedVersion: 2
+        x: 415
+        y: 1884
+        width: 15
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50007572e0588dbb0800000000000000
+      internalID: -4911029097811476475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button mechanikraum_2
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 1884
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3691896acf3ed44a0800000000000000
+      internalID: -6607374404016400029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button mechanikraum_3
+      rect:
+        serializedVersion: 2
+        x: 1998
+        y: 1156
+        width: 7
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3094287d5b79fdc60800000000000000
+      internalID: 7845155883163207939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button mechanikraum_4
+      rect:
+        serializedVersion: 2
+        x: 2005
+        y: 1164
+        width: 6
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45920ae7864b901a0800000000000000
+      internalID: -6842739797918733996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button mechanikraum_5
+      rect:
+        serializedVersion: 2
+        x: 1995
+        y: 1013
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b4e07c0518f385e0800000000000000
+      internalID: -1908409047788231495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button mechanikraum_6
+      rect:
+        serializedVersion: 2
+        x: 1995
+        y: 991
+        width: 7
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 260cfe18e9c6fc7d0800000000000000
+      internalID: -2895976607335333790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button mechanikraum_7
+      rect:
+        serializedVersion: 2
+        x: 1996
+        y: 952
+        width: 14
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2192d8bf56b03190800000000000000
+      internalID: -7984681617088933587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button mechanikraum_8
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 487
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41d29a97d746fe760800000000000000
+      internalID: 7489315195415244052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button mechanikraum_9
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 295
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81435895455c47dd0800000000000000
+      internalID: -2489147727959215080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button mechanikraum_10
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 283
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 607fd5338e5772b90800000000000000
+      internalID: -7266709833584347386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button mechanikraum_11
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 271
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21c6c7c71f63a8310800000000000000
+      internalID: 1407998244310248466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button mechanikraum_12
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 95
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e135838697d97f60800000000000000
+      internalID: 8032688451843600870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button mechanikraum_13
+      rect:
+        serializedVersion: 2
+        x: 559
+        y: 95
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 512e910bef312f010800000000000000
+      internalID: 1221060433567932949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button mechanikraum_14
+      rect:
+        serializedVersion: 2
+        x: 715
+        y: 95
+        width: 11
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da1db8f3dd094b500800000000000000
+      internalID: 411112745925857709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button mechanikraum_15
+      rect:
+        serializedVersion: 2
+        x: 1105
+        y: 95
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6b12b6c3ac058090800000000000000
+      internalID: -8033000462792647829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button mechanikraum_16
+      rect:
+        serializedVersion: 2
+        x: 1219
+        y: 95
+        width: 19
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b6dfe8f46fcd8fe0800000000000000
+      internalID: -1185063094348425547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button mechanikraum_17
+      rect:
+        serializedVersion: 2
+        x: 1375
+        y: 96
+        width: 19
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0cc427e0904c6d6d0800000000000000
+      internalID: -2965967761400771392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button mechanikraum_18
+      rect:
+        serializedVersion: 2
+        x: 1455
+        y: 95
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2701e99636b3fd200800000000000000
+      internalID: 206949406042099826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button mechanikraum_19
+      rect:
+        serializedVersion: 2
+        x: 1555
+        y: 95
+        width: 20
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a06a44901643bae50800000000000000
+      internalID: 6821603651954714122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button mechanikraum_20
+      rect:
+        serializedVersion: 2
+        x: 1690
+        y: 95
+        width: 13
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2a012f254331f220800000000000000
+      internalID: 2517850038913272366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      button mechanikraum_0: -4598502691954821414
+      button mechanikraum_1: -4911029097811476475
+      button mechanikraum_10: -7266709833584347386
+      button mechanikraum_11: 1407998244310248466
+      button mechanikraum_12: 8032688451843600870
+      button mechanikraum_13: 1221060433567932949
+      button mechanikraum_14: 411112745925857709
+      button mechanikraum_15: -8033000462792647829
+      button mechanikraum_16: -1185063094348425547
+      button mechanikraum_17: -2965967761400771392
+      button mechanikraum_18: 206949406042099826
+      button mechanikraum_19: 6821603651954714122
+      button mechanikraum_2: -6607374404016400029
+      button mechanikraum_20: 2517850038913272366
+      button mechanikraum_3: 7845155883163207939
+      button mechanikraum_4: -6842739797918733996
+      button mechanikraum_5: -1908409047788231495
+      button mechanikraum_6: -2895976607335333790
+      button mechanikraum_7: -7984681617088933587
+      button mechanikraum_8: 7489315195415244052
+      button mechanikraum_9: -2489147727959215080
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
