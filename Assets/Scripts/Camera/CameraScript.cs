@@ -4,15 +4,63 @@ using UnityEngine;
 
 public class CameraScript : MonoBehaviour
 {
-    public CinemachineCamera cam;
+    public CinemachineCamera playerFollowCam;
+    public CinemachineCamera stageCam;
+    public CinemachineCamera machineRoomCam;
+    public CameraMode currentMode = CameraMode.PlayerFollow;
+    public Transform playerTransform;
 
-    [Header("Static Stage View Cam Configuration")]
-    [SerializeField] private float stageSize = 8f;
-    [SerializeField] private Vector3 stagePos = new(0f, 0.055f, -10f);
+    public void SetCameraMode(CameraMode newMode)
+    {
+        currentMode = newMode;
+        switch (currentMode)
+        {
+            case CameraMode.StageView:
+                EnterStageMode();
+                break;
+            case CameraMode.MachineRoomView:
+                EnterMachineRoomMode();
+                break;
+            case CameraMode.PlayerFollow:
+                EnterPlayerFollowMode(playerTransform);
+                break;
+        }
+    }
 
-    [Header("Dynamic Player Follow Cam Configuration")]
-    [SerializeField] private float followSize = 8f;
-    public Transform trackingTarget = null;
+    public void EnterPlayerFollowMode(Transform playerTransform)
+    {
+        this.playerTransform = playerTransform;
+        Debug.Log("Entering Player Follow Mode");
+        playerFollowCam.Target.TrackingTarget = playerTransform;
+        playerFollowCam.Priority = 1;
+        stageCam.Priority = 0;
+        machineRoomCam.Priority = 0;
+    }
+
+    public void EnterPlayerFollowMode()
+    {
+        Debug.Log("Entering Player Follow Mode");
+        playerFollowCam.Target.TrackingTarget = playerTransform;
+        playerFollowCam.Priority = 1;
+        stageCam.Priority = 0;
+        machineRoomCam.Priority = 0;
+    }
+
+    public void EnterStageMode()
+    {
+        Debug.Log("Entering Stage Mode");
+        playerFollowCam.Priority = 0;
+        stageCam.Priority = 1;
+        machineRoomCam.Priority = 0;
+    }
+
+    public void EnterMachineRoomMode()
+    {
+        Debug.Log("Entering Machine Room Mode");
+        playerFollowCam.Priority = 0;
+        stageCam.Priority = 0;
+        machineRoomCam.Priority = 1;
+    }
 
     /*
     private CinemachineBasicMultiChannelPerlin noise;
@@ -35,8 +83,4 @@ public class CameraScript : MonoBehaviour
     }
 
     */
-
-
-
-
 }

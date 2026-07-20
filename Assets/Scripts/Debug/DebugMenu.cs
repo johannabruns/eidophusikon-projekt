@@ -13,6 +13,8 @@ public class DebugMenu : NetworkBehaviour
 
     private void Start()
     {
+        if (windScript == null) return;
+
         UpdateWindButtonText();
 
         windToggle.onClick.AddListener(ToggleWindRpc);
@@ -38,18 +40,24 @@ public class DebugMenu : NetworkBehaviour
 
     private void UpdateWindButtonText()
     {
+        if (windScript == null) return;
+
         windToggleText.text = windScript.WindActive ? "ON" : "OFF";
     }
 
     [Rpc(SendTo.Server)]
     private void ToggleWindRpc()
     {
+        if (windScript == null) return;
+
         windScript.ToggleWind();
     }
 
     [Rpc(SendTo.Server)]
     private void SetWindDirectionRpc()
     {
+        if (windScript == null) return;
+
         if (windScript.Direction == Wind.WindDirection.LeftToRight)
             windScript.SetDirection(Wind.WindDirection.RightToLeft);
         else

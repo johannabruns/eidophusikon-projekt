@@ -32,22 +32,17 @@ public class PlayerMovement : NetworkBehaviour
     {
         gravityScale = rigidBody.gravityScale;
 
-        // Wenn uns dieser Spieler gehört, schnappen wir uns die Hauptkamera
         if (IsOwner)
         {
-            // Der Host (Server) startet exakt auf deinen Koordinaten
-            if (IsServer)
-            {
-                transform.position = new Vector3(-24f, -4.23f, 0f);
-            }
-            // Der Client startet ein bisschen weiter rechts, damit sie nicht ineinander stecken!
-            else
-            {
-                transform.position = new Vector3(-26f, -4.23f, 0f);
-            }
+            //Set Spawn Position based on host or client
+            Vector3 hostSpawn = new Vector3(0f, 0f, 0f);
+            Vector3 clientSpawn = new Vector3(2f, 0f, 0f);
 
+            transform.position = IsServer ? hostSpawn : clientSpawn;
+
+            // Set the camera to follow this player
             CameraScript camScript = Camera.main.GetComponent<CameraScript>();
-            camScript.trackingTarget = transform;
+            camScript.EnterPlayerFollowMode(transform);
         }
     }
 

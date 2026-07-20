@@ -84,7 +84,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -299112622, guid: f14313a2115518745929d0c6e4b9ac7d, type: 3}
+  m_Sprite: {fileID: 1566129527, guid: f14313a2115518745929d0c6e4b9ac7d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -107,7 +107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3707595374
+  GlobalObjectIdHash: 319579194
   InScenePlacedSourceGlobalObjectIdHash: 3707595374
   DeferredDespawnTick: 0
   Ownership: 1

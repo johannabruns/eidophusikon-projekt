@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3364521437
+  GlobalObjectIdHash: 3697604084
   InScenePlacedSourceGlobalObjectIdHash: 3364521437
   DeferredDespawnTick: 0
   Ownership: 1
@@ -134,10 +134,11 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   spriteRenderer: {fileID: 5672040426706437659}
   sprites:
-  - {fileID: -5421124383479325134, guid: c1307b4000b32c241aac2d500990f413, type: 3}
-  - {fileID: 7102146409825947575, guid: c1307b4000b32c241aac2d500990f413, type: 3}
-  - {fileID: 6593349414748221981, guid: c1307b4000b32c241aac2d500990f413, type: 3}
-  - {fileID: -2888335692454678039, guid: c1307b4000b32c241aac2d500990f413, type: 3}
+  - {fileID: 314864304, guid: 11c7d82b618653c4387ccd96a125e8fb, type: 3}
+  - {fileID: 385543455, guid: 11c7d82b618653c4387ccd96a125e8fb, type: 3}
+  - {fileID: -60943541, guid: 11c7d82b618653c4387ccd96a125e8fb, type: 3}
+  - {fileID: -671831899, guid: 11c7d82b618653c4387ccd96a125e8fb, type: 3}
+  - {fileID: 1525822829, guid: 11c7d82b618653c4387ccd96a125e8fb, type: 3}
   currentSpriteIndex:
     UpdateTraits:
       MinSecondsBetweenUpdates: 0
