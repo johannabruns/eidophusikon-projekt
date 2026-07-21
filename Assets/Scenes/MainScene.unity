@@ -1546,7 +1546,7 @@ MonoBehaviour:
     horizontalesSeil: {fileID: 1350078636}
     buehnenSeil: {fileID: 354447991}
     buehnenSeilEnde: {fileID: 1984729517}
-  scrollGeschwindigkeit: 1
+  scrollGeschwindigkeit: 0.5
   minLaenge: 1
   maxLaenge: 20
   horizontalesScrollTempo: 0.5
@@ -11114,7 +11114,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 509.96948, y: -61.9174}
+  m_AnchoredPosition: {x: 499, y: -66.2}
   m_SizeDelta: {x: 335.6351, y: 157.7514}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1871327591
@@ -11554,7 +11554,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1988687205
 MonoBehaviour:
   m_ObjectHideFlags: 0
