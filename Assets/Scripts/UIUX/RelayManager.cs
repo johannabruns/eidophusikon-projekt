@@ -19,8 +19,11 @@ public class RelayManager : MonoBehaviour
     public TMP_InputField codeEingabeFeld; 
     public TextMeshProUGUI codeAnzeigeText; 
 
-    [Header("Lade-Sequenz (BETA)")]
-    public LoadingScreen loadingScreen; 
+    [Header("Lade-Sequenz")]
+    public LoadingScreen loadingScreen;
+
+    [Header("Nächster Schritt")]
+    public GameObject zweiterCanvas;
 
     private bool isStarting = false; 
 
@@ -131,5 +134,8 @@ public class RelayManager : MonoBehaviour
         // 4. Panel weg, Spiel starten!
         if (loadingScreen != null) loadingScreen.HideLoadingScreen();
         if (startMenuPanel != null) startMenuPanel.SetActive(false);
+
+        // --- NEU: 5. Zweiten Canvas einblenden ---
+        if (zweiterCanvas != null) zweiterCanvas.SetActive(true);
     }
-}
+    }
