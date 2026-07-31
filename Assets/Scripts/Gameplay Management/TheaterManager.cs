@@ -1,0 +1,31 @@
+using Unity.Netcode;
+using UnityEngine;
+
+/// <summary>
+/// This class manages gameplay elements related to the theater setting, such as curtain animations and audience reactions.
+/// </summary>
+public class TheaterManager : NetworkBehaviour
+{
+    public Animator curtainAnim;
+
+    public AudioSource audioSource;
+    public AudioClip audioCheer;
+    public AudioClip audienceApplause;
+    public AudioClip audienceBored;
+
+    public void OpenCurtains()
+    {
+        SetCurtainStateRpc(true);
+    }
+
+    public void CloseCurtains()
+    {
+        SetCurtainStateRpc(false);
+    }
+
+    [Rpc(SendTo.Server)]
+    private void SetCurtainStateRpc(bool state)
+    {
+        curtainAnim.SetBool("IsOpen", state);
+    }
+}

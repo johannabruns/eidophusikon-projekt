@@ -65,8 +65,8 @@ public class RopeController : NetworkBehaviour
         ApplyVisuals(2, seil3Laenge.Value, seil3Offset.Value);
     }
 
-    // Dieser Befehl wird NUR auf dem Server ausgeführt. (RequireOwnership = false erlaubt es dem Client, das zu senden)
-    [ServerRpc(RequireOwnership = false)]
+    // Dieser Befehl wird NUR auf dem Server ausgeführt.
+    [Rpc(SendTo.Server)]
     public void UpdateRopeServerRpc(int index, float scrollInput)
     {
         float lengthChange = scrollInput * scrollGeschwindigkeit;

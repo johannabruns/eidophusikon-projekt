@@ -11,8 +11,23 @@ public class DebugMenu : NetworkBehaviour
     public Button windDirection;
     public Wind windScript;
 
+    [Header("Act Management")]
+    public GameManager gameManager;
+    public Button loadAct1;
+    public Button loadAct2;
+    public Button loadAct3;
+    public Button loadAct4;
+    public Button loadAct5;
+
     private void Start()
     {
+        loadAct1.onClick.AddListener(() => gameManager.LoadActRpc(1));
+        loadAct2.onClick.AddListener(() => gameManager.LoadActRpc(2));
+        loadAct3.onClick.AddListener(() => gameManager.LoadActRpc(3));
+        loadAct4.onClick.AddListener(() => gameManager.LoadActRpc(4));
+        loadAct5.onClick.AddListener(() => gameManager.LoadActRpc(5));
+
+        //Wind 
         if (windScript == null) return;
 
         UpdateWindButtonText();
@@ -63,4 +78,7 @@ public class DebugMenu : NetworkBehaviour
         else
             windScript.SetDirection(Wind.WindDirection.LeftToRight);
     }
+
+
+
 }

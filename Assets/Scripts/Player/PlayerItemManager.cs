@@ -22,8 +22,8 @@ public class PlayerItemManager : NetworkBehaviour
     private Carryable carriedItemScript = null; //The Carryable component of the item currently being carried by the player
     private Rigidbody2D carriedItemRigidbody = null; //The Rigidbody2D component of the item currently being carried by the player
 
+    //private bool lastFlipX = false; //avoid spamming the network with unnecessary flip updates by checking if the player has actually changed direction since the last update
     private bool hasSyncedCarryPosition = false;
-    private bool lastSentFlip = false; // Merkt sich den letzten Flip-Zustand, um das Netzwerk nicht zu spammen
 
     private void OnEnable()
     {
@@ -100,67 +100,19 @@ public class PlayerItemManager : NetworkBehaviour
 
         if (CarriedItem == null) return;
 
-        bool currentFlip = playerAnimations.networkFlipX.Value;
-
-        // --- FLIP LOGIK (Sicher für Client & Server) ---
-        if (IsServer)
-        {
-            // Der Server darf die Variable direkt setzen
-            carriedItemScript.flip.Value = currentFlip;
-        }
-        else if (currentFlip != lastSentFlip)
-        {
-            // Der Client bittet den Server per Rpc, den Wert zu ändern (nur wenn er sich ändert!)
-            UpdateFlipServerRpc(CarriedItem.GetComponent<NetworkObject>().NetworkObjectId, currentFlip);
-            lastSentFlip = currentFlip;
-        }
-
+        //flip the carried item to match the player's facing direction
+        carriedItemScript.flip.Value = playerAnimations.networkFlipX.Value;
+        
         Vector2 carryPos = transform.position + (Vector3)carryOffset;
 
-        // --- TELEPORT LOGIK (Sicher für Client & Server) ---
         if (!hasSyncedCarryPosition)
         {
-            if (IsServer)
-            {
-                // Der Server darf direkt teleportieren
-                CarriedItem.GetComponent<NetworkTransform>().Teleport(carryPos, CarriedItem.transform.rotation, CarriedItem.transform.localScale);
-            }
-            else
-            {
-                // Der Client schickt den Teleport-Befehl an den Server
-                TeleportItemServerRpc(CarriedItem.GetComponent<NetworkObject>().NetworkObjectId, carryPos);
-            }
-            
+            CarriedItem.GetComponent<NetworkTransform>().Teleport(carryPos, CarriedItem.transform.rotation, CarriedItem.transform.localScale);
             hasSyncedCarryPosition = true;
         }
         else
         {
-            // Die normale Physik-Bewegung läuft weiter
             carriedItemRigidbody.MovePosition(carryPos);
-        }
-    }
-
-    [ServerRpc]
-    private void UpdateFlipServerRpc(ulong itemId, bool flipValue)
-    {
-        if (NetworkManager.SpawnManager.SpawnedObjects.TryGetValue(itemId, out NetworkObject itemObj))
-        {
-            if (itemObj.TryGetComponent(out Carryable carryable))
-            {
-                carryable.flip.Value = flipValue;
-            }
-        }
-    }
-
-    [ServerRpc]
-    private void TeleportItemServerRpc(ulong itemId, Vector2 pos)
-    {
-        if (NetworkManager.SpawnManager.SpawnedObjects.TryGetValue(itemId, out NetworkObject itemObj))
-        {
-            if (itemObj.TryGetComponent(out NetworkTransform netTransform))
-            {
-                netTransform.Teleport(pos, itemObj.transform.rotation, itemObj.transform.localScale);
-            }
         }
     }
 
@@ -189,7 +141,7 @@ public class PlayerItemManager : NetworkBehaviour
         InsertIntoSocketServerRpc(itemNetObj.NetworkObjectId, socketNetObj.NetworkObjectId);
     }
 
-    [ServerRpc]
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Owner)]
     private void InsertIntoSocketServerRpc(ulong itemId, ulong socketId)
     {
         if (NetworkManager.SpawnManager.SpawnedObjects.TryGetValue(itemId, out NetworkObject itemObj) &&
@@ -232,7 +184,7 @@ public class PlayerItemManager : NetworkBehaviour
         }
     }
 
-    [ServerRpc]
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Owner)]
     private void TakeFromSocketServerRpc(ulong socketId)
     {
         if (NetworkManager.SpawnManager.SpawnedObjects.TryGetValue(socketId, out NetworkObject socketObj))

@@ -30,7 +30,7 @@ public class SimpleFakeSocket : NetworkBehaviour
         }
     }
 
-    [ServerRpc(RequireOwnership = false)]
+    [Rpc(SendTo.Server)]
     private void TrySwapItemServerRpc()
     {
         // 1. Blende das feste Ziel-Objekt für alle Spieler im Netzwerk ein
@@ -52,7 +52,7 @@ public class SimpleFakeSocket : NetworkBehaviour
         // Hier müsstest du nur noch das getragene Item des Spielers zerstören/verstecken.
     }
 
-    [ClientRpc]
+    [Rpc(SendTo.Everyone)]
     private void ToggleVisualClientRpc(bool show)
     {
         if (targetVisualObject != null)

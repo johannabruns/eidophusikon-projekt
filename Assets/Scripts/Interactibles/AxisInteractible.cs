@@ -23,7 +23,7 @@ public class AxisInteractible : Interactible
 
     private void Update()
     {
-        if (IsServer && axisInput.Value != 0f)
+        if (IsServer && target != null && axisInput.Value != 0f)
             target.Move(axisInput.Value);
 
         // Every peer (host + clients) drives its own local visuals/audio

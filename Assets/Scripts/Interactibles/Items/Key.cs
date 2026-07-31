@@ -7,6 +7,7 @@ public class Key : Usable
         if(IsObjectInRange(out Birdcage birdcage))
         {
             birdcage.UnlockRpc(true);
+            NetworkObject.Despawn();
         }
     }
 }
