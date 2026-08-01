@@ -16,22 +16,55 @@ public class StageObjectGroup
 
 public class GameManager : NetworkBehaviour
 {
+    private const int ExpectedPlayerCount = 2;
+
     [SerializeField] private StageObjectGroup[] objectGroups;
     public TheaterManager theaterManager;
     private Coroutine loadActCoroutine;
+
+    private bool initialSetupDone = false;
 
 
     public override void OnNetworkSpawn()
     {
         if (!IsServer) return;
+        NetworkManager.Singleton.OnClientConnectedCallback += HandleClientConnected;
+    }
+
+    /// <summary>
+    /// Ensure that the client has joined before the initial setup to avoid syncing issues.
+    /// </summary>
+    private void HandleClientConnected(ulong clientId)
+    {
+        if (NetworkManager.Singleton.ConnectedClientsIds.Count < ExpectedPlayerCount) return;
+
+        NetworkManager.Singleton.OnClientConnectedCallback -= HandleClientConnected;
         StartCoroutine(InitialActSetup());
     }
 
+
+    /// <summary>
+    /// Start the game by enabling the first act's objects.
+    /// </summary>
     private IEnumerator InitialActSetup()
     {
-        yield return null; // let every in-scene object finish spawning this frame
-        Debug.Log("Initial act setup running");
-        EnableActObjects(1); //spawn the first act objects
+        if (initialSetupDone) yield break;
+        initialSetupDone = true;
+
+        yield return null;
+        EnableActObjects(1);
+        theaterManager.stageEntrance.SetStageLockStateRpc(StageEntrance.StageState.OneWayStage);
+    }
+
+    /// <summary>
+    /// force the initial setup even if no client has joined (for debugging purposes).
+    /// </summary>
+    [Rpc(SendTo.Server)]
+    public void ForceInitialActSetupRpc()
+    {
+        if (initialSetupDone) return; // guard against double-firing if a client does connect after
+        NetworkManager.Singleton.OnClientConnectedCallback -= HandleClientConnected;
+        StartCoroutine(InitialActSetup());
     }
 
 
@@ -47,7 +80,7 @@ public class GameManager : NetworkBehaviour
         loadActCoroutine = StartCoroutine(LoadAct(actIndex));
     }
 
-    public IEnumerator LoadAct(int actIndex)
+    private IEnumerator LoadAct(int actIndex)
     {
         if(!IsServer) yield break;
 
@@ -71,8 +104,9 @@ public class GameManager : NetworkBehaviour
             bool isActive = (i == actIndex - 1);
             foreach (StageObjectWrapper obj in objectGroups[i].ojects)
             {
-                Debug.Log($"Currently targeting {obj.gameObject.name}, isActive: {isActive}");
+                if (obj == null) continue;
                 if (isActive && obj.spawnManually) continue;
+
                 obj.SetActive(isActive);
             }
         }

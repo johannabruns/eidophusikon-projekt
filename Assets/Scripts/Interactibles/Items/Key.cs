@@ -1,3 +1,4 @@
+using Unity.Netcode;
 using UnityEngine;
 
 public class Key : Usable
@@ -7,7 +8,14 @@ public class Key : Usable
         if(IsObjectInRange(out Birdcage birdcage))
         {
             birdcage.UnlockRpc(true);
-            NetworkObject.Despawn();
+            RequestObjectDestructionRpc();
         }
     }
+
+    [Rpc(SendTo.Server)]
+    private void RequestObjectDestructionRpc()
+    {
+        NetworkObject.Despawn();
+    }
+
 }

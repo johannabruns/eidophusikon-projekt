@@ -7,6 +7,7 @@ using UnityEngine;
 public class TheaterManager : NetworkBehaviour
 {
     public Animator curtainAnim;
+    public StageEntrance stageEntrance;
 
     public AudioSource audioSource;
     public AudioClip audioCheer;

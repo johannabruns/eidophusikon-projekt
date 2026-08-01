@@ -12,58 +12,50 @@ public class StageEntrance : NetworkBehaviour
         Open
     }
 
-    private NetworkVariable<StageState> stageState = new(StageState.OneWayStage);
+    [SerializeField]
+    private NetworkVariable<StageState> stageLockState = new(StageState.Locked);
+
     public Collider2D colldier;
     public CameraScript camScript;
     public PlatformEffector2D platformEffector;
 
     public override void OnNetworkSpawn()
     {
-        stageState.OnValueChanged += OnIsLockedChanged;
-        SetStageState(stageState.Value);
+        stageLockState.OnValueChanged += OnStageLockStateChanged;
+        SetStageLockState(stageLockState.Value);
     }
 
     public override void OnNetworkDespawn()
     {
-        stageState.OnValueChanged -= OnIsLockedChanged;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-
+        stageLockState.OnValueChanged -= OnStageLockStateChanged;
     }
 
     [Rpc(SendTo.Server)]
-    public void SetStageLockServerRpc(StageState state)
+    public void SetStageLockStateRpc(StageState state)
     {
-        this.stageState.Value = state;
+        stageLockState.Value = state;
     }
 
-    private void OnIsLockedChanged(StageState previous, StageState current)
+    private void OnStageLockStateChanged(StageState previous, StageState current)
     {
-        SetStageState(current);
+        SetStageLockState(current);
     }
 
-    private void SetStageState(StageState state)
+    private void SetStageLockState(StageState state)
     {
         switch (state)
         {
             case StageState.Locked:
-                platformEffector.surfaceArc = 0f;
-                platformEffector.rotationalOffset = 360f;
+                platformEffector.surfaceArc = 360f;
+                platformEffector.rotationalOffset = 0f;
                 break;
             case StageState.OneWayStage:
                 platformEffector.surfaceArc = 180f;
                 platformEffector.rotationalOffset = -90f;
                 break;
             case StageState.OneWayHallway:
-                platformEffector.surfaceArc = 90f;
-                platformEffector.rotationalOffset = 180f;
+                platformEffector.surfaceArc = 180f;
+                platformEffector.rotationalOffset = 90;
                 break;
             case StageState.Open:
                 platformEffector.surfaceArc = 0f;

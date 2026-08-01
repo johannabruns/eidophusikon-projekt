@@ -19,6 +19,11 @@ public class DebugMenu : NetworkBehaviour
     public Button loadAct4;
     public Button loadAct5;
 
+    // DebugMenu.cs
+    [Header("Solo Testing")]
+    public Button forceInitialSetup;
+
+
     private void Start()
     {
         loadAct1.onClick.AddListener(() => gameManager.LoadActRpc(1));
@@ -26,6 +31,8 @@ public class DebugMenu : NetworkBehaviour
         loadAct3.onClick.AddListener(() => gameManager.LoadActRpc(3));
         loadAct4.onClick.AddListener(() => gameManager.LoadActRpc(4));
         loadAct5.onClick.AddListener(() => gameManager.LoadActRpc(5));
+
+        forceInitialSetup.onClick.AddListener(() => gameManager.ForceInitialActSetupRpc());
 
         //Wind 
         if (windScript == null) return;
