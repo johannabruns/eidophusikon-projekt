@@ -9,6 +9,8 @@ public class DebugMenu : NetworkBehaviour
     public Button windToggle;
     public TextMeshProUGUI windToggleText;
     public Button windDirection;
+    public Button increaseWind;
+    public Button decreaseWind;
     public Wind windScript;
 
     [Header("Act Management")]
@@ -39,8 +41,11 @@ public class DebugMenu : NetworkBehaviour
 
         UpdateWindButtonText();
 
-        windToggle.onClick.AddListener(ToggleWindRpc);
-        windDirection.onClick.AddListener(SetWindDirectionRpc);
+        windToggle.onClick.AddListener(windScript.ToggleWindRpc);
+        windDirection.onClick.AddListener(windScript.ToggleDirectionRpc);
+
+        decreaseWind.onClick.AddListener(() => windScript.SetIntensityRpc(windScript.currentIntensity.Value - 1f));
+        increaseWind.onClick.AddListener(() => windScript.SetIntensityRpc(windScript.currentIntensity.Value + 1f));
     }
 
     private void OnEnable()
@@ -66,26 +71,4 @@ public class DebugMenu : NetworkBehaviour
 
         windToggleText.text = windScript.WindActive ? "ON" : "OFF";
     }
-
-    [Rpc(SendTo.Server)]
-    private void ToggleWindRpc()
-    {
-        if (windScript == null) return;
-
-        windScript.ToggleWind();
-    }
-
-    [Rpc(SendTo.Server)]
-    private void SetWindDirectionRpc()
-    {
-        if (windScript == null) return;
-
-        if (windScript.Direction == Wind.WindDirection.LeftToRight)
-            windScript.SetDirection(Wind.WindDirection.RightToLeft);
-        else
-            windScript.SetDirection(Wind.WindDirection.LeftToRight);
-    }
-
-
-
 }

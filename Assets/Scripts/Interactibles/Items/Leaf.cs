@@ -1,14 +1,14 @@
 using Unity.Netcode;
 using UnityEngine;
 
-public class Key : Usable
+public class Leaf : Usable
 {
     public override void OnUse()
     {
-        if(IsObjectInRange(out Birdcage birdcage))
+        if(IsObjectInRange(out LeafPile pile))
         {
             audioSource.PlayOneShot(onUseSound);
-            birdcage.UnlockRpc(true);
+            pile.AddLeafRpc();
             RequestObjectDestructionRpc();
         }
     }
@@ -18,5 +18,4 @@ public class Key : Usable
     {
         NetworkObject.Despawn();
     }
-
 }

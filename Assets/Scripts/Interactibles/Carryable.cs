@@ -1,6 +1,7 @@
 using Unity.Netcode;
 using Unity.Netcode.Components;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 /// <summary>
@@ -13,11 +14,11 @@ using UnityEngine;
 [RequireComponent(typeof(NetworkTransform))]
 public class Carryable : NetworkBehaviour
 {
-    
     [Header("Item Typ")]
     public ItemCategory itemCategory = ItemCategory.None;
     
     public float rotationOnPickup = 0f; // the rotation to set on the object when it is picked up
+
     // Server is authoritative over both - clients only ever read these.
     public NetworkVariable<bool> isCarried = new(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     public NetworkVariable<ulong> carrierClientId = new(ulong.MaxValue, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);

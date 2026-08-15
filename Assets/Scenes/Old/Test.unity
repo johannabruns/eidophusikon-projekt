@@ -2015,11 +2015,11 @@ PrefabInstance:
     - target: {fileID: 8333585145017101947, guid: 81bd0e69a6f415649b833162e4841c9e, type: 3}
       propertyPath: onLeverEnabled.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 7303872469181682733}
+      objectReference: {fileID: 0}
     - target: {fileID: 8333585145017101947, guid: 81bd0e69a6f415649b833162e4841c9e, type: 3}
       propertyPath: onLeverDisabled.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 7303872469181682733}
+      objectReference: {fileID: 0}
     - target: {fileID: 8333585145017101947, guid: 81bd0e69a6f415649b833162e4841c9e, type: 3}
       propertyPath: onLeverEnabled.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ToggleRainRpc
@@ -2351,7 +2351,7 @@ PrefabInstance:
     - target: {fileID: 5197902950367289422, guid: 8af4eda5621b1b74ca25a9e8139763c0, type: 3}
       propertyPath: onPress.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2076991569}
+      objectReference: {fileID: 0}
     - target: {fileID: 5197902950367289422, guid: 8af4eda5621b1b74ca25a9e8139763c0, type: 3}
       propertyPath: onPress.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SwitchTargetStar
@@ -3865,11 +3865,11 @@ PrefabInstance:
     - target: {fileID: 674027185328568017, guid: 191c43d9fe9f9964abb15d4d3ff5039c, type: 3}
       propertyPath: target
       value: 
-      objectReference: {fileID: 8744940311433957256}
+      objectReference: {fileID: 0}
     - target: {fileID: 3787489281879372991, guid: 191c43d9fe9f9964abb15d4d3ff5039c, type: 3}
       propertyPath: target
       value: 
-      objectReference: {fileID: 8744940311433957256}
+      objectReference: {fileID: 0}
     - target: {fileID: 6189931728622911457, guid: 191c43d9fe9f9964abb15d4d3ff5039c, type: 3}
       propertyPath: m_Name
       value: Rad Regenwolke
@@ -3932,17 +3932,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7898325075794582048, guid: 191c43d9fe9f9964abb15d4d3ff5039c, type: 3}
   m_PrefabInstance: {fileID: 1926226088}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2076991569 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1189194910922483315, guid: 3f95916e878cfa144b3e2c87bde15491, type: 3}
-  m_PrefabInstance: {fileID: 6140844665293689240}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff42964b71164dd478973f38d1c33990, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ConstellationManager
 --- !u!1 &2143332140
 GameObject:
   m_ObjectHideFlags: 0
@@ -4107,71 +4096,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5d40f200bf8ea74a9480e85ac2bcbc5, type: 3}
---- !u!1001 &1564773358243571065
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1307136674453721466, guid: a7826c65e37acc243b538e3195ebcaac, type: 3}
-      propertyPath: GlobalObjectIdHash
-      value: 2218314367
-      objectReference: {fileID: 0}
-    - target: {fileID: 1864690551835474373, guid: a7826c65e37acc243b538e3195ebcaac, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 7.71
-      objectReference: {fileID: 0}
-    - target: {fileID: 1864690551835474373, guid: a7826c65e37acc243b538e3195ebcaac, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 7.43
-      objectReference: {fileID: 0}
-    - target: {fileID: 1864690551835474373, guid: a7826c65e37acc243b538e3195ebcaac, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1864690551835474373, guid: a7826c65e37acc243b538e3195ebcaac, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1864690551835474373, guid: a7826c65e37acc243b538e3195ebcaac, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1864690551835474373, guid: a7826c65e37acc243b538e3195ebcaac, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1864690551835474373, guid: a7826c65e37acc243b538e3195ebcaac, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1864690551835474373, guid: a7826c65e37acc243b538e3195ebcaac, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1864690551835474373, guid: a7826c65e37acc243b538e3195ebcaac, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1864690551835474373, guid: a7826c65e37acc243b538e3195ebcaac, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2633094718924463622, guid: a7826c65e37acc243b538e3195ebcaac, type: 3}
-      propertyPath: m_Name
-      value: Movable Rainy Cloud
-      objectReference: {fileID: 0}
-    - target: {fileID: 2633094718924463622, guid: a7826c65e37acc243b538e3195ebcaac, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: a7826c65e37acc243b538e3195ebcaac, type: 3}
 --- !u!1001 &3677114605556060680
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4468,17 +4392,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc813b005e3d2804f95f49e9380aae7b, type: 3}
---- !u!114 &7303872469181682733 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1655707222206824948, guid: a7826c65e37acc243b538e3195ebcaac, type: 3}
-  m_PrefabInstance: {fileID: 1564773358243571065}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0dfcc886332b00746b03b71de9577deb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Rain
 --- !u!1001 &7384798341862066149
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4601,17 +4514,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a0d7581e54a43c4a95c552625ce6fd3, type: 3}
---- !u!114 &8744940311433957256 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8904853292358283397, guid: a7826c65e37acc243b538e3195ebcaac, type: 3}
-  m_PrefabInstance: {fileID: 1564773358243571065}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26363301fa342e146bb8e71845441b14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Movable
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -4623,7 +4525,6 @@ SceneRoots:
   - {fileID: 2143332144}
   - {fileID: 561655884}
   - {fileID: 216734390}
-  - {fileID: 1564773358243571065}
   - {fileID: 131206532}
   - {fileID: 882123107}
   - {fileID: 6140844665293689240}

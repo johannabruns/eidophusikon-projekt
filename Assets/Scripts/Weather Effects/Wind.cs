@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Wind : NetworkBehaviour
 {
@@ -18,8 +19,8 @@ public class Wind : NetworkBehaviour
     public AudioSource audioSource;
 
     [Header("Configuration")]
-    public float intensity = 1f;
-    private float currentIntensity = 0f;
+    public NetworkVariable<float> targetIntensity = new(1f);
+    public NetworkVariable<float> currentIntensity = new(0f);
     public bool startOnAwake;
     [Space(1f)]
     public LayerMask ignoreLayers;
@@ -44,9 +45,8 @@ public class Wind : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        // Apply current state immediately (no callback fires for initial sync)
-        animator.SetFloat("Direction", direction.Value == WindDirection.LeftToRight ? -1f : 1f);
         animator.SetBool("WindActive", windActive.Value);
+        UpdateWindAnimation(currentIntensity.Value, direction.Value);
         if (windActive.Value)
             FadeInSound();
 
@@ -62,26 +62,50 @@ public class Wind : NetworkBehaviour
 
     // --- Public API (call from server-side logic, e.g. via Interactible's onPressServer) ---
 
-    public void StartWind()
+    [Rpc(SendTo.Server)]
+    public void StartWindRpc()
+    {
+        StartWind();
+    }
+
+    private void StartWind()
     {
         if (!IsServer || windActive.Value) return;
         windActive.Value = true;
-        currentIntensity = intensity;
+        SetIntensity(targetIntensity.Value);
     }
 
-    public void StopWind()
+    [Rpc(SendTo.Server)]
+    public void StopWindRpc()
+    {
+        StopWind();
+    }
+
+    private void StopWind()
     {
         if (!IsServer || !windActive.Value) return;
         windActive.Value = false;
     }
 
-    public void ToggleWind()
+    [Rpc(SendTo.Server)]
+    public void ToggleWindRpc()
+    {
+        ToggleWind();
+    }
+
+    private void ToggleWind()
     {
         if (windActive.Value) StopWind();
         else StartWind();
     }
 
-    public void SetDirection(WindDirection newDirection)
+    [Rpc(SendTo.Server)]
+    public void SetDirectionRpc(WindDirection newDirection)
+    {
+        SetDirection(newDirection);
+    }
+
+    private void SetDirection(WindDirection newDirection)
     {
         if (!IsServer) return;
 
@@ -94,7 +118,13 @@ public class Wind : NetworkBehaviour
         direction.Value = newDirection;
     }
 
-    public void ToggleDirection()
+    [Rpc(SendTo.Server)]
+    public void ToggleDirectionRpc()
+    {
+        ToggleDirection();
+    }
+
+    private void ToggleDirection()
     {
         if (direction.Value == WindDirection.LeftToRight)
             SetDirection(WindDirection.RightToLeft);
@@ -110,13 +140,46 @@ public class Wind : NetworkBehaviour
         StartWind();
     }
 
+    [Rpc(SendTo.Server)]
+    public void SetIntensityRpc(float newIntensity)
+    {
+        SetIntensity(newIntensity);
+    }
+
+    private void SetIntensity(float newIntensity)
+    {
+        if (!IsServer) return;
+
+        switch(newIntensity)
+        {
+            case < 1f:
+                newIntensity = 1f;
+                break;
+            case > 10f:
+                newIntensity = 10f;
+                break;
+        }
+
+        if (windActive.Value)
+        currentIntensity.Value = newIntensity;
+       
+        targetIntensity.Value = newIntensity;
+
+        UpdateWindAnimation(newIntensity, direction.Value);
+
+        Debug.Log($"Wind intensity set to {newIntensity}");
+    }
+
     // --- Local reactions to synced state (run on every peer) ---
 
     private void OnWindActiveChanged(bool previous, bool current)
     {
         animator.SetBool("WindActive", current);
         if (current)
+        {
+            UpdateWindAnimation(currentIntensity.Value, direction.Value);
             FadeInSound();
+        }
         else
             FadeOutSound();
 
@@ -125,7 +188,12 @@ public class Wind : NetworkBehaviour
 
     private void OnDirectionChanged(WindDirection previous, WindDirection current)
     {
-        animator.SetFloat("Direction", current == WindDirection.LeftToRight ? -1f : 1f);
+        UpdateWindAnimation(currentIntensity.Value, current);
+    }
+
+    private void UpdateWindAnimation(float speed, WindDirection direction)
+    {
+        animator.SetFloat("Speed", direction == WindDirection.LeftToRight ? -speed : speed);
     }
 
     // --- Server-only physics ---
@@ -133,7 +201,13 @@ public class Wind : NetworkBehaviour
     private Rigidbody2D[] FindRigidBodies()
     {
         Rigidbody2D[] allRigidbodies = FindObjectsByType<Rigidbody2D>(FindObjectsSortMode.None);
-        return System.Array.FindAll(allRigidbodies, rb => (ignoreLayers.value & (1 << rb.gameObject.layer)) == 0);
+        Rigidbody2D[] filteredRbs = Array.FindAll(allRigidbodies, rb => (ignoreLayers.value & (1 << rb.gameObject.layer)) == 0);
+
+        //DEBUG
+        string rigidbodyNames = string.Join(", ", Array.ConvertAll(filteredRbs, rb => rb.gameObject.name));
+        Debug.Log($"Found {filteredRbs.Length} rigidbodies affected by wind: {rigidbodyNames}");
+
+        return filteredRbs;
     }
 
     private void FixedUpdate()
@@ -142,15 +216,14 @@ public class Wind : NetworkBehaviour
 
         if (windActive.Value)
             ApplyWindForce();
-        else if (currentIntensity > 0f)
-            currentIntensity -= Time.deltaTime / windFadeAnimation.length;
+        else if (currentIntensity.Value > 0f)
+            currentIntensity.Value -= Time.deltaTime / windFadeAnimation.length;
     }
-
     private void ApplyWindForce()
     {
         rigidbodies ??= FindRigidBodies();
         Vector2 forceDirection = direction.Value == WindDirection.LeftToRight ? Vector2.right : Vector2.left;
-        Vector2 force = forceDirection * currentIntensity;
+        Vector2 force = forceDirection * currentIntensity.Value;
 
         foreach (Rigidbody2D rb in rigidbodies)
             rb.AddForce(force);
