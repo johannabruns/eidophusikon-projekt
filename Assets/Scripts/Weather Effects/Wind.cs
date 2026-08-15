@@ -71,6 +71,9 @@ public class Wind : NetworkBehaviour
     private void StartWind()
     {
         if (!IsServer || windActive.Value) return;
+
+        rigidbodies = FindRigidBodies();
+
         windActive.Value = true;
         SetIntensity(targetIntensity.Value);
     }
@@ -160,9 +163,11 @@ public class Wind : NetworkBehaviour
                 break;
         }
 
+        rigidbodies = FindRigidBodies();
+
         if (windActive.Value)
         currentIntensity.Value = newIntensity;
-       
+   
         targetIntensity.Value = newIntensity;
 
         UpdateWindAnimation(newIntensity, direction.Value);
@@ -202,10 +207,6 @@ public class Wind : NetworkBehaviour
     {
         Rigidbody2D[] allRigidbodies = FindObjectsByType<Rigidbody2D>(FindObjectsSortMode.None);
         Rigidbody2D[] filteredRbs = Array.FindAll(allRigidbodies, rb => (ignoreLayers.value & (1 << rb.gameObject.layer)) == 0);
-
-        //DEBUG
-        string rigidbodyNames = string.Join(", ", Array.ConvertAll(filteredRbs, rb => rb.gameObject.name));
-        Debug.Log($"Found {filteredRbs.Length} rigidbodies affected by wind: {rigidbodyNames}");
 
         return filteredRbs;
     }

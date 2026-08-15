@@ -11,7 +11,7 @@ public class WateringCan : Usable
     public Sprite fullSprite;
 
     public Rain waterStream;
-    private float rainDuration;
+    private float rainDuration = 0f;
 
 
     public override void OnNetworkSpawn()
@@ -34,16 +34,25 @@ public class WateringCan : Usable
         {
             anim.SetTrigger("Use");
             SetWateringCanStateRpc(false);
-            rainDuration = 2f;
+            rainDuration = 1f;
             
         }
         else
         {
             if(IsObjectInRange(out RainCollector rainCollector))
             {
-                rainCollector.CollectRain();
-                SetWateringCanStateRpc(true);
+                if (!rainCollector.isActive.Value)
+                {
+                    anim.SetTrigger("Use");
+                }
+                else
+                {
+                    rainCollector.CollectRain();
+                    SetWateringCanStateRpc(true);
+                    return;
+                }
             }
+            anim.SetTrigger("Use");
         }
     }
 
