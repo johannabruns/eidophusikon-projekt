@@ -11,6 +11,11 @@ public abstract class Usable : Carryable
 
     public abstract void OnUse();
 
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+    }
+
     public bool IsObjectInRange<T>(out T component) where T : NetworkBehaviour
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, range);

@@ -1,50 +1,75 @@
 using Unity.Netcode;
+using Unity.Services.Matchmaker.Models;
 using UnityEngine;
 
-public class WateringCan : Usable, IRainTarget
+public class WateringCan : Usable
 {
     NetworkVariable<bool> isFull = new NetworkVariable<bool>();
-    public Rain rain;
+
+    public SpriteRenderer spriteRenderer;
+    public Sprite emptySprite;
+    public Sprite fullSprite;
+
+    public Rain waterStream;
     private float rainDuration;
 
-    public void OnRainHit()
+
+    public override void OnNetworkSpawn()
     {
-        SetWateringCanStateRpc(true);
+        base.OnNetworkSpawn();
+        isFull.OnValueChanged += OnWateringCanStateChanged;
+        SetSprite(isFull.Value);
     }
+
 
     [Rpc(SendTo.Server)]
     private void SetWateringCanStateRpc(bool isFull)
     {
         this.isFull.Value = isFull;
-
-        if(!this.isFull.Value)
-            Debug.Log($"Watering can state set to: {isFull}");
     }
 
     public override void OnUse()
     {
-        anim.SetTrigger("Use");
         if (isFull.Value)
         {
+            anim.SetTrigger("Use");
             SetWateringCanStateRpc(false);
             rainDuration = 2f;
-            audioSource.PlayOneShot(onUseSound);
+            
         }
+        else
+        {
+            if(IsObjectInRange(out RainCollector rainCollector))
+            {
+                rainCollector.CollectRain();
+                SetWateringCanStateRpc(true);
+            }
+        }
+    }
+
+    private void OnWateringCanStateChanged(bool previousValue, bool newValue)
+    {
+        SetSprite(newValue);
+    }
+
+    private void SetSprite(bool isFull)
+    {
+        spriteRenderer.sprite = isFull ? fullSprite : emptySprite; 
     }
 
     private void FixedUpdate()
     {
-        if (rainDuration > 0f && !rain.isRaining.Value)
+        if (rainDuration > 0f && !waterStream.isRaining.Value)
         {
-            rain.ToggleRainRpc();
+            waterStream.ToggleRainRpc();
         }
-        else if (rainDuration > 0f && rain.isRaining.Value)
+        else if (rainDuration > 0f && waterStream.isRaining.Value)
         {
             rainDuration -= Time.fixedDeltaTime;
         }
-        else if (rainDuration <= 0f && rain.isRaining.Value)
+        else if (rainDuration <= 0f && waterStream.isRaining.Value)
         {
-            rain.ToggleRainRpc();
+            waterStream.ToggleRainRpc();
         }
     }
 }

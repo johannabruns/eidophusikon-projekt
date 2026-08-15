@@ -12,7 +12,7 @@ public class BoolStateObject : NetworkBehaviour
     [SerializeField] private AudioClip inactiveSound;
     [SerializeField] private AudioClip activeSound;
 
-    NetworkVariable<bool> isActive = new NetworkVariable<bool>(false);
+    public NetworkVariable<bool> isActive = new NetworkVariable<bool>(false);
 
     public UnityEvent onInactive;
     public UnityEvent onActive;

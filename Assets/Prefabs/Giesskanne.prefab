@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 259302615
+  GlobalObjectIdHash: 250613024
   InScenePlacedSourceGlobalObjectIdHash: 1506027910
   DeferredDespawnTick: 0
   Ownership: 1
@@ -296,7 +296,10 @@ MonoBehaviour:
   anim: {fileID: 2948991178605072209}
   audioSource: {fileID: 7253669652585523259}
   onUseSound: {fileID: 8300000, guid: 7803f7f51afadc34ba2cf8d8504bfc8e, type: 3}
-  rain: {fileID: 5209596330683771227}
+  spriteRenderer: {fileID: 4553841631207603859}
+  emptySprite: {fileID: -5007717835261507284, guid: d020513d5d1d12047a7f0dad7f34632d, type: 3}
+  fullSprite: {fileID: 1914849043038913832, guid: d020513d5d1d12047a7f0dad7f34632d, type: 3}
+  waterStream: {fileID: 5209596330683771227}
 --- !u!82 &7253669652585523259
 AudioSource:
   m_ObjectHideFlags: 0
@@ -531,7 +534,7 @@ SpriteRenderer:
   m_SortingLayerID: -1273045355
   m_SortingLayer: 2
   m_SortingOrder: 1
-  m_Sprite: {fileID: -6830005996277547449, guid: afcebeff3e624564c9328e8f65b58769, type: 3}
+  m_Sprite: {fileID: -5007717835261507284, guid: d020513d5d1d12047a7f0dad7f34632d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
