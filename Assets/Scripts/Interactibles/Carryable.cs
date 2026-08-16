@@ -1,8 +1,6 @@
 using Unity.Netcode;
 using Unity.Netcode.Components;
 using UnityEngine;
-using UnityEngine.Events;
-
 
 /// <summary>
 /// A component that allows a GameObject to be picked up and carried by a player.
@@ -27,6 +25,7 @@ public class Carryable : NetworkBehaviour
     private Rigidbody2D rb;
     private Collider2D col;
     private int uncarriedLayer;
+    private LayerMask baseExcludeLayers;
     private Vector3 originalScale;
 
     private void Awake()
@@ -35,6 +34,7 @@ public class Carryable : NetworkBehaviour
         col = GetComponent<Collider2D>();
         uncarriedLayer = gameObject.layer;
         originalScale = transform.localScale;
+        baseExcludeLayers = col.excludeLayers;
     }
 
     public override void OnNetworkSpawn()
@@ -79,9 +79,13 @@ public class Carryable : NetworkBehaviour
             }
         }
 
-        // Exclude the player layer from the collider when carried to prevent collisions with the player
         if (col != null)
-            col.excludeLayers = carried ? LayerMask.GetMask("Player") : 0;
+        {
+            Debug.Log("Exclude Layers");
+            col.excludeLayers = carried
+                ? (baseExcludeLayers | LayerMask.GetMask("Player"))
+                : baseExcludeLayers;
+        }
     }
 
     public void Flip(bool previous, bool current)
