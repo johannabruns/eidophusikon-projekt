@@ -25,7 +25,7 @@ public class StageObjectWrapper : NetworkBehaviour
     public void SetActive(bool active)
     {
         if (!IsServer) return;
-        Debug.Log($"Setting {targetObject.name} active state to {active}");
+        //Debug.Log($"Setting {targetObject.name} active state to {active}");
         isActive.Value = active;    
     }   
 

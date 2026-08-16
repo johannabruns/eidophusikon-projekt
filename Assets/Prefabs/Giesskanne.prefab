@@ -296,6 +296,7 @@ MonoBehaviour:
   anim: {fileID: 2948991178605072209}
   audioSource: {fileID: 7253669652585523259}
   onUseSound: {fileID: 8300000, guid: 7803f7f51afadc34ba2cf8d8504bfc8e, type: 3}
+  refillSound: {fileID: 8300000, guid: 7803f7f51afadc34ba2cf8d8504bfc8e, type: 3}
   spriteRenderer: {fileID: 4553841631207603859}
   emptySprite: {fileID: -5007717835261507284, guid: d020513d5d1d12047a7f0dad7f34632d, type: 3}
   fullSprite: {fileID: 1914849043038913832, guid: d020513d5d1d12047a7f0dad7f34632d, type: 3}
@@ -413,7 +414,7 @@ MonoBehaviour:
   rainDropPrefab: {fileID: 8720862323183967085, guid: 975d2763aae977b4c875ba0b1f8b0da0, type: 3}
   maxSpawnInterval: 0.1
   constantInverval: 1
-  audioSource: {fileID: 7253669652585523259}
+  audioSource: {fileID: 0}
   spawnPoints:
   - {fileID: 4253249469749843715}
   isRaining:

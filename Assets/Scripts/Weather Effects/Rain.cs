@@ -45,7 +45,7 @@ public class Rain : NetworkBehaviour
         isRaining.OnValueChanged -= OnIsActiveChanged;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (!IsServer)
             return;
@@ -89,11 +89,11 @@ public class Rain : NetworkBehaviour
     {
         if (current)
         {
-            FadeInSound();
+            if (audioSource != null) FadeInSound();
         }
         else
         {
-            FadeOutSound();
+            if (audioSource != null) FadeOutSound();
         }
     }
 

@@ -7,16 +7,10 @@ public class Key : Usable
     {
         if(IsObjectInRange(out Birdcage birdcage))
         {
-            audioSource.PlayOneShot(onUseSound);
+            //audioSource.PlayOneShot(onUseSound);
             birdcage.UnlockRpc(true);
             RequestObjectDestructionRpc();
         }
-    }
-
-    [Rpc(SendTo.Server)]
-    private void RequestObjectDestructionRpc()
-    {
-        NetworkObject.Despawn();
     }
 
 }

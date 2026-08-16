@@ -81,7 +81,6 @@ public class Carryable : NetworkBehaviour
 
         if (col != null)
         {
-            Debug.Log("Exclude Layers");
             col.excludeLayers = carried
                 ? (baseExcludeLayers | LayerMask.GetMask("Player"))
                 : baseExcludeLayers;

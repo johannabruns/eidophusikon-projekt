@@ -19,7 +19,6 @@ public class DebugMenu : NetworkBehaviour
     public Button loadAct2;
     public Button loadAct3;
     public Button loadAct4;
-    public Button loadAct5;
 
     // DebugMenu.cs
     [Header("Solo Testing")]
@@ -32,7 +31,6 @@ public class DebugMenu : NetworkBehaviour
         loadAct2.onClick.AddListener(() => gameManager.LoadActRpc(2));
         loadAct3.onClick.AddListener(() => gameManager.LoadActRpc(3));
         loadAct4.onClick.AddListener(() => gameManager.LoadActRpc(4));
-        loadAct5.onClick.AddListener(() => gameManager.LoadActRpc(5));
 
         forceInitialSetup.onClick.AddListener(() => gameManager.ForceInitialActSetupRpc());
 

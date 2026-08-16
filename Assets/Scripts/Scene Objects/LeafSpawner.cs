@@ -1,6 +1,3 @@
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -16,8 +13,7 @@ public class LeafSpawner : NetworkBehaviour
     public void SpawnLeaf()
     {
         if(!IsServer) return;  
-
-        GameObject drop = Instantiate(leafPrefab, transform.position, Quaternion.identity);
+        GameObject drop = Instantiate(leafPrefab, transform.position, Quaternion.Euler(0f, 0f, Random.Range(0f, 359f)));
         drop.GetComponent<NetworkObject>().Spawn();
     }
 

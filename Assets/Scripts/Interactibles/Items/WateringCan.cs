@@ -6,9 +6,11 @@ public class WateringCan : Usable
 {
     NetworkVariable<bool> isFull = new NetworkVariable<bool>();
 
+    public AudioClip refillSound;
     public SpriteRenderer spriteRenderer;
     public Sprite emptySprite;
     public Sprite fullSprite;
+   
 
     public Rain waterStream;
     private float rainDuration = 0f;
@@ -30,15 +32,17 @@ public class WateringCan : Usable
 
     public override void OnUse()
     {
+        //Watering
         if (isFull.Value)
         {
             anim.SetTrigger("Use");
             SetWateringCanStateRpc(false);
             rainDuration = 1f;
-            
+            audioSource.PlayOneShot(onUseSound);
         }
         else
         {
+            //Refilling
             if(IsObjectInRange(out RainCollector rainCollector))
             {
                 if (!rainCollector.isActive.Value)
@@ -49,6 +53,7 @@ public class WateringCan : Usable
                 {
                     rainCollector.CollectRain();
                     SetWateringCanStateRpc(true);
+                    audioSource.PlayOneShot(refillSound);
                     return;
                 }
             }

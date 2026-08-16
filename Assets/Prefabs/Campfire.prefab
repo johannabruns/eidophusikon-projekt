@@ -394,7 +394,7 @@ MonoBehaviour:
   - {fileID: 1472289338503660819}
   - {fileID: 7811944925459426027}
   - {fileID: 6655227390171324602}
-  audioSource: {fileID: 0}
+  audioSource: {fileID: 3149403911403764834}
   isReady:
     UpdateTraits:
       MinSecondsBetweenUpdates: 0
@@ -452,9 +452,9 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Resource: {fileID: 8300000, guid: 11aae8d81ab895f4cb60b92ddaf2e12d, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.089
   m_Pitch: 1
   Loop: 0
   Mute: 0

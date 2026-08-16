@@ -47,18 +47,20 @@ public class Wind : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         animator.SetBool("WindActive", windActive.Value);
-        UpdateWindAnimation(currentIntensity.Value, direction.Value);
+        UpdateAudiovisualFeedback(currentIntensity.Value, direction.Value);
         if (windActive.Value)
             FadeInSound();
 
         windActive.OnValueChanged += OnWindActiveChanged;
         direction.OnValueChanged += OnDirectionChanged;
+        currentIntensity.OnValueChanged += OnIntensityChanged;
     }
 
     public override void OnNetworkDespawn()
     {
         windActive.OnValueChanged -= OnWindActiveChanged;
         direction.OnValueChanged -= OnDirectionChanged;
+        currentIntensity.OnValueChanged -= OnIntensityChanged;
     }
 
     // --- Public API (call from server-side logic, e.g. via Interactible's onPressServer) ---
@@ -152,22 +154,12 @@ public class Wind : NetworkBehaviour
     {
         if (!IsServer) return;
 
-        switch(newIntensity)
-        {
-            case < 1f:
-                newIntensity = 1f;
-                break;
-            case > 10f:
-                newIntensity = 10f;
-                break;
-        }
+        newIntensity = Mathf.Clamp(newIntensity, 1f, 5f);
 
         if (windActive.Value)
         currentIntensity.Value = newIntensity;
    
         targetIntensity.Value = newIntensity;
-
-        UpdateWindAnimation(newIntensity, direction.Value);
 
         Debug.Log($"Wind intensity set to {newIntensity}");
     }
@@ -179,7 +171,7 @@ public class Wind : NetworkBehaviour
         animator.SetBool("WindActive", current);
         if (current)
         {
-            UpdateWindAnimation(currentIntensity.Value, direction.Value);
+            UpdateAudiovisualFeedback(currentIntensity.Value, direction.Value);
             FadeInSound();
         }
         else
@@ -190,12 +182,23 @@ public class Wind : NetworkBehaviour
 
     private void OnDirectionChanged(WindDirection previous, WindDirection current)
     {
-        UpdateWindAnimation(currentIntensity.Value, current);
+        UpdateAudiovisualFeedback(currentIntensity.Value, current);
     }
 
-    private void UpdateWindAnimation(float speed, WindDirection direction)
+    private void OnIntensityChanged(float previousIntensity, float newIntensity)
     {
-        animator.SetFloat("Speed", direction == WindDirection.LeftToRight ? -speed : speed);
+        UpdateAudiovisualFeedback(newIntensity, direction.Value);
+
+    }
+
+    private void UpdateAudiovisualFeedback(float speed, WindDirection direction)
+    {
+        float levelsAboveBase = speed - 1f;
+
+        float animSpeed = 1f + (0.3f * levelsAboveBase);
+        animator.SetFloat("Speed", direction == WindDirection.LeftToRight ? -animSpeed : animSpeed);
+
+        audioSource.pitch = 1f + (0.3f * levelsAboveBase);
     }
 
     // --- Server-only physics ---
@@ -240,6 +243,6 @@ public class Wind : NetworkBehaviour
     private void FadeInSound()
     {
         if (soundFade != null) StopCoroutine(soundFade);
-        soundFade = StartCoroutine(AudioFader.FadeIn(audioSource, 2f, 0.8f));
+        soundFade = StartCoroutine(AudioFader.FadeIn(audioSource, 2f, 0.25f));
     }
 }

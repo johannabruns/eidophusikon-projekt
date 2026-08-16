@@ -28,10 +28,4 @@ public class CampFireComponent : Usable
             RequestObjectDestructionRpc();
         }
     }
-
-    [Rpc(SendTo.Server)]
-    private void RequestObjectDestructionRpc()
-    {
-        NetworkObject.Despawn();
-    }
 }

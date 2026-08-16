@@ -12,10 +12,4 @@ public class Leaf : Usable
             RequestObjectDestructionRpc();
         }
     }
-
-    [Rpc(SendTo.Server)]
-    private void RequestObjectDestructionRpc()
-    {
-        NetworkObject.Despawn();
-    }
 }

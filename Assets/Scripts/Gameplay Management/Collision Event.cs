@@ -9,6 +9,7 @@ public class CollisionEvent : MonoBehaviour
 
     [Tooltip("If true, only reacts when the colliding object is the local player's own NetworkObject.")]
     public bool onlyLocalPlayer = true;
+    public bool onlyReactToPlayers = true;
 
     private bool IsRelevant(Component collision)
     {
@@ -23,24 +24,48 @@ public class CollisionEvent : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!IsRelevant(collision)) return;
+        if (onlyReactToPlayers)
+        {
+            if(!collision.gameObject.CompareTag("Player"))      
+                return;           
+        }
+
         OnEnter.Invoke();
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (!IsRelevant(collision)) return;
+        if (onlyReactToPlayers)
+        {
+            if (!collision.gameObject.CompareTag("Player"))
+                return;
+        }
+
         OnExit.Invoke();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!IsRelevant(collision.collider)) return;
+        if (onlyReactToPlayers)
+        {
+            if (!collision.gameObject.CompareTag("Player"))
+                return;
+        }
+
         OnEnter.Invoke();
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (!IsRelevant(collision.collider)) return;
+        if (onlyReactToPlayers)
+        {
+            if (!collision.gameObject.CompareTag("Player"))
+                return;
+        }
+
         OnExit.Invoke();
     }
 }
