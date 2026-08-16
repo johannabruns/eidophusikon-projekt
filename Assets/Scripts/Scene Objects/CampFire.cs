@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class CampFire : NetworkBehaviour
 {
+    public SpriteRenderer inactiveFire;
     public SpriteRenderer wood;
     public Sprite[] woodSprites;
-
     public SpriteRenderer fire;
     public SpriteRenderer[] stones;
 
@@ -75,6 +75,8 @@ public class CampFire : NetworkBehaviour
             wood.sprite = null;
             return;
         }
+
+        inactiveFire.enabled = index < 0;
 
         wood.sprite = woodSprites[index];
     }

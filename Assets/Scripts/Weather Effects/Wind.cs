@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -25,7 +26,7 @@ public class Wind : NetworkBehaviour
     [Space(1f)]
     public LayerMask ignoreLayers;
 
-    private Rigidbody2D[] rigidbodies;
+    private static readonly HashSet<Rigidbody2D> registeredRigidbodies = new();
     private Coroutine soundFade;
 
     // Synced state
@@ -71,8 +72,6 @@ public class Wind : NetworkBehaviour
     private void StartWind()
     {
         if (!IsServer || windActive.Value) return;
-
-        rigidbodies = FindRigidBodies();
 
         windActive.Value = true;
         SetIntensity(targetIntensity.Value);
@@ -163,8 +162,6 @@ public class Wind : NetworkBehaviour
                 break;
         }
 
-        rigidbodies = FindRigidBodies();
-
         if (windActive.Value)
         currentIntensity.Value = newIntensity;
    
@@ -202,13 +199,15 @@ public class Wind : NetworkBehaviour
     }
 
     // --- Server-only physics ---
-
-    private Rigidbody2D[] FindRigidBodies()
+    public static void Register(Rigidbody2D rb)
     {
-        Rigidbody2D[] allRigidbodies = FindObjectsByType<Rigidbody2D>(FindObjectsSortMode.None);
-        Rigidbody2D[] filteredRbs = Array.FindAll(allRigidbodies, rb => (ignoreLayers.value & (1 << rb.gameObject.layer)) == 0);
+        if (NetworkManager.Singleton.IsServer)
+            registeredRigidbodies.Add(rb);
+    }
 
-        return filteredRbs;
+    public static void Unregister(Rigidbody2D rb)
+    {
+        registeredRigidbodies.Remove(rb);
     }
 
     private void FixedUpdate()
@@ -222,12 +221,14 @@ public class Wind : NetworkBehaviour
     }
     private void ApplyWindForce()
     {
-        rigidbodies ??= FindRigidBodies();
         Vector2 forceDirection = direction.Value == WindDirection.LeftToRight ? Vector2.right : Vector2.left;
         Vector2 force = forceDirection * currentIntensity.Value;
 
-        foreach (Rigidbody2D rb in rigidbodies)
+        foreach (Rigidbody2D rb in registeredRigidbodies)
+        {
+            if ((ignoreLayers.value & (1 << rb.gameObject.layer)) != 0) continue;
             rb.AddForce(force);
+        }
     }
 
     private void FadeOutSound()

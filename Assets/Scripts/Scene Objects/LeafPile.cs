@@ -1,3 +1,4 @@
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
@@ -6,14 +7,14 @@ public class LeafPile : NetworkBehaviour
 {
     public SpriteRenderer spriteRenderer;
     public Sprite[] sprites;
-    public NetworkVariable<int> currentSpriteIndex = new(-1);
+    public NetworkVariable<int> currentSpriteIndex = new(0);
 
     public UnityEvent OnComplete;
 
     public override void OnNetworkSpawn()
     {
         currentSpriteIndex.OnValueChanged += OnSpriteIndexChanged;
-        spriteRenderer.sprite = null;
+        SetSprite(currentSpriteIndex.Value);
     }
     public override void OnNetworkDespawn()
     {
@@ -22,10 +23,15 @@ public class LeafPile : NetworkBehaviour
 
     private void OnSpriteIndexChanged(int previousValue, int newValue)
     {
-        if (newValue < 0 || newValue >= sprites.Length) return;
-        spriteRenderer.sprite = sprites[newValue];
+        SetSprite(newValue);
+    }
 
-        if(newValue == sprites.Length - 1)
+    private void SetSprite(int index)
+    {
+        if (index < 0 || index >= sprites.Length) return;
+        spriteRenderer.sprite = sprites[index];
+
+        if (index == sprites.Length - 1)
         {
             OnComplete?.Invoke();
         }

@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -4528200696319439014, guid: f25c0f4ec96834545b153edf74f20a38, type: 3}
+  m_Sprite: {fileID: 4362997835762611226, guid: f25c0f4ec96834545b153edf74f20a38, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -103,6 +103,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d85da45ae0dcddb498a2a1ff732fa593, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LeafPile
+  ShowTopMostFoldoutHeaderGroup: 1
+  spriteRenderer: {fileID: 705086516794579460}
+  sprites:
+  - {fileID: -5625146679383496843, guid: f25c0f4ec96834545b153edf74f20a38, type: 3}
+  - {fileID: -2471183535541609911, guid: f25c0f4ec96834545b153edf74f20a38, type: 3}
+  - {fileID: 8912215943260075831, guid: f25c0f4ec96834545b153edf74f20a38, type: 3}
+  - {fileID: -4528200696319439014, guid: f25c0f4ec96834545b153edf74f20a38, type: 3}
+  - {fileID: 4362997835762611226, guid: f25c0f4ec96834545b153edf74f20a38, type: 3}
+  currentSpriteIndex:
+    UpdateTraits:
+      MinSecondsBetweenUpdates: 0
+      MaxSecondsBetweenUpdates: 0
+    m_InternalValue: 0
+  OnComplete:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &7798909693287755773
 GameObject:
   m_ObjectHideFlags: 0
@@ -149,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3010417281
+  GlobalObjectIdHash: 2097971182
   InScenePlacedSourceGlobalObjectIdHash: 2097971182
   DeferredDespawnTick: 0
   Ownership: 1
