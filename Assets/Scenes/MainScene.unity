@@ -13673,6 +13673,14 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 2258766079
       objectReference: {fileID: 0}
+    - target: {fileID: 1022594625532243617, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 3569309072
+      objectReference: {fileID: 0}
+    - target: {fileID: 1022594625532243617, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 584570469
+      objectReference: {fileID: 0}
     - target: {fileID: 1244197047595118527, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
       propertyPath: camScript
       value: 
