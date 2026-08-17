@@ -7,7 +7,7 @@ public class CampFire : NetworkBehaviour
     public SpriteRenderer inactiveFire;
     public SpriteRenderer wood;
     public Sprite[] woodSprites;
-    public SpriteRenderer fire;
+    public GameObject fire;
     public SpriteRenderer[] stones;
 
     public AudioSource audioSource;
@@ -161,7 +161,7 @@ public class CampFire : NetworkBehaviour
 
     private void SetFireState(bool state)
     {
-        fire.enabled = state;
+        fire.SetActive(state);
 
         if (state)
         {

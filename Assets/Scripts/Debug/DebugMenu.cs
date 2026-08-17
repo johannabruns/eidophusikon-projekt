@@ -20,6 +20,13 @@ public class DebugMenu : NetworkBehaviour
     public Button loadAct3;
     public Button loadAct4;
 
+    [Header("Light Management")]
+    public StageLightManager lightManager;
+    public Button morningLight;
+    public Button dayLight;
+    public Button eveningLight;
+    public Button nightLight;
+
     // DebugMenu.cs
     [Header("Solo Testing")]
     public Button forceInitialSetup;
@@ -27,23 +34,35 @@ public class DebugMenu : NetworkBehaviour
 
     private void Start()
     {
-        loadAct1.onClick.AddListener(() => gameManager.LoadActRpc(1));
-        loadAct2.onClick.AddListener(() => gameManager.LoadActRpc(2));
-        loadAct3.onClick.AddListener(() => gameManager.LoadActRpc(3));
-        loadAct4.onClick.AddListener(() => gameManager.LoadActRpc(4));
+        if (gameManager != null)
+        {
+            loadAct1.onClick.AddListener(() => gameManager.LoadActRpc(1));
+            loadAct2.onClick.AddListener(() => gameManager.LoadActRpc(2));
+            loadAct3.onClick.AddListener(() => gameManager.LoadActRpc(3));
+            loadAct4.onClick.AddListener(() => gameManager.LoadActRpc(4));
 
-        forceInitialSetup.onClick.AddListener(() => gameManager.ForceInitialActSetupRpc());
+            forceInitialSetup.onClick.AddListener(() => gameManager.ForceInitialActSetupRpc());
+        }
 
-        //Wind 
-        if (windScript == null) return;
+        if (lightManager != null)
+        {
+            morningLight.onClick.AddListener(() => lightManager.SetLightRpc(TimeOfDay.Morning));
+            dayLight.onClick.AddListener(() => lightManager.SetLightRpc(TimeOfDay.Day));
+            eveningLight.onClick.AddListener(() => lightManager.SetLightRpc(TimeOfDay.Evening));
+            nightLight.onClick.AddListener(() => lightManager.SetLightRpc(TimeOfDay.Night));
+        }
 
-        UpdateWindButtonText();
+        
+        if (windScript != null)
+        {
+            UpdateWindButtonText();
 
-        windToggle.onClick.AddListener(windScript.ToggleWindRpc);
-        windDirection.onClick.AddListener(windScript.ToggleDirectionRpc);
+            windToggle.onClick.AddListener(windScript.ToggleWindRpc);
+            windDirection.onClick.AddListener(windScript.ToggleDirectionRpc);
 
-        decreaseWind.onClick.AddListener(() => windScript.SetIntensityRpc(windScript.currentIntensity.Value - 1f));
-        increaseWind.onClick.AddListener(() => windScript.SetIntensityRpc(windScript.currentIntensity.Value + 1f));
+            decreaseWind.onClick.AddListener(() => windScript.SetIntensityRpc(windScript.currentIntensity.Value - 1f));
+            increaseWind.onClick.AddListener(() => windScript.SetIntensityRpc(windScript.currentIntensity.Value + 1f));
+        }
     }
 
     private void OnEnable()

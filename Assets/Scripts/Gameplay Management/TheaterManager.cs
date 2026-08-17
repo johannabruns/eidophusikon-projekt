@@ -6,6 +6,8 @@ using UnityEngine;
 /// </summary>
 public class TheaterManager : NetworkBehaviour
 {
+    public StageLightManager lights;
+
     public Animator curtainAnim;
     public StageEntrance stageEntrance;
 

@@ -156,6 +156,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onlyLocalPlayer: 1
+  onlyReactToPlayers: 1
 --- !u!1 &2658644837982627686
 GameObject:
   m_ObjectHideFlags: 0
@@ -613,6 +614,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onlyLocalPlayer: 1
+  onlyReactToPlayers: 1
 --- !u!1 &6252562491431112966
 GameObject:
   m_ObjectHideFlags: 0
@@ -1261,6 +1263,7 @@ GameObject:
   - component: {fileID: 7660076928604753643}
   - component: {fileID: 4759954150445935916}
   - component: {fileID: 6405449608620278524}
+  - component: {fileID: 795013185987524326}
   m_Layer: 0
   m_Name: Stage
   m_TagString: Untagged
@@ -1306,7 +1309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 489974873
+  GlobalObjectIdHash: 584570469
   InScenePlacedSourceGlobalObjectIdHash: 584570469
   DeferredDespawnTick: 0
   Ownership: 1
@@ -1338,6 +1341,103 @@ MonoBehaviour:
   audioCheer: {fileID: 0}
   audienceApplause: {fileID: 0}
   audienceBored: {fileID: 0}
+--- !u!82 &795013185987524326
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8799413214798651516}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &159353190171515466
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1400,7 +1500,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6927629864825256724, guid: 5964e89e218fc604d8c71d6665e70993, type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 2396664413
+      value: 249964031
       objectReference: {fileID: 0}
     - target: {fileID: 6927629864825256724, guid: 5964e89e218fc604d8c71d6665e70993, type: 3}
       propertyPath: InScenePlacedSourceGlobalObjectIdHash
@@ -1438,7 +1538,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4392407856896567462, guid: b09dadb7aa11d0940adeca8a306b3001, type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 2428872022
+      value: 656923172
       objectReference: {fileID: 0}
     - target: {fileID: 4392407856896567462, guid: b09dadb7aa11d0940adeca8a306b3001, type: 3}
       propertyPath: InScenePlacedSourceGlobalObjectIdHash
@@ -1572,7 +1672,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8981104059172356883, guid: 1864588ccffd43d45a57fd87382f0c94, type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 275472422
+      value: 3661146594
       objectReference: {fileID: 0}
     - target: {fileID: 8981104059172356883, guid: 1864588ccffd43d45a57fd87382f0c94, type: 3}
       propertyPath: InScenePlacedSourceGlobalObjectIdHash
@@ -1654,7 +1754,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8981104059172356883, guid: 1864588ccffd43d45a57fd87382f0c94, type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 2033437089
+      value: 1143077602
       objectReference: {fileID: 0}
     - target: {fileID: 8981104059172356883, guid: 1864588ccffd43d45a57fd87382f0c94, type: 3}
       propertyPath: InScenePlacedSourceGlobalObjectIdHash
@@ -1748,7 +1848,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8246305142854996420, guid: a48a3400ca8d7d247946d00a68d57fa7, type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 4124460531
+      value: 1414945951
       objectReference: {fileID: 0}
     - target: {fileID: 8246305142854996420, guid: a48a3400ca8d7d247946d00a68d57fa7, type: 3}
       propertyPath: InScenePlacedSourceGlobalObjectIdHash
@@ -1842,7 +1942,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5608089838296387386, guid: 1911b4cc8c12cb947ae18b53c4df462e, type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 2731967808
+      value: 2496110858
       objectReference: {fileID: 0}
     - target: {fileID: 5608089838296387386, guid: 1911b4cc8c12cb947ae18b53c4df462e, type: 3}
       propertyPath: InScenePlacedSourceGlobalObjectIdHash
@@ -1992,7 +2092,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4638557700445245325, guid: c61e02723554f834e8cdd1351aade453, type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 3290362484
+      value: 814959977
       objectReference: {fileID: 0}
     - target: {fileID: 4638557700445245325, guid: c61e02723554f834e8cdd1351aade453, type: 3}
       propertyPath: InScenePlacedSourceGlobalObjectIdHash
@@ -2022,7 +2122,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1703437720152260356, guid: 3f95916e878cfa144b3e2c87bde15491, type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 1439271342
+      value: 4034548530
       objectReference: {fileID: 0}
     - target: {fileID: 1703437720152260356, guid: 3f95916e878cfa144b3e2c87bde15491, type: 3}
       propertyPath: InScenePlacedSourceGlobalObjectIdHash
@@ -2086,7 +2186,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6748419957215232465, guid: 3f95916e878cfa144b3e2c87bde15491, type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 4043303079
+      value: 1328833575
       objectReference: {fileID: 0}
     - target: {fileID: 6748419957215232465, guid: 3f95916e878cfa144b3e2c87bde15491, type: 3}
       propertyPath: InScenePlacedSourceGlobalObjectIdHash
@@ -2094,7 +2194,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7042540382875096636, guid: 3f95916e878cfa144b3e2c87bde15491, type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 1360855624
+      value: 1887752607
       objectReference: {fileID: 0}
     - target: {fileID: 7042540382875096636, guid: 3f95916e878cfa144b3e2c87bde15491, type: 3}
       propertyPath: InScenePlacedSourceGlobalObjectIdHash
@@ -2180,7 +2280,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6771458437749752818, guid: c61367312cea5bf4384690180f654762, type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 3677446805
+      value: 3814504389
       objectReference: {fileID: 0}
     - target: {fileID: 6771458437749752818, guid: c61367312cea5bf4384690180f654762, type: 3}
       propertyPath: InScenePlacedSourceGlobalObjectIdHash
@@ -2215,7 +2315,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 936841801914000028, guid: b1a50db558307be4bb7e04b38bddc026, type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 1724090158
+      value: 3886685216
       objectReference: {fileID: 0}
     - target: {fileID: 936841801914000028, guid: b1a50db558307be4bb7e04b38bddc026, type: 3}
       propertyPath: InScenePlacedSourceGlobalObjectIdHash
@@ -2333,7 +2433,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3800914010156435837, guid: c16e5a62164204f48b098d6f2bd2745d, type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 3362893099
+      value: 2404483571
       objectReference: {fileID: 0}
     - target: {fileID: 3800914010156435837, guid: c16e5a62164204f48b098d6f2bd2745d, type: 3}
       propertyPath: InScenePlacedSourceGlobalObjectIdHash
@@ -2415,7 +2515,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6121967642120708596, guid: fc813b005e3d2804f95f49e9380aae7b, type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 963356321
+      value: 504885207
       objectReference: {fileID: 0}
     - target: {fileID: 6121967642120708596, guid: fc813b005e3d2804f95f49e9380aae7b, type: 3}
       propertyPath: InScenePlacedSourceGlobalObjectIdHash
@@ -2445,7 +2545,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 936841801914000028, guid: b1a50db558307be4bb7e04b38bddc026, type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 3183024670
+      value: 2693818336
       objectReference: {fileID: 0}
     - target: {fileID: 936841801914000028, guid: b1a50db558307be4bb7e04b38bddc026, type: 3}
       propertyPath: InScenePlacedSourceGlobalObjectIdHash
@@ -2527,7 +2627,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 936841801914000028, guid: b1a50db558307be4bb7e04b38bddc026, type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 2934193487
+      value: 3886633281
       objectReference: {fileID: 0}
     - target: {fileID: 936841801914000028, guid: b1a50db558307be4bb7e04b38bddc026, type: 3}
       propertyPath: InScenePlacedSourceGlobalObjectIdHash
@@ -2661,7 +2761,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8981104059172356883, guid: 1864588ccffd43d45a57fd87382f0c94, type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 4249507349
+      value: 201840702
       objectReference: {fileID: 0}
     - target: {fileID: 8981104059172356883, guid: 1864588ccffd43d45a57fd87382f0c94, type: 3}
       propertyPath: InScenePlacedSourceGlobalObjectIdHash
@@ -2751,7 +2851,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7503987812653638742, guid: b2794ccce4bece6488d1158a5f41db5e, type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 4048517806
+      value: 560178314
       objectReference: {fileID: 0}
     - target: {fileID: 7503987812653638742, guid: b2794ccce4bece6488d1158a5f41db5e, type: 3}
       propertyPath: InScenePlacedSourceGlobalObjectIdHash
@@ -3034,7 +3134,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7159367891466112396, guid: f5d40f200bf8ea74a9480e85ac2bcbc5, type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 2258766079
+      value: 2154686735
       objectReference: {fileID: 0}
     - target: {fileID: 7159367891466112396, guid: f5d40f200bf8ea74a9480e85ac2bcbc5, type: 3}
       propertyPath: InScenePlacedSourceGlobalObjectIdHash
@@ -3120,7 +3220,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7486585135014991424, guid: 1c58fbbea0655ba4db973952345aa792, type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 4186257862
+      value: 3169156763
       objectReference: {fileID: 0}
     - target: {fileID: 7486585135014991424, guid: 1c58fbbea0655ba4db973952345aa792, type: 3}
       propertyPath: InScenePlacedSourceGlobalObjectIdHash
