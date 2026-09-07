@@ -18,6 +18,8 @@ public class GameManager : NetworkBehaviour
 {
     private const int ExpectedPlayerCount = 2;
 
+    public NetworkVariable<int> currentAct = new NetworkVariable<int>(0);
+
     [SerializeField] private StageObjectGroup[] objectGroups;
     public TheaterManager theaterManager;
     private Coroutine loadActCoroutine;
@@ -97,6 +99,8 @@ public class GameManager : NetworkBehaviour
     private void EnableActObjects(int actIndex)
     {
         if (!IsServer) return;
+
+        currentAct.Value = actIndex;
 
         for (int i = 0; i < objectGroups.Length; i++)
         {

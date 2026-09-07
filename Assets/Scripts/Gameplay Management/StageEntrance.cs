@@ -12,6 +12,8 @@ public class StageEntrance : NetworkBehaviour
         Open
     }
 
+    public StageState hostStageState;
+
     public Collider2D colldier;
     public CameraScript camScript;
     public PlatformEffector2D platformEffector;
@@ -19,7 +21,7 @@ public class StageEntrance : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         //The host player is assigned to the machine room and may not enter the stage
-        if(IsHost) SetEntranceValues(StageState.Locked);
+        if(IsHost) SetEntranceValues(hostStageState);
 
         //Open the entrance for client to enter the stage
         else if (IsClient) SetEntranceValues(StageState.OneWayStage);
