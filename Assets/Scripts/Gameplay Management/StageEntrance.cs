@@ -12,36 +12,27 @@ public class StageEntrance : NetworkBehaviour
         Open
     }
 
-    [SerializeField]
-    private NetworkVariable<StageState> stageLockState = new(StageState.Locked);
-
     public Collider2D colldier;
     public CameraScript camScript;
     public PlatformEffector2D platformEffector;
 
     public override void OnNetworkSpawn()
     {
-        stageLockState.OnValueChanged += OnStageLockStateChanged;
-        SetStageLockState(stageLockState.Value);
+        //The host player is assigned to the machine room and may not enter the stage
+        if(IsHost) SetEntranceValues(StageState.Locked);
+
+        //Open the entrance for client to enter the stage
+        else if (IsClient) SetEntranceValues(StageState.OneWayStage);
     }
 
-    public override void OnNetworkDespawn()
+
+    public void SetStageLockState(StageState state)
     {
-        stageLockState.OnValueChanged -= OnStageLockStateChanged;
+        if(!IsServer) return;
+        SetEntranceValues(state);
     }
 
-    [Rpc(SendTo.Server)]
-    public void SetStageLockStateRpc(StageState state)
-    {
-        stageLockState.Value = state;
-    }
-
-    private void OnStageLockStateChanged(StageState previous, StageState current)
-    {
-        SetStageLockState(current);
-    }
-
-    private void SetStageLockState(StageState state)
+    private void SetEntranceValues(StageState state)
     {
         switch (state)
         {

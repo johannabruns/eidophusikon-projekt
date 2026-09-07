@@ -53,7 +53,6 @@ public class GameManager : NetworkBehaviour
 
         yield return null;
         EnableActObjects(1);
-        theaterManager.stageEntrance.SetStageLockStateRpc(StageEntrance.StageState.OneWayStage);
     }
 
     /// <summary>
