@@ -70,7 +70,7 @@ public class Rain : NetworkBehaviour
         }
     }
 
-    [Rpc(SendTo.Server)]
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     public void ToggleRainRpc()
     {
         isRaining.Value = !isRaining.Value;
