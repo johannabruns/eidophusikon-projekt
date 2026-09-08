@@ -9,7 +9,7 @@ public class TheaterManager : NetworkBehaviour
     public StageLightManager lights;
 
     public Animator curtainAnim;
-    public StageEntrance stageEntrance;
+    public StageEntrance entrance;
 
     public AudioSource audioSource;
     public AudioClip audioCheer;

@@ -12,6 +12,7 @@ public class StageEntrance : NetworkBehaviour
         Open
     }
 
+    //configurable for debugging purposes, but should normally be set to Locked
     public StageState hostStageState;
 
     public Collider2D colldier;
@@ -21,16 +22,22 @@ public class StageEntrance : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         //The host player is assigned to the machine room and may not enter the stage
-        if(IsHost) SetEntranceValues(hostStageState);
+        if(IsServer) SetEntranceValues(hostStageState);
 
         //Open the entrance for client to enter the stage
-        else if (IsClient) SetEntranceValues(StageState.OneWayStage);
+        else if (!IsServer) SetEntranceValues(StageState.OneWayStage);
     }
 
 
-    public void SetStageLockState(StageState state)
-    {
-        if(!IsServer) return;
+    [Rpc(SendTo.ClientsAndHost)]
+    public void SetStageLockStateRpc(Player player, StageState state)
+    {   
+        if (player == Player.StagePlayer && IsServer)
+            return;
+
+        if (player == Player.MachineRoomPlayer && !IsServer)
+            return;
+
         SetEntranceValues(state);
     }
 

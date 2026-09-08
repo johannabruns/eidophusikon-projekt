@@ -46,7 +46,7 @@ public class GameManager : NetworkBehaviour
 
 
     /// <summary>
-    /// Start the game by enabling the first act's objects.
+    /// Only unlock the stage when the client has joined to avoid syncing issues.
     /// </summary>
     private IEnumerator InitialActSetup()
     {
@@ -54,7 +54,7 @@ public class GameManager : NetworkBehaviour
         initialSetupDone = true;
 
         yield return null;
-        EnableActObjects(1);
+        theaterManager.entrance.SetStageLockStateRpc(Player.StagePlayer, StageEntrance.StageState.OneWayStage);
     }
 
     /// <summary>

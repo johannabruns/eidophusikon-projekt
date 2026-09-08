@@ -10,6 +10,7 @@ public class CollisionEvent : MonoBehaviour
     [Tooltip("If true, only reacts when the colliding object is the local player's own NetworkObject.")]
     public bool onlyLocalPlayer = true;
     public bool onlyReactToPlayers = true;
+    public bool destroyOnEnter = false;
 
     private bool IsRelevant(Component collision)
     {
@@ -31,6 +32,11 @@ public class CollisionEvent : MonoBehaviour
         }
 
         OnEnter.Invoke();
+
+        if (destroyOnEnter)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -55,6 +61,11 @@ public class CollisionEvent : MonoBehaviour
         }
 
         OnEnter.Invoke();
+
+        if (destroyOnEnter)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
