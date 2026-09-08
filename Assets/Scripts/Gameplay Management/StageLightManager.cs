@@ -31,6 +31,8 @@ public class StageLightManager : NetworkBehaviour
     private void OnTimeOfDayChanged(TimeOfDay previous, TimeOfDay current)
     {
         SetLight(current);
+        Debug.Log($"Time of day is now {current}");
+        QuestManager.Instance.CheckQuestCompletion();
     }
 
     [Rpc(SendTo.Server)]

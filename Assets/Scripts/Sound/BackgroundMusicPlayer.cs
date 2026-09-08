@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BackgroundMusicPlayer : NetworkBehaviour
 {
-    public GameManager gameManager;
+    public QuestManager questManager;
 
     public AudioSource audioSource;
     private float volume;
@@ -18,13 +18,13 @@ public class BackgroundMusicPlayer : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        gameManager.currentAct.OnValueChanged += OnActChanged;
+        questManager.currentAct.OnValueChanged += OnActChanged;
         volume = audioSource.volume;
     }
 
     public override void OnNetworkDespawn()
     {
-        gameManager.currentAct.OnValueChanged -= OnActChanged;
+        questManager.currentAct.OnValueChanged -= OnActChanged;
     }
 
     private void OnActChanged(int previous, int current)

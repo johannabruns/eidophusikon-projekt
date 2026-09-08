@@ -18,11 +18,8 @@ public class GameManager : NetworkBehaviour
 {
     private const int ExpectedPlayerCount = 2;
 
-    public NetworkVariable<int> currentAct = new NetworkVariable<int>(0);
-
     [SerializeField] private StageObjectGroup[] objectGroups;
     public TheaterManager theaterManager;
-    private Coroutine loadActCoroutine;
 
     private bool initialSetupDone = false;
 
@@ -73,34 +70,19 @@ public class GameManager : NetworkBehaviour
     public void LoadActRpc(int actIndex)
     {
         Debug.Log($"LOADING ACT {actIndex}");
-
-        if (loadActCoroutine != null)
-        {
-            StopCoroutine(loadActCoroutine);
-        }
-        loadActCoroutine = StartCoroutine(LoadAct(actIndex));
+        LoadAct(actIndex);
     }
 
-    private IEnumerator LoadAct(int actIndex)
+    public void LoadAct(int actIndex)
     {
-        if(!IsServer) yield break;
-
-        theaterManager.CloseCurtains();
-
-        yield return new WaitForSeconds(3f);
+        if(!IsServer) return;
 
         EnableActObjects(actIndex);
-
-        yield return new WaitForSeconds(1f);
-
-        theaterManager.OpenCurtains();
     }
 
     private void EnableActObjects(int actIndex)
     {
         if (!IsServer) return;
-
-        currentAct.Value = actIndex;
 
         for (int i = 0; i < objectGroups.Length; i++)
         {

@@ -93,8 +93,11 @@ public class ConstellationManager : NetworkBehaviour
 
     private void UpdateTargetStar(int index)
     {
-        if (stars[index].gameObject.TryGetComponent(out Movable target))
+        if (stars[index].gameObject.TryGetComponent(out Movable target) && axisInteractible != null)
             axisInteractible.target = target;
+
+        else if (axisInteractible == null)
+            Debug.LogWarning("AxisInteractible is not assigned in ConstellationManager.");
     }
     private void OnCurrentStarIndexChanged(int previous, int current) => UpdateTargetStar(current);
 
