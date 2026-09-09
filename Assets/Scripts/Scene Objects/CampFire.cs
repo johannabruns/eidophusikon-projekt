@@ -39,9 +39,14 @@ public class CampFire : NetworkBehaviour
         isLit.OnValueChanged -= OnIsLitChanged;
     }
 
-    public bool IsReady()
+    public bool IsReady(bool lightFireIfReady = true)
     {
-        return woodCount.Value == woodSprites.Length - 1 && stoneCount.Value == stones.Length - 1;
+        bool isReady = woodCount.Value >= woodSprites.Length - 1 && stoneCount.Value >= stones.Length - 1;
+
+        if (lightFireIfReady && isReady && !isLit.Value)
+            LightFire();
+
+        return isReady;
     }
 
     /*----------------------------Wood----------------------------*/
@@ -146,6 +151,7 @@ public class CampFire : NetworkBehaviour
         if (!isReady.Value) return;
 
         isLit.Value = true;
+        QuestManager.Instance.CheckQuestCompletion();
     }
 
     private void ExtinguishFire()

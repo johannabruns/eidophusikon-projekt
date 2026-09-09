@@ -28,7 +28,11 @@ public class Birdcage : NetworkBehaviour
         if(isOpen.Value != newState)
         {
             isOpen.Value = newState;
-            if(newState) onUnlocked.Invoke();          
+            if (newState)
+            {
+                onUnlocked.Invoke();
+                QuestManager.Instance.CheckQuestCompletion();
+            }    
         }
     }
 

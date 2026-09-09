@@ -4,8 +4,10 @@ using UnityEngine.Events;
 
 public class FlowerObserver : NetworkBehaviour
 {
-    public BoolStateObject[] flowers;
-    private NetworkVariable<bool> allFlowersActive = new NetworkVariable<bool>(false);
+    private BoolStateObject[] flowers;
+
+
+    public NetworkVariable<bool> allFlowersActive = new NetworkVariable<bool>(false);
 
     public UnityEvent OnAllFlowersActive;
 
@@ -17,7 +19,7 @@ public class FlowerObserver : NetworkBehaviour
         }
 
         flowers = GetComponentsInChildren<BoolStateObject>();
-        Debug.Log($"FlowerObserver found {flowers.Length} flowers.");
+        //Debug.Log($"FlowerObserver found {flowers.Length} flowers.");
     }
 
     public void Check()
@@ -31,11 +33,12 @@ public class FlowerObserver : NetworkBehaviour
             if (!flower.isActive.Value) return;
         }            
 
-        if (allFlowersActive.Value) return;
+        //if (allFlowersActive.Value) return;
 
-        Debug.Log("All flowers are active!");
+        //Debug.Log("All flowers are active!");
         allFlowersActive.Value = true;
         OnAllFlowersActive.Invoke();
+        QuestManager.Instance.CheckQuestCompletion();
         return;
     }
 

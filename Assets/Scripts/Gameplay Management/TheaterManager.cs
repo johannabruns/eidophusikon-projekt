@@ -12,9 +12,19 @@ public class TheaterManager : NetworkBehaviour
     public StageEntrance entrance;
 
     public AudioSource audioSource;
-    public AudioClip audioCheer;
-    public AudioClip audienceApplause;
-    public AudioClip audienceBored;
+
+    public AudioClip longApplause;
+    public AudioClip shortApplause;
+    public AudioClip finalApplause;
+
+    public void ShortApplause()     
+    {
+        audioSource.PlayOneShot(shortApplause);
+    }
+    public void LongApplause()
+    {
+        audioSource.PlayOneShot(longApplause);
+    }
 
     public void OpenCurtains()
     {

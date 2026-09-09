@@ -18,6 +18,7 @@ public class LeafPile : NetworkBehaviour
     public AudioSource audioSource;
     public AudioClip onDestroyed;
 
+    public bool IsComplete => currentSpriteIndex.Value >= sprites.Length - 1;
     public UnityEvent OnComplete;
 
     public override void OnNetworkSpawn()
@@ -42,7 +43,8 @@ public class LeafPile : NetworkBehaviour
 
         if (index == sprites.Length - 1)
         {
-            OnComplete?.Invoke();
+            OnComplete.Invoke();
+            QuestManager.Instance.CheckQuestCompletion();
         }
     }
 

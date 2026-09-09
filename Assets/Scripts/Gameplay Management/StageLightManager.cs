@@ -4,6 +4,7 @@ using UnityEngine.Rendering.Universal;
 
 public class StageLightManager : NetworkBehaviour
 {
+    [HideInInspector]
     public NetworkVariable<TimeOfDay> currentTimeOfDay = new NetworkVariable<TimeOfDay>(TimeOfDay.Morning);
     public TimeOfDay initialTimeOfDay;
 

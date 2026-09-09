@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ConstellationManager : NetworkBehaviour
 {
@@ -11,12 +12,12 @@ public class ConstellationManager : NetworkBehaviour
     public NetworkVariable<int> alignedStars = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
     public List<Star> stars;
-    //private Star currentstar => stars[currentStarIndex.Value];
-
     public NetworkVariable<int> currentStarIndex = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     public Transform currentStarIndicator;
 
     public AxisInteractible axisInteractible;
+
+    public UnityEvent OnConstellationAligned;
 
     public override void OnNetworkSpawn()
     {
@@ -31,8 +32,8 @@ public class ConstellationManager : NetworkBehaviour
             isAligned.Value = alignedStars.Value == stars.Count;
         }
 
-        isAligned.OnValueChanged += OnConstellationAligned;
-        currentStarIndex.OnValueChanged += OnCurrentStarIndexChanged;
+        isAligned.OnValueChanged += OnConstellationStateChanged;
+        currentStarIndex.OnValueChanged += OnActiveStarChanged;
 
         UpdateTargetStar(currentStarIndex.Value);
     }
@@ -44,8 +45,8 @@ public class ConstellationManager : NetworkBehaviour
             star.reachedPosition.OnValueChanged -= OnStarPositionChanged;
         }
 
-        isAligned.OnValueChanged -= OnConstellationAligned;
-        currentStarIndex.OnValueChanged -= OnCurrentStarIndexChanged;
+        isAligned.OnValueChanged -= OnConstellationStateChanged;
+        currentStarIndex.OnValueChanged -= OnActiveStarChanged;
     }
 
     private void OnStarPositionChanged(bool previous, bool current)
@@ -64,16 +65,12 @@ public class ConstellationManager : NetworkBehaviour
         isAligned.Value = alignedStars.Value == stars.Count;
     }
 
-    private void OnConstellationAligned(bool previous, bool current)
+    private void OnConstellationStateChanged(bool previous, bool current)
     {
         if (current)
         {
-            Debug.Log("Constellation aligned!");
-        }
-
-        else if (previous && !current)
-        {
-            Debug.Log("Constellation misaligned!");
+            QuestManager.Instance.CheckQuestCompletion();
+            OnConstellationAligned.Invoke();
         }
     }
 
@@ -99,7 +96,8 @@ public class ConstellationManager : NetworkBehaviour
         else if (axisInteractible == null)
             Debug.LogWarning("AxisInteractible is not assigned in ConstellationManager.");
     }
-    private void OnCurrentStarIndexChanged(int previous, int current) => UpdateTargetStar(current);
+
+    private void OnActiveStarChanged(int previous, int current) => UpdateTargetStar(current);
 
 
     private void FixedUpdate()

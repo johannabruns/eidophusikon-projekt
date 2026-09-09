@@ -8,7 +8,6 @@ public class QuestManager : NetworkBehaviour
     public static QuestManager Instance { get; private set; }
 
     public TheaterManager theaterManager;
-    public StageLightManager stageLightManager;
     public GameManager gameManager;
 
     public NetworkVariable<int> currentAct = new NetworkVariable<int>(0);
@@ -19,6 +18,9 @@ public class QuestManager : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
+        if (Instance != null && Instance != this)
+            return;
+       
         Instance = this;
     }
 
@@ -30,12 +32,10 @@ public class QuestManager : NetworkBehaviour
 
     public void CheckQuestCompletion()
     {
-        if (!IsServer) return;
-
         bool isComplete = true;
 
         //check if the correct time of day is set for the current quest
-        if (currentQuest.timeOfDay != stageLightManager.currentTimeOfDay.Value)
+        if (currentQuest.timeOfDay != theaterManager.lights.currentTimeOfDay.Value)
             isComplete = false;
 
         //check if all requirements for the current quest are complete
@@ -44,21 +44,24 @@ public class QuestManager : NetworkBehaviour
 
         //TODO: Check if curtains are closed?
 
-        Debug.Log($"Checking for {currentAct.Value}: TimeOfDay should be {currentQuest.timeOfDay} and is: {stageLightManager.currentTimeOfDay.Value}" +
-            $" | Quest requirements completed: {currentQuest.IsComplete()}");
-
-        if (isComplete && currentAct.Value < quests.Count) NextQuest();
+        if (isComplete)
+            StartNextQuest();
     }
 
-    private void NextQuest()
+    private void StartNextQuest()
     {
         if (!IsServer) return;
 
-        //return if there is no next quest
-        if (currentAct.Value >= quests.Count) return;
+        //special case if this is the final quest
+        if (!HasNextQuest())
+        {
+            theaterManager.LongApplause();
+            return;
+        }
 
         currentAct.Value++;
         currentQuest = quests[currentAct.Value - 1];
+
         actTransition = StartCoroutine(QuestTransition(currentAct.Value));
     }
 
@@ -66,9 +69,10 @@ public class QuestManager : NetworkBehaviour
     {
         if (actTransition != null) yield break;
 
-        //don't close the curtains for the first quest, since the curtains are already closed at the start of the game
+        //this block only executes if this is NOT the first quest
         if (currentAct.Value > 1)
         {
+            theaterManager.ShortApplause();
             theaterManager.CloseCurtains();
             yield return new WaitForSeconds(3f);
         }
@@ -86,9 +90,15 @@ public class QuestManager : NetworkBehaviour
     [Rpc(SendTo.Server)]
     public void StartFirstQuestRpc()
     {
-        //make sure the game has not started yet
+        //confirm this is indeed the first quest
         if (currentAct.Value != 0) return;
 
-        NextQuest();
+        theaterManager.LongApplause();
+        StartNextQuest();
     }
+
+    public bool HasNextQuest()
+    {
+        return currentAct.Value < quests.Count;
+    }  
 }

@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 8405854952080250234}
   - component: {fileID: 939204110093234378}
   m_Layer: 0
-  m_Name: 'Right Mask '
+  m_Name: 'Right Sprite Mask '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -437,8 +437,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CurtainManger
   ShowTopMostFoldoutHeaderGroup: 1
+  lights: {fileID: 0}
   curtainAnim: {fileID: 0}
-  stageEntrance: {fileID: 0}
+  entrance: {fileID: 0}
   audioSource: {fileID: 0}
   audioCheer: {fileID: 0}
   audienceApplause: {fileID: 0}
