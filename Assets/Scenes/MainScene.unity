@@ -12117,7 +12117,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.447
+  m_Volume: 0.311
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -14964,6 +14964,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 512176559937168986, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
+      propertyPath: log
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 512176559937168986, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
       propertyPath: constantInverval
       value: 1
       objectReference: {fileID: 0}
@@ -14985,7 +14989,7 @@ PrefabInstance:
       objectReference: {fileID: 1527540977}
     - target: {fileID: 1244197047595118527, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
       propertyPath: hostStageState
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1657367841872237900, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
       propertyPath: windScript
@@ -15163,6 +15167,10 @@ PrefabInstance:
       propertyPath: OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1527540977}
+    - target: {fileID: 6113134622829205218, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
+      propertyPath: m_Name
+      value: WaterStream
+      objectReference: {fileID: 0}
     - target: {fileID: 6405449608620278524, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
       propertyPath: lights
       value: 
@@ -15438,7 +15446,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 695293042673568129, guid: acbcf74b6bdf60241bbde0dcfd66387b, type: 3}
       propertyPath: m_Volume
-      value: 0.045
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 3770602187852686767, guid: acbcf74b6bdf60241bbde0dcfd66387b, type: 3}
       propertyPath: m_LocalPosition.x

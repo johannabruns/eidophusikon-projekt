@@ -14,6 +14,7 @@ public class WateringCan : Usable
 
     public Rain waterStream;
     private float rainDuration = 0f;
+    private bool lastRequestedRainState = false;
 
 
     public override void OnNetworkSpawn()
@@ -73,17 +74,17 @@ public class WateringCan : Usable
 
     private void FixedUpdate()
     {
-        if (rainDuration > 0f && !waterStream.isRaining.Value)
+        bool wantsRain = rainDuration > 0f;
+
+        if (wantsRain != lastRequestedRainState)
         {
-            waterStream.ToggleRainRpc();
+            waterStream.SetRainRpc(wantsRain);
+            lastRequestedRainState = wantsRain;
         }
-        else if (rainDuration > 0f && waterStream.isRaining.Value)
+
+        if (rainDuration > 0f)
         {
             rainDuration -= Time.fixedDeltaTime;
-        }
-        else if (rainDuration <= 0f && waterStream.isRaining.Value)
-        {
-            waterStream.ToggleRainRpc();
         }
     }
 }

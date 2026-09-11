@@ -27,10 +27,12 @@ public class Rain : NetworkBehaviour
     public List<Transform> spawnPoints;
     private List<RainDropSpawner> spawners = new List<RainDropSpawner>();
 
-    public NetworkVariable<bool> isRaining = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<bool> isRaining = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
     public override void OnNetworkSpawn()
     {
+        Debug.Log($"Rain Spawned on Object: {gameObject.name}");
+
         isRaining.OnValueChanged += OnIsActiveChanged;
 
         foreach(Transform spawnPoint in spawnPoints)
@@ -76,6 +78,13 @@ public class Rain : NetworkBehaviour
         isRaining.Value = !isRaining.Value;
     }
 
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Owner)]
+    public void SetRainRpc(bool value)
+    {
+        isRaining.Value = value;
+    }
+
+ 
     private void OnDrawGizmos()
     {
         foreach(Transform spawnPoint in spawnPoints)
