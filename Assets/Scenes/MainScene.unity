@@ -1934,6 +1934,14 @@ PrefabInstance:
       propertyPath: m_Volume
       value: 0.25
       objectReference: {fileID: 0}
+    - target: {fileID: 7450269613077072492, guid: 125ac45e3f587c24f9ac889d58063f44, type: 3}
+      propertyPath: spreadCustomCurve.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7450269613077072492, guid: 125ac45e3f587c24f9ac889d58063f44, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12025,182 +12033,17 @@ MonoBehaviour:
       MinSecondsBetweenUpdates: 0
       MaxSecondsBetweenUpdates: 0
     m_InternalValue: 0
---- !u!1 &1736983378
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1736983381}
-  - component: {fileID: 1736983379}
-  - component: {fileID: 1736983380}
-  - component: {fileID: 1736983382}
-  m_Layer: 0
-  m_Name: Theater Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1736983379
+--- !u!114 &1736983380 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 5323167748103990891, guid: 41f4a0ff674d23c49a254e3f9d04ca76, type: 3}
+  m_PrefabInstance: {fileID: 4005258782348368060}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1736983378}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 2931053404
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  DeferredDespawnTick: 0
-  Ownership: 1
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 0
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
-  SyncOwnerTransformWhenParented: 1
-  AllowOwnerToParent: 0
---- !u!114 &1736983380
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1736983378}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ef2672a143e49442b0e67a01037a626, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TheaterManager
-  ShowTopMostFoldoutHeaderGroup: 1
-  lights: {fileID: 762427352}
-  curtainAnim: {fileID: 1436977391}
-  entrance: {fileID: 1838624521}
-  audioSource: {fileID: 1736983382}
-  longApplause: {fileID: 8300000, guid: 7b9f4ff77e23e7641895897a9aa46263, type: 3}
-  shortApplause: {fileID: 8300000, guid: 122b6ceb974b9844ab86878354d80041, type: 3}
-  finalApplause: {fileID: 0}
---- !u!4 &1736983381
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1736983378}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25.18, y: 1.43, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &1736983382
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1736983378}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 0.311
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1 &1747817941
 GameObject:
   m_ObjectHideFlags: 0
@@ -14989,7 +14832,7 @@ PrefabInstance:
       objectReference: {fileID: 1527540977}
     - target: {fileID: 1244197047595118527, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
       propertyPath: hostStageState
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1657367841872237900, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
       propertyPath: windScript
@@ -15346,6 +15189,91 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b59dcfb655b36614fb3058e187e2df23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageObjectWrapper
+--- !u!1001 &4005258782348368060
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3392272881699577296, guid: 41f4a0ff674d23c49a254e3f9d04ca76, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 25.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 3392272881699577296, guid: 41f4a0ff674d23c49a254e3f9d04ca76, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.43
+      objectReference: {fileID: 0}
+    - target: {fileID: 3392272881699577296, guid: 41f4a0ff674d23c49a254e3f9d04ca76, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3392272881699577296, guid: 41f4a0ff674d23c49a254e3f9d04ca76, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3392272881699577296, guid: 41f4a0ff674d23c49a254e3f9d04ca76, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3392272881699577296, guid: 41f4a0ff674d23c49a254e3f9d04ca76, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3392272881699577296, guid: 41f4a0ff674d23c49a254e3f9d04ca76, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3392272881699577296, guid: 41f4a0ff674d23c49a254e3f9d04ca76, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3392272881699577296, guid: 41f4a0ff674d23c49a254e3f9d04ca76, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3392272881699577296, guid: 41f4a0ff674d23c49a254e3f9d04ca76, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5305265344738032532, guid: 41f4a0ff674d23c49a254e3f9d04ca76, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 3874153216
+      objectReference: {fileID: 0}
+    - target: {fileID: 5305265344738032532, guid: 41f4a0ff674d23c49a254e3f9d04ca76, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 2617743349
+      objectReference: {fileID: 0}
+    - target: {fileID: 5323167748103990891, guid: 41f4a0ff674d23c49a254e3f9d04ca76, type: 3}
+      propertyPath: lights
+      value: 
+      objectReference: {fileID: 762427352}
+    - target: {fileID: 5323167748103990891, guid: 41f4a0ff674d23c49a254e3f9d04ca76, type: 3}
+      propertyPath: entrance
+      value: 
+      objectReference: {fileID: 1838624521}
+    - target: {fileID: 5323167748103990891, guid: 41f4a0ff674d23c49a254e3f9d04ca76, type: 3}
+      propertyPath: curtainAnim
+      value: 
+      objectReference: {fileID: 1436977391}
+    - target: {fileID: 6399948449208266721, guid: 41f4a0ff674d23c49a254e3f9d04ca76, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6399948449208266721, guid: 41f4a0ff674d23c49a254e3f9d04ca76, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7641393621070033313, guid: 41f4a0ff674d23c49a254e3f9d04ca76, type: 3}
+      propertyPath: m_Name
+      value: Theater Manager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 41f4a0ff674d23c49a254e3f9d04ca76, type: 3}
 --- !u!4 &7898325076822248437 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 432257663246631066, guid: da96949611d45e548ad4953847582209, type: 3}
@@ -15448,6 +15376,26 @@ PrefabInstance:
       propertyPath: m_Volume
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 695293042673568129, guid: acbcf74b6bdf60241bbde0dcfd66387b, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: e0e4f11b197dbd64f8a7ffe45d9d88b3, type: 3}
+    - target: {fileID: 695293042673568129, guid: acbcf74b6bdf60241bbde0dcfd66387b, type: 3}
+      propertyPath: MaxDistance
+      value: 63.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 695293042673568129, guid: acbcf74b6bdf60241bbde0dcfd66387b, type: 3}
+      propertyPath: MinDistance
+      value: 12.72
+      objectReference: {fileID: 0}
+    - target: {fileID: 695293042673568129, guid: acbcf74b6bdf60241bbde0dcfd66387b, type: 3}
+      propertyPath: DopplerLevel
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 695293042673568129, guid: acbcf74b6bdf60241bbde0dcfd66387b, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3770602187852686767, guid: acbcf74b6bdf60241bbde0dcfd66387b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 24.64
@@ -15500,6 +15448,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MusicPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 5006153358277334503, guid: acbcf74b6bdf60241bbde0dcfd66387b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8239306924390350694, guid: acbcf74b6bdf60241bbde0dcfd66387b, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 3495139956
@@ -15520,7 +15472,7 @@ SceneRoots:
   - {fileID: 1789062279}
   - {fileID: 413524000}
   - {fileID: 689767144}
-  - {fileID: 1736983381}
+  - {fileID: 4005258782348368060}
   - {fileID: 323756973}
   - {fileID: 8961447280312189712}
   - {fileID: 702300219}

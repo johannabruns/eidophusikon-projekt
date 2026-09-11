@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ using UnityEngine;
 /// </summary>
 public class TheaterManager : NetworkBehaviour
 {
+    private NetworkVariable<bool> initialStateActive = new NetworkVariable<bool>(true);
+
     public StageLightManager lights;
 
     public Animator curtainAnim;
@@ -15,15 +18,29 @@ public class TheaterManager : NetworkBehaviour
 
     public AudioClip longApplause;
     public AudioClip shortApplause;
-    public AudioClip finalApplause;
+    public AudioClip audienceChatter;
+
+    private Dictionary<string, AudioClip> soundEffects = new Dictionary<string, AudioClip>();
+
+    public override void OnNetworkSpawn()
+    {
+        audioSource.loop = true;
+        audioSource.clip = audienceChatter;
+        audioSource.volume = 0.05f;
+        audioSource.Play();
+
+        soundEffects.Add("ShortApplause", shortApplause);
+        soundEffects.Add("LongApplause", longApplause);
+    }
 
     public void ShortApplause()     
     {
-        audioSource.PlayOneShot(shortApplause);
+        PlaySoundRpc("ShortApplause");
     }
     public void LongApplause()
     {
-        audioSource.PlayOneShot(longApplause);
+
+        PlaySoundRpc("LongApplause");
     }
 
     public void OpenCurtains()
@@ -34,6 +51,26 @@ public class TheaterManager : NetworkBehaviour
     public void CloseCurtains()
     {
         SetCurtainStateRpc(false);
+    }
+
+    [Rpc(SendTo.Everyone)]
+    private void PlaySoundRpc(string sound)
+    {
+        if (initialStateActive.Value)
+        {
+            initialStateActive.Value = false;
+            audioSource.loop = false;
+            audioSource.clip = null;
+            audioSource.volume = 0.1f;
+            audioSource.Stop();
+        }
+
+        AudioClip clip = soundEffects[sound];
+
+        if (clip != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
     }
 
     [Rpc(SendTo.Server)]
