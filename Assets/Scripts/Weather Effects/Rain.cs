@@ -27,7 +27,7 @@ public class Rain : NetworkBehaviour
     public List<Transform> spawnPoints;
     private List<RainDropSpawner> spawners = new List<RainDropSpawner>();
 
-    public NetworkVariable<bool> isRaining = new NetworkVariable<bool>(false);
+    public NetworkVariable<bool> isRaining = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     public override void OnNetworkSpawn()
     {

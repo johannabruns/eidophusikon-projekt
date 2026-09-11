@@ -95,13 +95,13 @@ public class PlayerItemManager : NetworkBehaviour
         if (!IsOwner) return;
 
         //calculate carry position based on whether the player is facing left or right
-        Vector2 carryOffset = playerAnimations.networkFlipX.Value ?
+        Vector2 carryOffset = playerAnimations.isFlipped.Value ?
             new(-this.carryOffset.x, this.carryOffset.y) : this.carryOffset;
 
         if (CarriedItem == null) return;
 
         //flip the carried item to match the player's facing direction
-        carriedItemScript.flip.Value = playerAnimations.networkFlipX.Value;
+        carriedItemScript.flip.Value = playerAnimations.isFlipped.Value;
         
         Vector2 carryPos = transform.position + (Vector3)carryOffset;
 

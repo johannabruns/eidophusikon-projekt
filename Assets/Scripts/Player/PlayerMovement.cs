@@ -34,12 +34,6 @@ public class PlayerMovement : NetworkBehaviour
 
         if (IsOwner)
         {
-            //Set Spawn Position based on host or client
-            Vector3 hostSpawn = new Vector3(0f, 0f, 0f);
-            Vector3 clientSpawn = new Vector3(2f, 0f, 0f);
-
-            transform.position = IsServer ? hostSpawn : clientSpawn;
-
             // Set the camera to follow this player
             CameraScript camScript = Camera.main.GetComponent<CameraScript>();
             camScript.EnterPlayerFollowMode(transform);

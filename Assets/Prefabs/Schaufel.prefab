@@ -71,7 +71,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.007, y: 0}
+  m_Offset: {x: 0.007, y: -0.54}
   m_Size: {x: 0.13237236, y: 2.0644445}
   m_Direction: 0
 --- !u!50 &3742615647200079272
@@ -351,6 +351,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StageObjectWrapper
   ShowTopMostFoldoutHeaderGroup: 1
   targetObject: {fileID: 409964318956758425}
+  spawnManually: 0
 --- !u!1 &5877646700226589029
 GameObject:
   m_ObjectHideFlags: 0

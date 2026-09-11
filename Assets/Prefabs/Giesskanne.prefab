@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 250613024
+  GlobalObjectIdHash: 1506027910
   InScenePlacedSourceGlobalObjectIdHash: 1506027910
   DeferredDespawnTick: 0
   Ownership: 1
@@ -88,7 +88,6 @@ GameObject:
   - component: {fileID: 1762907350122789000}
   - component: {fileID: 8738169217505471580}
   - component: {fileID: 7253669652585523259}
-  - component: {fileID: 5209596330683771227}
   m_Layer: 12
   m_Name: Giesskanne Object
   m_TagString: Carryable
@@ -269,7 +268,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 4553841631207603859}
   emptySprite: {fileID: -5007717835261507284, guid: d020513d5d1d12047a7f0dad7f34632d, type: 3}
   fullSprite: {fileID: 1914849043038913832, guid: d020513d5d1d12047a7f0dad7f34632d, type: 3}
-  waterStream: {fileID: 5209596330683771227}
+  waterStream: {fileID: 297644191465003025}
 --- !u!82 &7253669652585523259
 AudioSource:
   m_ObjectHideFlags: 0
@@ -367,30 +366,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &5209596330683771227
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5888278880124879864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0dfcc886332b00746b03b71de9577deb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Rain
-  ShowTopMostFoldoutHeaderGroup: 1
-  rainDropPrefab: {fileID: 8720862323183967085, guid: 975d2763aae977b4c875ba0b1f8b0da0, type: 3}
-  maxSpawnInterval: 0.1
-  constantInverval: 1
-  audioSource: {fileID: 0}
-  spawnPoints:
-  - {fileID: 4253249469749843715}
-  isRaining:
-    UpdateTraits:
-      MinSecondsBetweenUpdates: 0
-      MaxSecondsBetweenUpdates: 0
-    m_InternalValue: 0
 --- !u!1 &6335680128421243049
 GameObject:
   m_ObjectHideFlags: 0
@@ -400,8 +375,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4253249469749843715}
+  - component: {fileID: 297644191465003025}
   m_Layer: 12
-  m_Name: DropOrigin
+  m_Name: Rain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -422,6 +398,30 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8388366891286185881}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &297644191465003025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6335680128421243049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dfcc886332b00746b03b71de9577deb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Rain
+  ShowTopMostFoldoutHeaderGroup: 1
+  rainDropPrefab: {fileID: 8720862323183967085, guid: 975d2763aae977b4c875ba0b1f8b0da0, type: 3}
+  maxSpawnInterval: 0.5
+  constantInverval: 0
+  audioSource: {fileID: 0}
+  spawnPoints:
+  - {fileID: 4253249469749843715}
+  isRaining:
+    UpdateTraits:
+      MinSecondsBetweenUpdates: 0
+      MaxSecondsBetweenUpdates: 0
+    m_InternalValue: 0
 --- !u!1 &7798667412797044477
 GameObject:
   m_ObjectHideFlags: 0

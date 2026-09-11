@@ -10,6 +10,7 @@ public class QuestManager : NetworkBehaviour
     public TheaterManager theaterManager;
     public GameManager gameManager;
 
+    [HideInInspector]
     public NetworkVariable<int> currentAct = new NetworkVariable<int>(0);
     public List<Quest> quests;
     private Quest currentQuest;
