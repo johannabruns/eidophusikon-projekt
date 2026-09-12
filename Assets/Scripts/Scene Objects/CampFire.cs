@@ -26,6 +26,7 @@ public class CampFire : NetworkBehaviour
         woodCount.OnValueChanged += OnWoodCountChanged;
         stoneCount.OnValueChanged += OnStoneCountChanged;
         isLit.OnValueChanged += OnIsLitChanged;
+        isReady.OnValueChanged += OnIsReadyChanged;
 
         SetStoneSprite(stoneCount.Value);
         SetWoodSprite(woodCount.Value);
@@ -37,17 +38,24 @@ public class CampFire : NetworkBehaviour
         woodCount.OnValueChanged -= OnWoodCountChanged;
         stoneCount.OnValueChanged -= OnStoneCountChanged;
         isLit.OnValueChanged -= OnIsLitChanged;
+        isReady.OnValueChanged -= OnIsReadyChanged;
     }
 
-    public bool IsReady(bool lightFireIfReady = true)
+    public bool IsReady()
     {
-        bool isReady = woodCount.Value >= woodSprites.Length - 1 && stoneCount.Value >= stones.Length - 1;
-
-        if (lightFireIfReady && isReady && !isLit.Value)
-            LightFire();
-
-        return isReady;
+        return woodCount.Value >= woodSprites.Length - 1 && stoneCount.Value >= stones.Length - 1;
     }
+
+    private void OnIsReadyChanged(bool previousValue, bool newValue)
+    {
+        if (!IsServer) return;
+
+        if (newValue)
+        {
+            LightFire();
+        }
+    }
+
 
     /*----------------------------Wood----------------------------*/
 
@@ -72,7 +80,7 @@ public class CampFire : NetworkBehaviour
 
     private void SetWoodSprite(int index)
     {
-        if (index >= woodSprites.Length) 
+        if (index >= woodSprites.Length)
             return;
 
         if (index < 0)
@@ -107,7 +115,7 @@ public class CampFire : NetworkBehaviour
         SetStoneSprite(newValue);
     }
 
-    private void SetStoneSprite (int index)
+    private void SetStoneSprite(int index)
     {
         if (index >= woodSprites.Length) return;
 

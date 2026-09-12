@@ -6,7 +6,7 @@ public abstract class Interactible : NetworkBehaviour
 {
     public Collider2D range;
     public GameObject UI;
-    public GameObject player;
+    [HideInInspector] public GameObject player;
 
     public override void OnNetworkSpawn()
     {

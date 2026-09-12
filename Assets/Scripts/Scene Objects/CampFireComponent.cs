@@ -25,7 +25,7 @@ public class CampFireComponent : Usable
                     break;
             }
             audioSource.PlayOneShot(onUseSound);
-            RequestObjectDestructionRpc();
+            RequestObjectDestructionRpc(onUseSound.length + 0.5f);
         }
     }
 }

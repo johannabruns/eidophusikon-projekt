@@ -26,7 +26,7 @@ public class TheaterManager : NetworkBehaviour
     {
         audioSource.loop = true;
         audioSource.clip = audienceChatter;
-        audioSource.volume = 0.05f;
+        audioSource.volume = 0.02f;
         audioSource.Play();
 
         soundEffects.Add("ShortApplause", shortApplause);

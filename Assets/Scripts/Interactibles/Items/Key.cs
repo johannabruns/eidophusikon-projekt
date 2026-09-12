@@ -9,7 +9,7 @@ public class Key : Usable
         {
             //audioSource.PlayOneShot(onUseSound);
             birdcage.UnlockRpc(true);
-            RequestObjectDestructionRpc();
+            RequestObjectDestructionRpc(0f);
         }
     }
 

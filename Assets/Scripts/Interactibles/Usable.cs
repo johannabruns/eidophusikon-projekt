@@ -32,23 +32,23 @@ public abstract class Usable : Carryable
     }
 
     [Rpc(SendTo.Server)]
-    protected void RequestObjectDestructionRpc()
+    protected void RequestObjectDestructionRpc(float delay)
     {
         if (audioSource != null && audioSource.isPlaying)
         {
-            StartCoroutine(DestroyAfterSound());
+            StartCoroutine(DestroyAfterDelay(delay));
         }
         else
             NetworkObject.Despawn();
     }
 
-    private IEnumerator DestroyAfterSound()
+    private IEnumerator DestroyAfterDelay(float delay)
     {
         GetComponent<Rigidbody2D>().simulated = false;
         GetComponent<Collider2D>().enabled = false;
         GetComponent<SpriteRenderer>().enabled = false;
 
-        yield return new WaitUntil(() => !audioSource.isPlaying);
+        yield return new WaitForSeconds(delay);
         NetworkObject.Despawn();
     }
 

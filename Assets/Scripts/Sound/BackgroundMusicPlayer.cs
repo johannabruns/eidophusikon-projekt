@@ -6,7 +6,8 @@ public class BackgroundMusicPlayer : NetworkBehaviour
 {
     public QuestManager questManager;
 
-    public AudioSource audioSource;
+    public AudioSource primaryAudioSource;
+    public AudioSource secondaryAudioSource;
     private float volume;
 
     public AudioClip act1Music;
@@ -14,12 +15,16 @@ public class BackgroundMusicPlayer : NetworkBehaviour
     public AudioClip act3Music;
     public AudioClip act4Music;
 
+    public AudioClip birdSounds;
+    public AudioClip owlSounds;
+
+
     private Coroutine musicTransitionCoroutine = null;
 
     public override void OnNetworkSpawn()
     {
         questManager.currentAct.OnValueChanged += OnActChanged;
-        volume = audioSource.volume;
+        volume = primaryAudioSource.volume;
     }
 
     public override void OnNetworkDespawn()
@@ -32,7 +37,7 @@ public class BackgroundMusicPlayer : NetworkBehaviour
         if (musicTransitionCoroutine != null)
         {
             StopCoroutine(musicTransitionCoroutine);
-            audioSource.volume = volume;
+            primaryAudioSource.volume = volume;
         }
 
         musicTransitionCoroutine = StartCoroutine(MusicTransitionCoroutine(current));
@@ -42,28 +47,31 @@ public class BackgroundMusicPlayer : NetworkBehaviour
     {
         Debug.Log($"Transitioning to music for act {index}");
 
-        yield return StartCoroutine(AudioFader.FadeOut(audioSource, 3f));
-        audioSource.clip = GetClipBySceneIndex(index);
-        yield return StartCoroutine(AudioFader.FadeIn(audioSource, 3f));
+        yield return StartCoroutine(AudioFader.FadeOut(primaryAudioSource, 3f));
+        yield return StartCoroutine(AudioFader.FadeOut(secondaryAudioSource, 3f));
+        primaryAudioSource.clip = GetClipBySceneIndex(index)[0];
+        secondaryAudioSource.clip = GetClipBySceneIndex(index)[1];
+        yield return StartCoroutine(AudioFader.FadeIn(primaryAudioSource, 3f));
+        yield return StartCoroutine(AudioFader.FadeIn(secondaryAudioSource, 3f));
     }
 
-    private AudioClip GetClipBySceneIndex(int index)
+    private AudioClip[] GetClipBySceneIndex(int index)
     {
-        AudioClip clip;
+        AudioClip[] clip;
 
         switch (index)
         {
             case 1:
-                clip = act1Music;
+                clip = new[] { act1Music, birdSounds };
                 break;
             case 2:
-                clip = act2Music;
+                clip = new[] { act2Music, birdSounds };
                 break;
             case 3:
-                clip = act3Music;
+                clip = new[] { act3Music, birdSounds };
                 break;
             case 4:
-                clip = act4Music;
+                clip = new[] { act4Music, owlSounds };
                 break;
             default:
                 clip = null;

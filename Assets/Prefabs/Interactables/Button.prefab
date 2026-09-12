@@ -318,6 +318,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   range: {fileID: 6681002738747141358}
   UI: {fileID: 8379731483276071705}
+  player: {fileID: 0}
   animator: {fileID: 1627663299075758028}
   onPress:
     m_PersistentCalls:
@@ -349,7 +350,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.223
   m_Pitch: 1
   Loop: 0
   Mute: 0

@@ -44,7 +44,7 @@ public class LeafPile : NetworkBehaviour
         if (index == sprites.Length - 1)
         {
             OnComplete.Invoke();
-            QuestManager.Instance.CheckQuestCompletion();
+            StartCoroutine(WaitUntilComplete());
         }
     }
 
@@ -74,6 +74,12 @@ public class LeafPile : NetworkBehaviour
 
         currentSpriteIndex.Value = 0;
         destroyCoroutine = null;
+    }
+
+    private IEnumerator WaitUntilComplete()
+    {
+        yield return new WaitForSeconds(4f);
+        QuestManager.Instance.CheckQuestCompletion();
     }
 
     private bool IsInProgress()

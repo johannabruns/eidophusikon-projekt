@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 842374175520449577}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.78399944, y: 0, z: 0}
+  m_LocalPosition: {x: -0.78399944, y: 0.36999965, z: 0}
   m_LocalScale: {x: 1.22, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -56,7 +56,7 @@ Transform:
   m_GameObject: {fileID: 1055892301708675686}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.6560006, y: 0, z: 0}
+  m_LocalPosition: {x: 1.6560006, y: 0.36999965, z: 0}
   m_LocalScale: {x: 1.22, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -139,7 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 563636008
+  GlobalObjectIdHash: 3561270865
   InScenePlacedSourceGlobalObjectIdHash: 3561270865
   DeferredDespawnTick: 0
   Ownership: 1
@@ -166,6 +166,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StageObjectWrapper
   ShowTopMostFoldoutHeaderGroup: 1
   targetObject: {fileID: 4905914498804977651}
+  spawnManually: 0
 --- !u!1 &2263218187098576283
 GameObject:
   m_ObjectHideFlags: 0
@@ -191,7 +192,7 @@ Transform:
   m_GameObject: {fileID: 2263218187098576283}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.17399931, y: 0, z: 0}
+  m_LocalPosition: {x: -0.17399931, y: 0.36999965, z: 0}
   m_LocalScale: {x: 1.22, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -280,7 +281,7 @@ SpriteRenderer:
   m_SortingLayerID: -1273045355
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: -9204343751905074325, guid: 5f72ffa28923ece4d9d8a235f17898ad, type: 3}
+  m_Sprite: {fileID: 8728564930443918006, guid: 82b4ca2c49ebd6f489a4ee94e16a294d, type: 3}
   m_Color: {r: 0.7056604, g: 0.6643859, b: 0.6643859, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -476,7 +477,7 @@ Transform:
   m_GameObject: {fileID: 3586001153019427022}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.3939995, y: 0, z: 0}
+  m_LocalPosition: {x: -1.3939995, y: 0.36999965, z: 0}
   m_LocalScale: {x: 1.22, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -507,7 +508,7 @@ Transform:
   m_GameObject: {fileID: 3932811452464984803}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.2660007, y: 0, z: 0}
+  m_LocalPosition: {x: 2.2660007, y: 0.36999965, z: 0}
   m_LocalScale: {x: 1.22, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -569,7 +570,7 @@ Transform:
   m_GameObject: {fileID: 4570615413985142396}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.004, y: 0, z: 0}
+  m_LocalPosition: {x: -2.004, y: 0.37, z: 0}
   m_LocalScale: {x: 1.22, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -600,7 +601,7 @@ Transform:
   m_GameObject: {fileID: 4722887990783544893}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.4360006, y: 0, z: 0}
+  m_LocalPosition: {x: 0.4360006, y: 0.36999965, z: 0}
   m_LocalScale: {x: 1.22, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -665,7 +666,7 @@ Transform:
   m_GameObject: {fileID: 7735981340333321274}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.0460005, y: 0, z: 0}
+  m_LocalPosition: {x: 1.0460005, y: 0.36999965, z: 0}
   m_LocalScale: {x: 1.22, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -754,9 +755,9 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 11aae8d81ab895f4cb60b92ddaf2e12d, type: 3}
+  m_Resource: {fileID: 8300000, guid: 63ced7aaff9f79a40966846fdd57a19a, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.243
+  m_Volume: 0.057
   m_Pitch: 1
   Loop: 1
   Mute: 0

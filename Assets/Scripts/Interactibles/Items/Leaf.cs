@@ -9,7 +9,7 @@ public class Leaf : Usable
         {
             audioSource.PlayOneShot(onUseSound);
             pile.AddLeafRpc();
-            RequestObjectDestructionRpc();
+            RequestObjectDestructionRpc(onUseSound.length + 0.5f);
         }
     }
 }

@@ -22,6 +22,9 @@ public class PlayerItemManager : NetworkBehaviour
     private Carryable carriedItemScript = null; //The Carryable component of the item currently being carried by the player
     private Rigidbody2D carriedItemRigidbody = null; //The Rigidbody2D component of the item currently being carried by the player
 
+    public AudioSource audioSource;
+    public AudioClip pickupSound;
+
     //private bool lastFlipX = false; //avoid spamming the network with unnecessary flip updates by checking if the player has actually changed direction since the last update
     private bool hasSyncedCarryPosition = false;
 
@@ -60,6 +63,8 @@ public class PlayerItemManager : NetworkBehaviour
         if (carryable.isCarried.Value) return;
 
         if (!obj.TryGetComponent(out Rigidbody2D rb)) return;
+
+        audioSource.PlayOneShot(pickupSound);
 
         CarriedItem = obj;
         carriedItemScript = carryable;
