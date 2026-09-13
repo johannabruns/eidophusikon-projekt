@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 1143368323
+  GlobalObjectIdHash: 4046596341
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -155,7 +155,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -5220999690027502875, guid: 9da58aa586ed0684fbca9683fbd753dc, type: 3}
+  m_Sprite: {fileID: 3226572988962026464, guid: 283a696e580166c4a948dd90ed896a09, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -180,8 +180,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RainCollector
   ShowTopMostFoldoutHeaderGroup: 1
   spriteRenderer: {fileID: 5578560388927446092}
-  inactiveSprite: {fileID: -5220999690027502875, guid: 9da58aa586ed0684fbca9683fbd753dc, type: 3}
-  activeSprite: {fileID: -626672089071684324, guid: 9da58aa586ed0684fbca9683fbd753dc, type: 3}
+  inactiveSprite: {fileID: 3226572988962026464, guid: 283a696e580166c4a948dd90ed896a09, type: 3}
+  activeSprite: {fileID: 3840737849516842502, guid: 283a696e580166c4a948dd90ed896a09, type: 3}
   audioSource: {fileID: 0}
   inactiveSound: {fileID: 0}
   activeSound: {fileID: 0}

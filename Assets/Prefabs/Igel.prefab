@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3050046569
+  GlobalObjectIdHash: 263287334
   InScenePlacedSourceGlobalObjectIdHash: 263287334
   DeferredDespawnTick: 0
   Ownership: 1
@@ -154,7 +154,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1764911195795153990, guid: 1b38ea15c4e8f2847bbd4d65d2982e4f, type: 3}
+  m_Sprite: {fileID: -65206080, guid: 1aa4be8a3ba68e4498eaaa21d7d19fab, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -177,3 +177,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16a9f3e79556fc04aae42f5d5173cbd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hedgehog
+  ShowTopMostFoldoutHeaderGroup: 1
+  anim: {fileID: 0}
+  isHappy:
+    UpdateTraits:
+      MinSecondsBetweenUpdates: 0
+      MaxSecondsBetweenUpdates: 0
+    m_InternalValue: 0

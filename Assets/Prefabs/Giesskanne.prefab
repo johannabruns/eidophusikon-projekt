@@ -145,7 +145,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.3326488, y: 0.042643785}
+  m_Offset: {x: 0.017006576, y: -0.34144813}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.03, y: 0.54}
@@ -155,7 +155,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.6072184, y: 0.6649008}
+  m_Size: {x: 0.24123156, y: 0.647797}
   m_EdgeRadius: 0
 --- !u!50 &8117941846655260564
 Rigidbody2D:
@@ -261,13 +261,13 @@ MonoBehaviour:
       MaxSecondsBetweenUpdates: 0
     m_InternalValue: 0
   range: 1
-  anim: {fileID: 2948991178605072209}
+  anim: {fileID: 2484353299117413067}
   audioSource: {fileID: 7253669652585523259}
   onUseSound: {fileID: 8300000, guid: 7803f7f51afadc34ba2cf8d8504bfc8e, type: 3}
   refillSound: {fileID: 8300000, guid: 7803f7f51afadc34ba2cf8d8504bfc8e, type: 3}
   spriteRenderer: {fileID: 4553841631207603859}
-  emptySprite: {fileID: -5007717835261507284, guid: d020513d5d1d12047a7f0dad7f34632d, type: 3}
-  fullSprite: {fileID: 1914849043038913832, guid: d020513d5d1d12047a7f0dad7f34632d, type: 3}
+  emptySprite: {fileID: -8529909241067308733, guid: ffedbd8d85bc1014981042a848271309, type: 3}
+  fullSprite: {fileID: -4431673574374306781, guid: ffedbd8d85bc1014981042a848271309, type: 3}
   waterStream: {fileID: 297644191465003025}
 --- !u!82 &7253669652585523259
 AudioSource:
@@ -392,7 +392,7 @@ Transform:
   m_GameObject: {fileID: 6335680128421243049}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.147, y: 0.12, z: 0}
+  m_LocalPosition: {x: 0.707, y: -0.008, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -412,8 +412,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Rain
   ShowTopMostFoldoutHeaderGroup: 1
   rainDropPrefab: {fileID: 8720862323183967085, guid: 975d2763aae977b4c875ba0b1f8b0da0, type: 3}
-  maxSpawnInterval: 0.5
-  constantInverval: 0
+  maxSpawnInterval: 0.25
+  constantInverval: 1
   audioSource: {fileID: 0}
   spawnPoints:
   - {fileID: 4253249469749843715}
@@ -432,8 +432,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8388366891286185881}
   - component: {fileID: 4553841631207603859}
-  - component: {fileID: 2948991178605072209}
-  - component: {fileID: 1363467645899325809}
+  - component: {fileID: 2484353299117413067}
+  - component: {fileID: 1913020070872174004}
   m_Layer: 12
   m_Name: Visual
   m_TagString: Carryable
@@ -504,18 +504,18 @@ SpriteRenderer:
   m_SortingLayerID: -1273045355
   m_SortingLayer: 2
   m_SortingOrder: 1
-  m_Sprite: {fileID: -5007717835261507284, guid: d020513d5d1d12047a7f0dad7f34632d, type: 3}
+  m_Sprite: {fileID: -8529909241067308733, guid: ffedbd8d85bc1014981042a848271309, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 19.6, y: 10.2}
+  m_Size: {x: 1.3216128, y: 1.3219355}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &2948991178605072209
+--- !u!95 &2484353299117413067
 Animator:
   serializedVersion: 7
   m_ObjectHideFlags: 0
@@ -537,7 +537,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1363467645899325809
+--- !u!114 &1913020070872174004
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -552,7 +552,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   NetworkAnimatorExpanded: 0
   AuthorityMode: 1
-  m_Animator: {fileID: 2948991178605072209}
+  m_Animator: {fileID: 2484353299117413067}
   TransitionStateInfoList:
   - IsCrossFadeExit: 0
     Layer: 0

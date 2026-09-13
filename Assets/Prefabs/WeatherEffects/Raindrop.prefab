@@ -84,7 +84,7 @@ SpriteRenderer:
   m_SortingLayerID: 1818748079
   m_SortingLayer: 1
   m_SortingOrder: 1
-  m_Sprite: {fileID: -1424099077791734811, guid: 8d03ad1c73da4d9459c57caa0bfd8e68, type: 3}
+  m_Sprite: {fileID: -1151064017456929052, guid: 702bef9d69df6ca48bdb005b71190ce1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -180,6 +180,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RainDrop
   ShowTopMostFoldoutHeaderGroup: 1
   rb: {fileID: -8139135540295824397}
+  sprites:
+  - {fileID: -1151064017456929052, guid: 702bef9d69df6ca48bdb005b71190ce1, type: 3}
+  - {fileID: -7341781857123735818, guid: 702bef9d69df6ca48bdb005b71190ce1, type: 3}
+  - {fileID: -2496500284722343200, guid: 702bef9d69df6ca48bdb005b71190ce1, type: 3}
 --- !u!50 &-8139135540295824397
 Rigidbody2D:
   serializedVersion: 5
@@ -242,4 +246,4 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.25625
+  m_Radius: 0.12

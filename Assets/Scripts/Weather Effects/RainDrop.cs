@@ -1,9 +1,16 @@
+using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
 public class RainDrop : NetworkBehaviour
 {
     public Rigidbody2D rb;
+    public List<Sprite> sprites;
+
+    public override void OnNetworkSpawn()
+    {
+        GetComponent<SpriteRenderer>().sprite = sprites[Random.Range(0, sprites.Count)];
+    }
 
     private void FixedUpdate()
     {
