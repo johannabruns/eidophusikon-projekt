@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class QuestManager : NetworkBehaviour
 {
@@ -16,6 +18,7 @@ public class QuestManager : NetworkBehaviour
     private Quest currentQuest;
 
     private Coroutine actTransition;
+    public static Action<int> OnQuestComplete;
 
     public override void OnNetworkSpawn()
     {
@@ -46,7 +49,11 @@ public class QuestManager : NetworkBehaviour
         //TODO: Check if curtains are closed?
 
         if (isComplete)
+        {
+            OnQuestComplete.Invoke(currentAct.Value);
             StartNextQuest();
+        }
+          
     }
 
     private void StartNextQuest()
@@ -60,13 +67,17 @@ public class QuestManager : NetworkBehaviour
             return;
         }
 
+        float delay = 0f;
+        if (currentQuest != null)
+            delay = currentQuest.nextQuestDelay;
+
         currentAct.Value++;
         currentQuest = quests[currentAct.Value - 1];
 
-        actTransition = StartCoroutine(QuestTransition(currentAct.Value));
+        actTransition = StartCoroutine(QuestTransition(currentAct.Value, delay));
     }
 
-    private IEnumerator QuestTransition(int index)
+    private IEnumerator QuestTransition(int index, float delay)
     {
         if (actTransition != null) yield break;
 
@@ -74,14 +85,13 @@ public class QuestManager : NetworkBehaviour
         if (currentAct.Value > 1)
         {
             theaterManager.ShortApplause();
+            yield return new WaitForSeconds(delay);
+
             theaterManager.CloseCurtains();
             yield return new WaitForSeconds(3f);
         }
 
         gameManager.LoadAct(index);
-
-        yield return new WaitForSeconds(1f);
-
         theaterManager.OpenCurtains();
 
         actTransition = null;
