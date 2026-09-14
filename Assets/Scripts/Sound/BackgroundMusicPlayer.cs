@@ -14,6 +14,7 @@ public class BackgroundMusicPlayer : NetworkBehaviour
     public AudioClip act2Music;
     public AudioClip act3Music;
     public AudioClip act4Music;
+    public AudioClip finalMusic;
 
     public AudioClip birdSounds;
     public AudioClip owlSounds;
@@ -24,15 +25,38 @@ public class BackgroundMusicPlayer : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         questManager.currentAct.OnValueChanged += OnActChanged;
+
+        QuestManager.OnQuestComplete += (int quest) =>
+        {
+            if (quest == 4)
+            {
+                PlayFinalMusic();
+            }
+        };
         volume = primaryAudioSource.volume;
     }
 
     public override void OnNetworkDespawn()
     {
         questManager.currentAct.OnValueChanged -= OnActChanged;
+
+        QuestManager.OnQuestComplete -= (int quest) =>
+        {
+            if (quest == 4)
+            {
+                PlayFinalMusic();
+            }
+        };
     }
 
+
+
     private void OnActChanged(int previous, int current)
+    {
+        SetTrack(current);
+    }
+
+    private void SetTrack(int index)
     {
         if (musicTransitionCoroutine != null)
         {
@@ -40,7 +64,18 @@ public class BackgroundMusicPlayer : NetworkBehaviour
             primaryAudioSource.volume = volume;
         }
 
-        musicTransitionCoroutine = StartCoroutine(MusicTransitionCoroutine(current));
+        musicTransitionCoroutine = StartCoroutine(MusicTransitionCoroutine(index));
+    }
+
+    private void PlayFinalMusic()
+    {
+        if (musicTransitionCoroutine != null)
+        {
+            StopCoroutine(musicTransitionCoroutine);
+            primaryAudioSource.volume = volume;
+        }
+        primaryAudioSource.clip = finalMusic;
+        primaryAudioSource.Play();
     }
 
     private IEnumerator MusicTransitionCoroutine(int index)

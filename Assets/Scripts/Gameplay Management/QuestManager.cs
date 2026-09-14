@@ -50,6 +50,7 @@ public class QuestManager : NetworkBehaviour
 
         if (isComplete)
         {
+            Debug.Log($"Invoke Event for index {currentAct.Value}!");
             OnQuestComplete.Invoke(currentAct.Value);
             StartNextQuest();
         }
