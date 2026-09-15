@@ -26,27 +26,14 @@ public class BackgroundMusicPlayer : NetworkBehaviour
     {
         questManager.currentAct.OnValueChanged += OnActChanged;
 
-        QuestManager.OnQuestComplete += (int quest) =>
-        {
-            if (quest == 4)
-            {
-                PlayFinalMusic();
-            }
-        };
+        QuestManager.OnQuestComplete += PlayFinalMusicRpc;
         volume = primaryAudioSource.volume;
     }
 
     public override void OnNetworkDespawn()
     {
         questManager.currentAct.OnValueChanged -= OnActChanged;
-
-        QuestManager.OnQuestComplete -= (int quest) =>
-        {
-            if (quest == 4)
-            {
-                PlayFinalMusic();
-            }
-        };
+        QuestManager.OnQuestComplete -= PlayFinalMusicRpc;         
     }
 
 
@@ -67,13 +54,20 @@ public class BackgroundMusicPlayer : NetworkBehaviour
         musicTransitionCoroutine = StartCoroutine(MusicTransitionCoroutine(index));
     }
 
-    private void PlayFinalMusic()
+    [Rpc(SendTo.Everyone)]
+    private void PlayFinalMusicRpc(int index)
     {
+        if (index != 4) return;
+
         if (musicTransitionCoroutine != null)
         {
             StopCoroutine(musicTransitionCoroutine);
             primaryAudioSource.volume = volume;
         }
+
+        primaryAudioSource.Stop();
+        secondaryAudioSource.Stop();
+
         primaryAudioSource.clip = finalMusic;
         primaryAudioSource.Play();
     }
