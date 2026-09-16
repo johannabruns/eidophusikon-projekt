@@ -14,6 +14,7 @@ public class ConstellationManager : NetworkBehaviour
     public List<Star> stars;
     public NetworkVariable<int> currentStarIndex = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     public Transform currentStarIndicator;
+    public Animator constellationAnim;
 
     public AxisInteractible axisInteractible;
 
@@ -67,6 +68,7 @@ public class ConstellationManager : NetworkBehaviour
 
     private void OnConstellationStateChanged(bool previous, bool current)
     {
+        constellationAnim.SetBool("IsAligned", current);
         if (current)
         {
             QuestManager.Instance.CheckQuestCompletion();
