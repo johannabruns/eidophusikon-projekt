@@ -2,11 +2,6 @@ using Unity.Netcode;
 using Unity.Netcode.Components;
 using UnityEngine;
 
-/// <summary>
-/// A component that allows a GameObject to be picked up and carried by a player.
-/// </summary>
-/// 
-
 [RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(NetworkTransform))]
@@ -14,13 +9,32 @@ public class Carryable : NetworkBehaviour
 {
     [Header("Item Typ")]
     public ItemCategory itemCategory = ItemCategory.None;
-    
-    public float rotationOnPickup = 0f; // the rotation to set on the object when it is picked up
 
-    // Server is authoritative over both - clients only ever read these.
-    public NetworkVariable<bool> isCarried = new(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
-    public NetworkVariable<ulong> carrierClientId = new(ulong.MaxValue, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
-    public NetworkVariable<bool> flip = new(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public float rotationOnPickup;
+
+    public NetworkVariable<bool> isCarried = new(
+        false,
+        NetworkVariableReadPermission.Everyone,
+        NetworkVariableWritePermission.Server
+    );
+
+    public NetworkVariable<bool> isSocketed = new(
+        false,
+        NetworkVariableReadPermission.Everyone,
+        NetworkVariableWritePermission.Server
+    );
+
+    public NetworkVariable<ulong> carrierClientId = new(
+        ulong.MaxValue,
+        NetworkVariableReadPermission.Everyone,
+        NetworkVariableWritePermission.Server
+    );
+
+    public NetworkVariable<bool> flip = new(
+        false,
+        NetworkVariableReadPermission.Everyone,
+        NetworkVariableWritePermission.Owner
+    );
 
     private Rigidbody2D rb;
     private Collider2D col;
@@ -41,38 +55,58 @@ public class Carryable : NetworkBehaviour
     {
         gameObject.tag = "Carryable";
 
-        NetworkTransform networkTransform = GetComponent<NetworkTransform>();
-        networkTransform.AuthorityMode = NetworkTransform.AuthorityModes.Owner;
+        NetworkTransform networkTransform =
+            GetComponent<NetworkTransform>();
 
-        isCarried.OnValueChanged += OnCarriedChanged;
+        networkTransform.AuthorityMode =
+            NetworkTransform.AuthorityModes.Owner;
+
+        isCarried.OnValueChanged += HandleCarriedChanged;
+        isSocketed.OnValueChanged += HandleSocketedChanged;
         flip.OnValueChanged += Flip;
 
-        // In case this client joins late / this object spawns already carried,
-        // make sure the visual state matches immediately rather than waiting
-        // for the next change event.
-        ApplyCarriedState(isCarried.Value);
+        ApplyPhysicalState();
     }
 
     public override void OnNetworkDespawn()
     {
-        isCarried.OnValueChanged -= OnCarriedChanged;
+        isCarried.OnValueChanged -= HandleCarriedChanged;
+        isSocketed.OnValueChanged -= HandleSocketedChanged;
         flip.OnValueChanged -= Flip;
     }
 
-    private void OnCarriedChanged(bool previous, bool current)
+    private void HandleCarriedChanged(
+        bool previous,
+        bool current
+    )
     {
-        ApplyCarriedState(current);
+        ApplyPhysicalState();
     }
 
-    private void ApplyCarriedState(bool carried)
+    private void HandleSocketedChanged(
+        bool previous,
+        bool current
+    )
     {
-        gameObject.layer = carried ? LayerMask.NameToLayer("Default") : uncarriedLayer;
+        ApplyPhysicalState();
+    }
+
+    private void ApplyPhysicalState()
+    {
+        bool attached =
+            isCarried.Value || isSocketed.Value;
+
+        gameObject.layer = attached
+            ? LayerMask.NameToLayer("Default")
+            : uncarriedLayer;
 
         if (rb != null)
         {
-            rb.bodyType = carried ? RigidbodyType2D.Kinematic: RigidbodyType2D.Dynamic;
+            rb.bodyType = attached
+                ? RigidbodyType2D.Kinematic
+                : RigidbodyType2D.Dynamic;
 
-            if(carried)
+            if (attached)
             {
                 rb.angularVelocity = 0f;
                 rb.linearVelocity = Vector2.zero;
@@ -81,8 +115,9 @@ public class Carryable : NetworkBehaviour
 
         if (col != null)
         {
-            col.excludeLayers = carried
-                ? (baseExcludeLayers | LayerMask.GetMask("Player"))
+            col.excludeLayers = attached
+                ? baseExcludeLayers |
+                  LayerMask.GetMask("Player")
                 : baseExcludeLayers;
         }
     }
@@ -93,50 +128,111 @@ public class Carryable : NetworkBehaviour
 
         if (current)
         {
-            transform.localScale = new Vector3(-xScale, originalScale.y, originalScale.z);
-            if (IsOwner) transform.rotation = Quaternion.Euler(0f, 0f, -rotationOnPickup);
+            transform.localScale = new Vector3(
+                -xScale,
+                originalScale.y,
+                originalScale.z
+            );
+
+            if (IsOwner)
+            {
+                transform.rotation = Quaternion.Euler(
+                    0f,
+                    0f,
+                    -rotationOnPickup
+                );
+            }
         }
         else
         {
-            transform.localScale = new Vector3(xScale, originalScale.y, originalScale.z);
-            if (IsOwner) transform.rotation = Quaternion.Euler(0f, 0f, rotationOnPickup);
+            transform.localScale = new Vector3(
+                xScale,
+                originalScale.y,
+                originalScale.z
+            );
+
+            if (IsOwner)
+            {
+                transform.rotation = Quaternion.Euler(
+                    0f,
+                    0f,
+                    rotationOnPickup
+                );
+            }
         }
     }
 
-    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
-    public void RequestPickUpServerRpc(RpcParams rpcParams = default)
+    [Rpc(
+        SendTo.Server,
+        InvokePermission = RpcInvokePermission.Everyone
+    )]
+    public void RequestPickUpServerRpc(
+        RpcParams rpcParams = default
+    )
     {
-        if (isCarried.Value) return;
+        if (isCarried.Value || isSocketed.Value)
+            return;
 
-        ulong requestingClientId = rpcParams.Receive.SenderClientId;
+        ulong requestingClientId =
+            rpcParams.Receive.SenderClientId;
 
         isCarried.Value = true;
         carrierClientId.Value = requestingClientId;
 
-        NetworkObject.ChangeOwnership(requestingClientId);
-        ApplyPickupRotationRpc(RpcTarget.Single(requestingClientId, RpcTargetUse.Temp));
+        NetworkObject.ChangeOwnership(
+            requestingClientId
+        );
+
+        ApplyPickupRotationRpc(
+            RpcTarget.Single(
+                requestingClientId,
+                RpcTargetUse.Temp
+            )
+        );
     }
 
-    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
-    public void RequestDropServerRpc(RpcParams rpcParams = default)
+    [Rpc(
+        SendTo.Server,
+        InvokePermission = RpcInvokePermission.Everyone
+    )]
+    public void RequestDropServerRpc(
+        RpcParams rpcParams = default
+    )
     {
-        ulong requestingClientId = rpcParams.Receive.SenderClientId;
+        ulong requestingClientId =
+            rpcParams.Receive.SenderClientId;
 
-        // Only the current carrier is allowed to drop it
-        if (!isCarried.Value || carrierClientId.Value != requestingClientId) return;
+        if (!isCarried.Value ||
+            carrierClientId.Value != requestingClientId)
+        {
+            return;
+        }
 
         isCarried.Value = false;
         carrierClientId.Value = ulong.MaxValue;
 
-        if (NetworkObject.OwnerClientId != NetworkManager.ServerClientId)
+        if (NetworkObject.OwnerClientId !=
+            NetworkManager.ServerClientId)
+        {
             NetworkObject.RemoveOwnership();
+        }
     }
 
     [Rpc(SendTo.SpecifiedInParams)]
-    private void ApplyPickupRotationRpc(RpcParams rpcParams = default)
+    private void ApplyPickupRotationRpc(
+        RpcParams rpcParams = default
+    )
     {
-        float rotation = flip.Value ? -rotationOnPickup : rotationOnPickup;
-        transform.rotation = Quaternion.Euler(0f, 0f, rotation);
+        float rotation = flip.Value
+            ? -rotationOnPickup
+            : rotationOnPickup;
+
+        transform.rotation = Quaternion.Euler(
+            0f,
+            0f,
+            rotation
+        );
+
         Physics2D.SyncTransforms();
     }
 }

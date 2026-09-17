@@ -5,5 +5,7 @@ public enum ItemCategory
     Gluehbirne,
     Farbfilter,
     Sonne,
-    SchienenObjekt
+    SchienenObjekt,
+    Wassertropfen,
+    Trommelschlaegel
 }

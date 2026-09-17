@@ -1,22 +1,73 @@
+using System;
 using Unity.Netcode;
 using UnityEngine;
 
 public class ItemSocket : SimpleInteractible
 {
-    [Header("Steckplatz Einstellungen")]
-    public ItemCategory erlaubteKategorie; // Was darf hier rein?
-    public Transform snapPoint;            // Wo genau soll das Item einrasten?
+    public const ulong EmptyItemId = ulong.MaxValue;
 
-    // Speichert die NetworkObjectId des Items, das gerade drinsteckt (0 = leer)
-    public NetworkVariable<ulong> eingeklinktesItem = new NetworkVariable<ulong>(0);
+    [Header("Socket Settings")]
+    public ItemCategory erlaubteKategorie;
+    public Transform snapPoint;
 
-    public bool IstLeer => eingeklinktesItem.Value == 0;
+    public NetworkVariable<ulong> eingeklinktesItem = new(
+        EmptyItemId,
+        NetworkVariableReadPermission.Everyone,
+        NetworkVariableWritePermission.Server
+    );
+
+    public bool IstLeer =>
+        eingeklinktesItem.Value == EmptyItemId;
+
+    public event Action<ulong, ulong> ItemChanged;
+
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+
+        if (IsServer)
+        {
+            eingeklinktesItem.Value = EmptyItemId;
+        }
+
+        eingeklinktesItem.OnValueChanged += HandleItemChanged;
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        eingeklinktesItem.OnValueChanged -= HandleItemChanged;
+    }
+
+    private void HandleItemChanged(
+        ulong previousItem,
+        ulong currentItem
+    )
+    {
+        ItemChanged?.Invoke(
+            previousItem,
+            currentItem
+        );
+    }
+
+    public bool TryGetSocketedItem(
+        out NetworkObject item
+    )
+    {
+        item = null;
+
+        if (IstLeer || NetworkManager == null)
+            return false;
+
+        return NetworkManager
+            .SpawnManager
+            .SpawnedObjects
+            .TryGetValue(
+                eingeklinktesItem.Value,
+                out item
+            );
+    }
 
     public override void OnInteract()
     {
-        // Wir lassen diese Methode leer! 
-        // Warum? Weil der Spieler das Socket nicht "benutzt", 
-        // sondern der PlayerItemManager übergibt das Item an das Socket.
-        // Die Logik dafür bauen wir gleich im Spieler-Skript ein.
     }
 }

@@ -255,6 +255,10 @@ MonoBehaviour:
   raycastHits:
     serializedVersion: 2
     m_Bits: 256
+  carryableClickLayer:
+    serializedVersion: 2
+    m_Bits: 8192
+  maxPointClickDistance: 6
 --- !u!114 &2845985234367255098
 MonoBehaviour:
   m_ObjectHideFlags: 0

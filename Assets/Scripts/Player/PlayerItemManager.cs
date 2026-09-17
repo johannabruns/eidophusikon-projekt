@@ -1,32 +1,27 @@
 using System.Collections.Generic;
 using Unity.Netcode;
 using Unity.Netcode.Components;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-// This sits on a child of the PlayerObject, so it shares the PlayerObject's
-// NetworkObject - IsOwner here means "this is the local player who owns the
-// character", same as it does on PlayerInteraction.
 public class PlayerItemManager : NetworkBehaviour
 {
     public InputActionReference useControls;
-    public Vector2 carryOffset = new(1, 0); //the position at which the carried item should be held relative to the player
+    public Vector2 carryOffset = new(1f, 0f);
 
     public PlayerMovement playerMovement;
     public PlayerAnimations playerAnimations;
 
-    public List<GameObject> itemsInRange = new(); //all items that are currently in range of the player
+    public List<GameObject> itemsInRange = new();
 
-    public GameObject CarriedItem { get; private set; } = null; //The item currently being carried by the player
-    private Carryable carriedItemScript = null; //The Carryable component of the item currently being carried by the player
-    private Rigidbody2D carriedItemRigidbody = null; //The Rigidbody2D component of the item currently being carried by the player
+    public GameObject CarriedItem { get; private set; }
+
+    private Carryable carriedItemScript;
+    private Rigidbody2D carriedItemRigidbody;
+    private bool hasSyncedCarryPosition;
 
     public AudioSource audioSource;
     public AudioClip pickupSound;
-
-    //private bool lastFlipX = false; //avoid spamming the network with unnecessary flip updates by checking if the player has actually changed direction since the last update
-    private bool hasSyncedCarryPosition = false;
 
     private void OnEnable()
     {
@@ -40,7 +35,8 @@ public class PlayerItemManager : NetworkBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Carryable"))
+        if (other.gameObject.CompareTag("Carryable") &&
+            !itemsInRange.Contains(other.gameObject))
         {
             itemsInRange.Add(other.gameObject);
         }
@@ -48,7 +44,7 @@ public class PlayerItemManager : NetworkBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Carryable") && itemsInRange.Contains(other.gameObject))
+        if (other.gameObject.CompareTag("Carryable"))
         {
             itemsInRange.Remove(other.gameObject);
         }
@@ -56,153 +52,416 @@ public class PlayerItemManager : NetworkBehaviour
 
     public void PickUpItem(GameObject obj)
     {
-        if (!IsOwner) return;
-        if (CarriedItem != null) return;
+        if (!IsOwner ||
+            CarriedItem != null ||
+            obj == null)
+        {
+            return;
+        }
 
-        if (!obj.TryGetComponent(out Carryable carryable)) return;
-        if (carryable.isCarried.Value) return;
+        if (!obj.TryGetComponent(
+                out Carryable carryable
+            ))
+        {
+            return;
+        }
 
-        if (!obj.TryGetComponent(out Rigidbody2D rb)) return;
+        if (carryable.isCarried.Value ||
+            carryable.isSocketed.Value)
+        {
+            return;
+        }
 
-        audioSource.PlayOneShot(pickupSound);
+        if (!obj.TryGetComponent(
+                out Rigidbody2D rb
+            ))
+        {
+            return;
+        }
 
+        SetCarriedItem(
+            obj,
+            carryable,
+            rb,
+            true
+        );
+
+        carryable.RequestPickUpServerRpc();
+    }
+
+    private void SetCarriedItem(
+        GameObject obj,
+        Carryable carryable,
+        Rigidbody2D rb,
+        bool playSound
+    )
+    {
         CarriedItem = obj;
         carriedItemScript = carryable;
         carriedItemRigidbody = rb;
-
         hasSyncedCarryPosition = false;
-        carryable.RequestPickUpServerRpc();
+
+        if (playSound &&
+            audioSource != null &&
+            pickupSound != null)
+        {
+            audioSource.PlayOneShot(pickupSound);
+        }
     }
 
     public void DropItem()
     {
-        if (!IsOwner) return;
-        if (CarriedItem == null) return;
+        if (!IsOwner || CarriedItem == null)
+            return;
 
-        if (CarriedItem.TryGetComponent(out Carryable carryable))
+        if (CarriedItem.TryGetComponent(
+                out Carryable carryable
+            ))
+        {
             carryable.RequestDropServerRpc();
+        }
 
         carriedItemScript = null;
+        carriedItemRigidbody = null;
         CarriedItem = null;
+        hasSyncedCarryPosition = false;
     }
 
-    private void UseItem(InputAction.CallbackContext obj)
+    private void UseItem(
+        InputAction.CallbackContext context
+    )
     {
-        if (!IsOwner) return;
-        if (CarriedItem == null) return;
+        if (!IsOwner || CarriedItem == null)
+            return;
 
-        if (CarriedItem.TryGetComponent(out Usable usable))
+        if (CarriedItem.TryGetComponent(
+                out Usable usable
+            ))
+        {
             usable.OnUse();
+        }
     }
 
     private void FixedUpdate()
     {
-        if (!IsOwner) return;
+        if (!IsOwner || CarriedItem == null)
+            return;
 
-        //calculate carry position based on whether the player is facing left or right
-        Vector2 carryOffset = playerAnimations.isFlipped.Value ?
-            new(-this.carryOffset.x, this.carryOffset.y) : this.carryOffset;
+        Vector2 currentCarryOffset =
+            playerAnimations.isFlipped.Value
+                ? new Vector2(
+                    -carryOffset.x,
+                    carryOffset.y
+                )
+                : carryOffset;
 
-        if (CarriedItem == null) return;
+        carriedItemScript.flip.Value =
+            playerAnimations.isFlipped.Value;
 
-        //flip the carried item to match the player's facing direction
-        carriedItemScript.flip.Value = playerAnimations.isFlipped.Value;
-        
-        Vector2 carryPos = transform.position + (Vector3)carryOffset;
+        Vector2 carryPosition =
+            transform.position +
+            (Vector3)currentCarryOffset;
 
         if (!hasSyncedCarryPosition)
         {
-            CarriedItem.GetComponent<NetworkTransform>().Teleport(carryPos, CarriedItem.transform.rotation, CarriedItem.transform.localScale);
+            CarriedItem
+                .GetComponent<NetworkTransform>()
+                .Teleport(
+                    carryPosition,
+                    CarriedItem.transform.rotation,
+                    CarriedItem.transform.localScale
+                );
+
             hasSyncedCarryPosition = true;
         }
         else
         {
-            carriedItemRigidbody.MovePosition(carryPos);
+            carriedItemRigidbody.MovePosition(
+                carryPosition
+            );
         }
+    }
+
+    public void InsertIntoSocket(ItemSocket socket)
+    {
+        if (!IsOwner ||
+            CarriedItem == null ||
+            socket == null ||
+            !socket.IstLeer)
+        {
+            return;
+        }
+
+        NetworkObject itemNetworkObject =
+            CarriedItem.GetComponent<NetworkObject>();
+
+        NetworkObject socketNetworkObject =
+            socket.GetComponent<NetworkObject>();
+
+        if (itemNetworkObject == null ||
+            socketNetworkObject == null)
+        {
+            return;
+        }
+
+        InsertIntoSocketServerRpc(
+            itemNetworkObject.NetworkObjectId,
+            socketNetworkObject.NetworkObjectId
+        );
+
+        carriedItemScript = null;
+        carriedItemRigidbody = null;
+        CarriedItem = null;
+        hasSyncedCarryPosition = false;
+    }
+
+    [Rpc(
+        SendTo.Server,
+        InvokePermission = RpcInvokePermission.Owner
+    )]
+    private void InsertIntoSocketServerRpc(
+        ulong itemId,
+        ulong socketId,
+        RpcParams rpcParams = default
+    )
+    {
+        if (!NetworkManager
+                .SpawnManager
+                .SpawnedObjects
+                .TryGetValue(
+                    itemId,
+                    out NetworkObject itemObject
+                ))
+        {
+            return;
+        }
+
+        if (!NetworkManager
+                .SpawnManager
+                .SpawnedObjects
+                .TryGetValue(
+                    socketId,
+                    out NetworkObject socketObject
+                ))
+        {
+            return;
+        }
+
+        ItemSocket socket =
+            socketObject.GetComponent<ItemSocket>();
+
+        Carryable carryable =
+            itemObject.GetComponent<Carryable>();
+
+        if (socket == null ||
+            carryable == null ||
+            socket.snapPoint == null ||
+            !socket.IstLeer)
+        {
+            return;
+        }
+
+        ulong requestingClientId =
+            rpcParams.Receive.SenderClientId;
+
+        if (!carryable.isCarried.Value ||
+            carryable.carrierClientId.Value !=
+            requestingClientId ||
+            carryable.itemCategory !=
+            socket.erlaubteKategorie)
+        {
+            return;
+        }
+
+        carryable.isSocketed.Value = true;
+        carryable.isCarried.Value = false;
+        carryable.carrierClientId.Value =
+            ulong.MaxValue;
+
+        if (itemObject.OwnerClientId !=
+            NetworkManager.ServerClientId)
+        {
+            itemObject.RemoveOwnership();
+        }
+
+        socket.eingeklinktesItem.Value = itemId;
+
+        itemObject.TrySetParent(
+            socketObject.transform,
+            false
+        );
+
+        NetworkTransform networkTransform =
+            itemObject.GetComponent<NetworkTransform>();
+
+        networkTransform.Teleport(
+            socket.snapPoint.position,
+            socket.snapPoint.rotation,
+            itemObject.transform.localScale
+        );
+    }
+
+    public void TakeFromSocket(ItemSocket socket)
+    {
+        if (!IsOwner ||
+            CarriedItem != null ||
+            socket == null ||
+            socket.IstLeer)
+        {
+            return;
+        }
+
+        NetworkObject socketNetworkObject =
+            socket.GetComponent<NetworkObject>();
+
+        if (socketNetworkObject == null)
+            return;
+
+        TakeFromSocketServerRpc(
+            socketNetworkObject.NetworkObjectId
+        );
+    }
+
+    [Rpc(
+        SendTo.Server,
+        InvokePermission = RpcInvokePermission.Owner
+    )]
+    private void TakeFromSocketServerRpc(
+        ulong socketId,
+        RpcParams rpcParams = default
+    )
+    {
+        if (!NetworkManager
+                .SpawnManager
+                .SpawnedObjects
+                .TryGetValue(
+                    socketId,
+                    out NetworkObject socketObject
+                ))
+        {
+            return;
+        }
+
+        ItemSocket socket =
+            socketObject.GetComponent<ItemSocket>();
+
+        if (socket == null || socket.IstLeer)
+            return;
+
+        ulong itemId =
+            socket.eingeklinktesItem.Value;
+
+        if (!NetworkManager
+                .SpawnManager
+                .SpawnedObjects
+                .TryGetValue(
+                    itemId,
+                    out NetworkObject itemObject
+                ))
+        {
+            return;
+        }
+
+        Carryable carryable =
+            itemObject.GetComponent<Carryable>();
+
+        if (carryable == null ||
+            !carryable.isSocketed.Value)
+        {
+            return;
+        }
+
+        ulong requestingClientId =
+            rpcParams.Receive.SenderClientId;
+
+        itemObject.TryRemoveParent();
+
+        socket.eingeklinktesItem.Value =
+            ItemSocket.EmptyItemId;
+
+        carryable.isCarried.Value = true;
+        carryable.isSocketed.Value = false;
+        carryable.carrierClientId.Value =
+            requestingClientId;
+
+        if (itemObject.OwnerClientId !=
+            requestingClientId)
+        {
+            itemObject.ChangeOwnership(
+                requestingClientId
+            );
+        }
+
+        ReceiveSocketItemRpc(
+            itemId,
+            RpcTarget.Single(
+                requestingClientId,
+                RpcTargetUse.Temp
+            )
+        );
+    }
+
+    [Rpc(SendTo.SpecifiedInParams)]
+    private void ReceiveSocketItemRpc(
+        ulong itemId,
+        RpcParams rpcParams = default
+    )
+    {
+        if (!IsOwner || CarriedItem != null)
+            return;
+
+        if (!NetworkManager
+                .SpawnManager
+                .SpawnedObjects
+                .TryGetValue(
+                    itemId,
+                    out NetworkObject itemObject
+                ))
+        {
+            return;
+        }
+
+        if (!itemObject.TryGetComponent(
+                out Carryable carryable
+            ))
+        {
+            return;
+        }
+
+        if (!itemObject.TryGetComponent(
+                out Rigidbody2D rb
+            ))
+        {
+            return;
+        }
+
+        float rotation = carryable.flip.Value
+            ? -carryable.rotationOnPickup
+            : carryable.rotationOnPickup;
+
+        itemObject.transform.rotation =
+            Quaternion.Euler(
+                0f,
+                0f,
+                rotation
+            );
+
+        SetCarriedItem(
+            itemObject.gameObject,
+            carryable,
+            rb,
+            true
+        );
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
-        Gizmos.DrawSphere(transform.position + (Vector3)carryOffset, 0.05f);
-    }
 
-    // ==========================================
-    // --- NEUE SOCKET LOGIK ---
-    // ==========================================
-
-    public void InsertIntoSocket(ItemSocket socket)
-    {
-        if (!IsOwner || CarriedItem == null) return;
-
-        NetworkObject itemNetObj = CarriedItem.GetComponent<NetworkObject>();
-        NetworkObject socketNetObj = socket.GetComponent<NetworkObject>();
-
-        // 1. Lokale Variablen sofort leeren (damit das Item nicht mehr an der Hand klebt)
-        carriedItemScript = null;
-        CarriedItem = null;
-
-        // 2. Den Server bitten, das Item physisch ins Socket zu stecken
-        InsertIntoSocketServerRpc(itemNetObj.NetworkObjectId, socketNetObj.NetworkObjectId);
-    }
-
-    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Owner)]
-    private void InsertIntoSocketServerRpc(ulong itemId, ulong socketId)
-    {
-        if (NetworkManager.SpawnManager.SpawnedObjects.TryGetValue(itemId, out NetworkObject itemObj) &&
-            NetworkManager.SpawnManager.SpawnedObjects.TryGetValue(socketId, out NetworkObject socketObj))
-        {
-            ItemSocket socket = socketObj.GetComponent<ItemSocket>();
-            Carryable carryable = itemObj.GetComponent<Carryable>();
-
-            // Lokis "Drop" Logik simulieren, damit es keinem Spieler mehr gehört
-            carryable.isCarried.Value = false;
-            carryable.carrierClientId.Value = ulong.MaxValue;
-            itemObj.RemoveOwnership();
-
-            // Im Socket registrieren
-            socket.eingeklinktesItem.Value = itemId;
-
-            // Das Item wird ein Child des Sockets, damit es sich (z.B. am Seil) perfekt mitbewegt!
-            itemObj.TrySetParent(socketObj.transform, false);
-
-            // Position & Rotation exakt auf den SnapPoint setzen
-            itemObj.transform.position = socket.snapPoint.position;
-            itemObj.transform.rotation = socket.snapPoint.rotation;
-        }
-    }
-
-    public void TakeFromSocket(ItemSocket socket)
-    {
-        if (!IsOwner || CarriedItem != null) return;
-
-        NetworkObject socketNetObj = socket.GetComponent<NetworkObject>();
-        ulong itemId = socket.eingeklinktesItem.Value;
-
-        // 1. Den Server bitten, das Item vom SnapPoint zu lösen
-        TakeFromSocketServerRpc(socketNetObj.NetworkObjectId);
-
-        // 2. Wir heben es direkt lokal auf, indem wir Lokis bestehende Funktion nutzen!
-        if (NetworkManager.SpawnManager.SpawnedObjects.TryGetValue(itemId, out NetworkObject itemObj))
-        {
-            PickUpItem(itemObj.gameObject);
-        }
-    }
-
-    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Owner)]
-    private void TakeFromSocketServerRpc(ulong socketId)
-    {
-        if (NetworkManager.SpawnManager.SpawnedObjects.TryGetValue(socketId, out NetworkObject socketObj))
-        {
-            ItemSocket socket = socketObj.GetComponent<ItemSocket>();
-            ulong itemId = socket.eingeklinktesItem.Value;
-
-            if (NetworkManager.SpawnManager.SpawnedObjects.TryGetValue(itemId, out NetworkObject itemObj))
-            {
-                // Vom Socket entkoppeln (entfernt das Child-Parent-Verhältnis)
-                socket.eingeklinktesItem.Value = 0;
-                itemObj.TryRemoveParent();
-            }
-        }
+        Gizmos.DrawSphere(
+            transform.position +
+            (Vector3)carryOffset,
+            0.05f
+        );
     }
 }

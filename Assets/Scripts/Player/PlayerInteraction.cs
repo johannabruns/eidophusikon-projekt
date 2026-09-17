@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using Unity.Netcode;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,119 +16,304 @@ public class PlayerInteraction : NetworkBehaviour
     [Header("Configuration")]
     public LayerMask raycastHits;
 
-    public Interactible CurrentInteractible { get; private set; } // the item the player is currently able to interact with
-    private List<Interactible> interactiblesInRange = new(); //all interactibles that are currently in range of the player (excluding the current interactible)
+    [Header("Point-and-Click Pickup")]
+    public LayerMask carryableClickLayer;
 
-    public float AxisValue { get; private set; }
-    private float previousAxisValue = 0f;
+    [Min(0f)]
+    public float maxPointClickDistance = 6f;
 
+    public Interactible CurrentInteractible
+    {
+        get;
+        private set;
+    }
+
+    private readonly List<Interactible>
+        interactiblesInRange = new();
+
+    public float AxisValue
+    {
+        get;
+        private set;
+    }
+
+    private float previousAxisValue;
 
     private void OnEnable()
     {
-        interactionControls.action.performed += ButtonPressInteract;
+        interactionControls.action.performed +=
+            ButtonPressInteract;
     }
+
     private void OnDisable()
     {
-        interactionControls.action.performed -= ButtonPressInteract;
+        interactionControls.action.performed -=
+            ButtonPressInteract;
     }
 
-    /// <summary>
-    /// Manages interaction with simple interactibles (und unseren neuen Sockets!)
-    /// </summary>
-    private void ButtonPressInteract(InputAction.CallbackContext obj)
+    private void ButtonPressInteract(
+        InputAction.CallbackContext context
+    )
     {
-        if (!IsOwner) return;
+        if (!IsOwner)
+            return;
 
-        // --- NEU: Unsere Socket-Logik ---
-        if (CurrentInteractible is ItemSocket socket)
+        ItemSocket usableSocket =
+            FindUsableSocket();
+
+        if (usableSocket != null)
         {
-            // Fall 1: Hineinlegen (Spieler hat ein Item, es passt und Socket ist leer)
-            if (itemManager.CarriedItem != null && socket.IstLeer)
+            if (itemManager.CarriedItem != null)
             {
-                Carryable carryable = itemManager.CarriedItem.GetComponent<Carryable>();
-                if (carryable.itemCategory == socket.erlaubteKategorie)
-                {
-                    itemManager.InsertIntoSocket(socket);
-                    return; // Erfolgreich eingeklinkt, brich hier ab!
-                }
+                itemManager.InsertIntoSocket(
+                    usableSocket
+                );
             }
-            // Fall 2: Herausholen (Spieler hat leere Hände und im Socket steckt etwas)
-            else if (itemManager.CarriedItem == null && !socket.IstLeer)
+            else
             {
-                itemManager.TakeFromSocket(socket);
-                return; // Erfolgreich herausgeholt, brich hier ab!
+                itemManager.TakeFromSocket(
+                    usableSocket
+                );
             }
+
+            return;
         }
 
-        // --- ALTE LOKI-LOGIK (greift, wenn wir an keinem Socket stehen) ---
         if (itemManager.CarriedItem != null)
         {
             itemManager.DropItem();
             return;
         }
 
-        if (itemManager.itemsInRange.Count > 0)
+        foreach (GameObject nearbyItem
+                 in itemManager.itemsInRange)
         {
-            itemManager.PickUpItem(itemManager.itemsInRange[0]);
+            if (nearbyItem == null)
+                continue;
+
+            bool usesPointAndClick =
+                (carryableClickLayer.value &
+                 (1 << nearbyItem.layer)) != 0;
+
+            if (usesPointAndClick)
+                continue;
+
+            itemManager.PickUpItem(nearbyItem);
             return;
         }
 
-        if (CurrentInteractible is SimpleInteractible interactible)
+        if (CurrentInteractible
+            is SimpleInteractible interactible)
         {
             interactible.OnInteract();
         }
     }
-    
-    /// <summary>
-    /// Manages interaction with interactibles that require axis input
-    /// </summary>
-    /// <param name="val"></param>
-    private void AxisInteract(float val)
-    {
-        if (!IsOwner) return;
 
-        if (CurrentInteractible is AxisInteractible axisInteractible)
+    private ItemSocket FindUsableSocket()
+    {
+        Carryable carriedItem = null;
+
+        if (itemManager.CarriedItem != null)
         {
-            if (AxisValue == 0 && AxisValue != previousAxisValue)
+            carriedItem =
+                itemManager.CarriedItem
+                    .GetComponent<Carryable>();
+        }
+
+        if (CurrentInteractible
+            is ItemSocket currentSocket &&
+            CanUseSocket(
+                currentSocket,
+                carriedItem
+            ))
+        {
+            return currentSocket;
+        }
+
+        foreach (Interactible interactible
+                 in interactiblesInRange)
+        {
+            if (interactible
+                is ItemSocket socket &&
+                CanUseSocket(
+                    socket,
+                    carriedItem
+                ))
+            {
+                return socket;
+            }
+        }
+
+        return null;
+    }
+
+    private bool CanUseSocket(
+        ItemSocket socket,
+        Carryable carriedItem
+    )
+    {
+        if (socket == null)
+            return false;
+
+        if (carriedItem != null)
+        {
+            return socket.IstLeer &&
+                   carriedItem.itemCategory ==
+                   socket.erlaubteKategorie;
+        }
+
+        return !socket.IstLeer;
+    }
+
+    private void TryPointClickPickup()
+    {
+        if (!IsOwner)
+            return;
+
+        if (itemManager == null ||
+            itemManager.CarriedItem != null)
+        {
+            return;
+        }
+
+        if (interactionControls == null ||
+            !interactionControls.action.IsPressed())
+        {
+            return;
+        }
+
+        if (Mouse.current == null ||
+            !Mouse.current
+                .leftButton
+                .wasPressedThisFrame)
+        {
+            return;
+        }
+
+        Camera activeCamera = Camera.main;
+
+        if (activeCamera == null)
+            return;
+
+        Ray mouseRay =
+            activeCamera.ScreenPointToRay(
+                Mouse.current.position.ReadValue()
+            );
+
+        RaycastHit2D[] hits =
+            Physics2D.GetRayIntersectionAll(
+                mouseRay,
+                100f,
+                carryableClickLayer
+            );
+
+        foreach (RaycastHit2D hit in hits)
+        {
+            if (hit.collider == null)
+                continue;
+
+            Carryable carryable =
+                hit.collider
+                    .GetComponentInParent<Carryable>();
+
+            if (carryable == null ||
+                carryable.isCarried.Value ||
+                carryable.isSocketed.Value)
+            {
+                continue;
+            }
+
+            float distance =
+                Vector2.Distance(
+                    transform.position,
+                    carryable.transform.position
+                );
+
+            if (distance >
+                maxPointClickDistance)
+            {
+                continue;
+            }
+
+            itemManager.PickUpItem(
+                carryable.gameObject
+            );
+
+            return;
+        }
+    }
+
+    private void AxisInteract(float value)
+    {
+        if (!IsOwner)
+            return;
+
+        if (CurrentInteractible
+            is AxisInteractible axisInteractible)
+        {
+            if (AxisValue == 0f &&
+                AxisValue != previousAxisValue)
             {
                 axisInteractible.Stop();
                 return;
             }
 
-            // Create a ray from the mouse position
-            Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+            if (Mouse.current == null ||
+                Camera.main == null)
+            {
+                return;
+            }
 
-            // Raycast into the 2D scene
-            RaycastHit2D hit = Physics2D.GetRayIntersection(ray, 50f, raycastHits);
+            Ray ray =
+                Camera.main.ScreenPointToRay(
+                    Mouse.current.position.ReadValue()
+                );
 
-            // Check if the collider hit is the wheel's collider
-            if (AxisValue != 0 && hit.collider != null && hit.collider == axisInteractible.rayTargetCollider)
+            RaycastHit2D hit =
+                Physics2D.GetRayIntersection(
+                    ray,
+                    50f,
+                    raycastHits
+                );
+
+            if (AxisValue != 0f &&
+                hit.collider != null &&
+                hit.collider ==
+                axisInteractible.rayTargetCollider)
             {
                 axisInteractible.Turn(AxisValue);
             }
         }
     }
 
-    /// <summary>
-    /// Sets the current interactible or adds one to the list of interactibles in range if there is already a current interactible
-    /// </summary>
-    /// <param name="interactible"></param>
-    public void AddInteractible(Interactible interactible)
+    public void AddInteractible(
+        Interactible interactible
+    )
     {
         if (CurrentInteractible == null)
-            SetCurrentInteractible(interactible);
-
-        else if (CurrentInteractible != interactible)
-            interactiblesInRange.Add(interactible);
+        {
+            SetCurrentInteractible(
+                interactible
+            );
+        }
+        else if (
+            CurrentInteractible != interactible &&
+            !interactiblesInRange.Contains(
+                interactible
+            ))
+        {
+            interactiblesInRange.Add(
+                interactible
+            );
+        }
     }
 
-    /// <summary>
-    /// Clears the current interactible. Sets a new current interactible, if there are any within range.
-    /// </summary>
-    /// <param name="interactible"></param>
-    public void RemoveInteractible(Interactible interactible)
+    public void RemoveInteractible(
+        Interactible interactible
+    )
     {
-        if (CurrentInteractible == interactible)
+        if (CurrentInteractible ==
+            interactible)
         {
             if (interactiblesInRange.Count == 0)
             {
@@ -138,28 +321,50 @@ public class PlayerInteraction : NetworkBehaviour
                 return;
             }
 
-            Interactible newInteractible = interactiblesInRange.Count > 0 ? interactiblesInRange[0] : null;
-            interactiblesInRange.Remove(newInteractible);
-            SetCurrentInteractible(newInteractible);
+            Interactible newInteractible =
+                interactiblesInRange[0];
+
+            interactiblesInRange.RemoveAt(0);
+
+            SetCurrentInteractible(
+                newInteractible
+            );
         }
-        else if (interactiblesInRange.Contains(interactible))
+        else
         {
-            interactiblesInRange.Remove(interactible);
+            interactiblesInRange.Remove(
+                interactible
+            );
         }
     }
 
-    private void SetCurrentInteractible(Interactible interactible)
+    private void SetCurrentInteractible(
+        Interactible interactible
+    )
     {
         CurrentInteractible = interactible;
-        if (CurrentInteractible != null && CurrentInteractible.UI != null)
-            CurrentInteractible.UI.SetActive(true);
+
+        if (CurrentInteractible != null &&
+            CurrentInteractible.UI != null)
+        {
+            CurrentInteractible.UI.SetActive(
+                true
+            );
+        }
     }
 
-    void Update()
+    private void Update()
     {
-        AxisValue = axisControls.action.ReadValue<float>();
+        if (!IsOwner)
+            return;
+
+        TryPointClickPickup();
+
+        AxisValue =
+            axisControls.action.ReadValue<float>();
+
         AxisInteract(AxisValue);
+
         previousAxisValue = AxisValue;
     }
 }
-
