@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class QuestManager : NetworkBehaviour
 {
@@ -20,6 +21,10 @@ public class QuestManager : NetworkBehaviour
     [Header("Vorhang")]
     public StopMotionRope curtainRope;
 
+    [Header("Act Transition")]
+    [Min(0f)]
+    public float curtainCloseTransitionDelay = 3f;
+
     [Header("Regiebuch")]
     public QuestOverlayManager overlayManager;
 
@@ -31,10 +36,11 @@ public class QuestManager : NetworkBehaviour
     public float finaleTeleportDelay = 0.35f;
 
     [Min(0f)]
-    public float finalAnimationDuration = 4f;
+    public float finalAnimationDuration = 60f;
 
     [Header("Debug")]
     public bool startWithOnePlayerForDebug;
+    public bool enableDebugActSkipping;
 
     [HideInInspector]
     public NetworkVariable<int> currentAct =
@@ -99,6 +105,7 @@ public class QuestManager : NetworkBehaviour
             return;
 
         TryStartInitialFlow();
+        TryHandleDebugSkip();
 
         if (currentQuest == null ||
             questCompletionInProgress ||
@@ -132,6 +139,70 @@ public class QuestManager : NetworkBehaviour
         if (IsCurtainClosed())
         {
             CheckQuestCompletion();
+        }
+    }
+
+    private void TryHandleDebugSkip()
+    {
+        if (!enableDebugActSkipping ||
+            Keyboard.current == null ||
+            !Keyboard.current.f8Key
+                .wasPressedThisFrame)
+        {
+            return;
+        }
+
+        DebugSkipCurrentAct();
+    }
+
+    [ContextMenu("DEBUG Skip Current Act")]
+    public void DebugSkipCurrentAct()
+    {
+        if (!IsServer ||
+            !enableDebugActSkipping ||
+            currentQuest == null ||
+            questCompletionInProgress ||
+            gameFinished ||
+            finaleStarted ||
+            actTransition != null)
+        {
+            return;
+        }
+
+        if (IsFinalQuest())
+        {
+            StartFinale();
+            return;
+        }
+
+        curtainControlEnabled.Value =
+            false;
+
+        SetCurtainClosedForDebug();
+        CompleteCurrentQuest();
+    }
+
+    private void SetCurtainClosedForDebug()
+    {
+        if (curtainRope != null &&
+            curtainRope.ropeFrames != null &&
+            curtainRope.ropeFrames.Length > 0)
+        {
+            int closedFrame =
+                curtainRope
+                    .longestStateOpensCurtain
+                    ? 0
+                    : curtainRope
+                        .ropeFrames
+                        .Length - 1;
+
+            curtainRope.currentFrame.Value =
+                closedFrame;
+        }
+
+        if (theaterManager != null)
+        {
+            theaterManager.CloseCurtains();
         }
     }
 
@@ -309,7 +380,7 @@ public class QuestManager : NetworkBehaviour
             currentAct.Value
         );
 
-        float delay =
+        float questDelay =
             Mathf.Max(
                 0f,
                 currentQuest.nextQuestDelay
@@ -317,12 +388,14 @@ public class QuestManager : NetworkBehaviour
 
         actTransition =
             StartCoroutine(
-                QuestTransition(delay)
+                QuestTransition(
+                    questDelay
+                )
             );
     }
 
     private IEnumerator QuestTransition(
-        float delay
+        float questDelay
     )
     {
         if (theaterManager != null)
@@ -330,9 +403,18 @@ public class QuestManager : NetworkBehaviour
             theaterManager.ShortApplause();
         }
 
-        yield return new WaitForSeconds(
-            delay
-        );
+        float transitionDelay =
+            Mathf.Max(
+                curtainCloseTransitionDelay,
+                questDelay
+            );
+
+        if (transitionDelay > 0f)
+        {
+            yield return new WaitForSeconds(
+                transitionDelay
+            );
+        }
 
         int nextAct =
             currentAct.Value + 1;

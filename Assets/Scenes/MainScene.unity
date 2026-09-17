@@ -3391,7 +3391,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3451175867352636082, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
   m_PrefabInstance: {fileID: 2057205060571908004}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 567180272}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b59dcfb655b36614fb3058e187e2df23, type: 3}
@@ -5387,6 +5387,7 @@ MonoBehaviour:
     - {fileID: 925973888}
     - {fileID: 1830902562}
     - {fileID: 1803362487}
+    - {fileID: 499916161}
   - groupName: Akt 2
     ojects:
     - {fileID: 934398843}
@@ -6407,6 +6408,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 499916159}
+  - component: {fileID: 499916160}
+  - component: {fileID: 499916161}
   m_Layer: 0
   m_Name: Seile
   m_TagString: Untagged
@@ -6422,17 +6425,57 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 499916158}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 413.10938, y: 195.00536, z: 0}
+  m_LocalScale: {x: 0.6666667, y: 0.6666667, z: 0.6666667}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 415196676}
   - {fileID: 386281831}
   - {fileID: 1049946484}
   - {fileID: 2099255741}
-  m_Father: {fileID: 950363476}
+  m_Father: {fileID: 1871165109}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &499916160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 499916158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 4221743653
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
+--- !u!114 &499916161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 499916158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b59dcfb655b36614fb3058e187e2df23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StageObjectWrapper
+  ShowTopMostFoldoutHeaderGroup: 1
+  targetObject: {fileID: 499916158}
+  spawnManually: 0
 --- !u!1 &500547729
 GameObject:
   m_ObjectHideFlags: 0
@@ -7485,6 +7528,11 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!1 &567180272 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6584395600378228155, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
+  m_PrefabInstance: {fileID: 2057205060571908004}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &578125037
 GameObject:
   m_ObjectHideFlags: 0
@@ -8139,7 +8187,6 @@ GameObject:
   - component: {fileID: 600510624}
   - component: {fileID: 600510623}
   - component: {fileID: 600510625}
-  - component: {fileID: 600510626}
   m_Layer: 0
   m_Name: SeilHaken
   m_TagString: Untagged
@@ -8257,18 +8304,6 @@ MonoBehaviour:
       MinSecondsBetweenUpdates: 0
       MaxSecondsBetweenUpdates: 0
     m_InternalValue: 0
---- !u!114 &600510626
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 600510621}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79297f2d9f7ca848b236d49db5925e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SimpleFakeSocket
 --- !u!1 &604262780
 GameObject:
   m_ObjectHideFlags: 0
@@ -9289,7 +9324,6 @@ GameObject:
   - component: {fileID: 653779902}
   - component: {fileID: 653779901}
   - component: {fileID: 653779900}
-  - component: {fileID: 653779903}
   m_Layer: 0
   m_Name: SeilHaken (2)
   m_TagString: Untagged
@@ -9407,18 +9441,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.9571445, y: 1.7691422}
   m_EdgeRadius: 0
---- !u!114 &653779903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 653779898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79297f2d9f7ca848b236d49db5925e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SimpleFakeSocket
 --- !u!1 &656299319
 GameObject:
   m_ObjectHideFlags: 0
@@ -10108,6 +10130,7 @@ MonoBehaviour:
   gameManager: {fileID: 413524002}
   playerSpawner: {fileID: 1789062278}
   curtainRope: {fileID: 1326580457}
+  curtainCloseTransitionDelay: 3
   overlayManager: {fileID: 689767145}
   quests:
   - {fileID: 556214901}
@@ -10115,8 +10138,9 @@ MonoBehaviour:
   - {fileID: 1342749582}
   - {fileID: 1897489915}
   finaleTeleportDelay: 0.35
-  finalAnimationDuration: 4
+  finalAnimationDuration: 60
   startWithOnePlayerForDebug: 0
+  enableDebugActSkipping: 0
   currentAct:
     UpdateTraits:
       MinSecondsBetweenUpdates: 0
@@ -10462,7 +10486,7 @@ Transform:
   m_GameObject: {fileID: 704533756}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -614.44, y: -295.54, z: 0}
+  m_LocalPosition: {x: -615.89, y: -295.54, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11123,6 +11147,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1987607483}
+  - {fileID: 1384725659}
   - {fileID: 1607646913}
   - {fileID: 58490466}
   - {fileID: 766047492}
@@ -11173,11 +11198,13 @@ MonoBehaviour:
       MinSecondsBetweenUpdates: 0
       MaxSecondsBetweenUpdates: 0
     m_InternalValue: 0
-  initialTimeOfDay: 0
+  initialTimeOfDay: 4
+  twilightLight: {fileID: 1384725660}
   morningLight: {fileID: 1987607484}
   dayLight: {fileID: 1607646914}
   eveningLight: {fileID: 58490467}
   nightLight: {fileID: 766047493}
+  morningBirds: {fileID: 0}
 --- !u!1 &766047491
 GameObject:
   m_ObjectHideFlags: 0
@@ -12118,6 +12145,7 @@ MonoBehaviour:
   stageLightManager: {fileID: 762427352}
   bulbGlow: {fileID: 2105353201}
   lightCone: {fileID: 1729629447}
+  twilightConeColor: {r: 0.1681664, g: 0.07320219, b: 0.4433962, a: 1}
   dayConeColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &915562404
 GameObject:
@@ -12881,7 +12909,6 @@ Transform:
   m_Children:
   - {fileID: 704533757}
   - {fileID: 1966428568}
-  - {fileID: 499916159}
   - {fileID: 1232469578}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -13085,7 +13112,6 @@ GameObject:
   - component: {fileID: 957400027}
   - component: {fileID: 957400026}
   - component: {fileID: 957400025}
-  - component: {fileID: 957400028}
   m_Layer: 0
   m_Name: SeilHaken (1)
   m_TagString: Untagged
@@ -13203,18 +13229,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.9446626, y: 2.2809029}
   m_EdgeRadius: 0
---- !u!114 &957400028
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 957400023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79297f2d9f7ca848b236d49db5925e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SimpleFakeSocket
 --- !u!1001 &959550234
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18494,6 +18508,90 @@ Transform:
   - {fileID: 1350078635}
   m_Father: {fileID: 230997152}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1384725658
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1384725659}
+  - component: {fileID: 1384725660}
+  m_Layer: 0
+  m_Name: Stage, Twilight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1384725659
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1384725658}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 762427350}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1384725660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1384725658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.2D.Runtime::UnityEngine.Rendering.Universal.Light2D
+  m_ComponentVersion: 2
+  m_LightType: 1
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0.5
+  m_Color: {r: 0.42745098, g: 0.3529412, b: 0.5411765, a: 1}
+  m_Intensity: 1
+  m_LightVolumeIntensity: 1
+  m_LightVolumeEnabled: 0
+  m_ApplyToSortingLayers: 9702d9ebfb693a1a00000000afe4676c95de1eb4
+  m_LightCookieSprite: {fileID: 0}
+  m_DeprecatedPointLightCookieSprite: {fileID: 0}
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_OverlapOperation: 0
+  m_NormalMapDistance: 3
+  m_NormalMapQuality: 2
+  m_UseNormalMap: 0
+  m_ShadowsEnabled: 1
+  m_ShadowIntensity: 0.75
+  m_ShadowSoftness: 0.3
+  m_ShadowSoftnessFalloffIntensity: 0.5
+  m_ShadowVolumeIntensityEnabled: 0
+  m_ShadowVolumeIntensity: 0.75
+  m_LocalBounds:
+    m_Center: {x: 2.83705, y: 0.6019001, z: 0}
+    m_Extent: {x: 14.89785, y: 8.6109, z: 0}
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 1
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -11.542959, y: -7.475572, z: 0}
+  - {x: 17.234753, y: -7.5098524, z: 0}
+  - {x: 17.15297, y: 8.611517, z: 0}
+  - {x: -11.560199, y: 8.712453, z: 0}
 --- !u!1 &1391489003
 GameObject:
   m_ObjectHideFlags: 0
@@ -23443,6 +23541,7 @@ MonoBehaviour:
   hostSpawnPoint: {fileID: 2030772629}
   clientSpawnPoint: {fileID: 663606812}
   mechanicFinaleSpawnPoint: {fileID: 704533757}
+  finaleMovementDuration: 3
 --- !u!4 &1789062279
 Transform:
   m_ObjectHideFlags: 0
@@ -23538,6 +23637,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b59dcfb655b36614fb3058e187e2df23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageObjectWrapper
+--- !u!95 &1809302946 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8889133127860572439, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
+  m_PrefabInstance: {fileID: 2057205060571908004}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1812646244
 GameObject:
   m_ObjectHideFlags: 0
@@ -24223,6 +24327,11 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 27.394287, y: 18.646332}
   m_EdgeRadius: 0
+--- !u!4 &1871165109 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 695825350189392502, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
+  m_PrefabInstance: {fileID: 2057205060571908004}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1871327591
 GameObject:
   m_ObjectHideFlags: 0
@@ -24332,7 +24441,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1885520531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26766,7 +26875,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 8728564930443918006, guid: 82b4ca2c49ebd6f489a4ee94e16a294d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -28449,7 +28558,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 0546df2596bbff44c982f7a333b92247, type: 2}
     - target: {fileID: 389659191877558816, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 391965253658987947, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
       propertyPath: GlobalObjectIdHash
@@ -28615,6 +28724,10 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 3183024670
       objectReference: {fileID: 0}
+    - target: {fileID: 6584395600378228155, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6585458745900050411, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -28751,13 +28864,27 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stage
       objectReference: {fileID: 0}
+    - target: {fileID: 8809008177550413084, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
+      propertyPath: beesObject
+      value: 
+      objectReference: {fileID: 567180272}
+    - target: {fileID: 8809008177550413084, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
+      propertyPath: beesAnimator
+      value: 
+      objectReference: {fileID: 1809302946}
     - target: {fileID: 9034806189571411499, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
       propertyPath: m_LocalPosition.x
       value: -16.75
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5375777142049474596, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
+    - {fileID: 7136629245839835447, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
+    - {fileID: 2791186796260808921, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 695825350189392502, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 499916159}
     - targetCorrespondingSourceObject: {fileID: 1816296385819899456, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 178046606}

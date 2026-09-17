@@ -15,12 +15,13 @@ public class FinaleOverlayManager : NetworkBehaviour
     public string startSceneName = "Start";
 
     [Min(0f)]
-    public float returnDelay = 0.35f;
+    public float returnDelay = 0.75f;
 
     private readonly HashSet<ulong>
         readyClients = new();
 
-    private bool finaleIsActive;
+    private bool serverFinaleIsActive;
+    private bool localFinaleIsActive;
     private bool localPlayerConfirmed;
     private bool buttonWasRegistered;
     private bool returnStarted;
@@ -51,13 +52,13 @@ public class FinaleOverlayManager : NetworkBehaviour
     private void ShowFinale()
     {
         if (!IsServer ||
-            finaleIsActive ||
+            serverFinaleIsActive ||
             returnStarted)
         {
             return;
         }
 
-        finaleIsActive = true;
+        serverFinaleIsActive = true;
         readyClients.Clear();
 
         ShowFinaleRpc();
@@ -68,6 +69,7 @@ public class FinaleOverlayManager : NetworkBehaviour
     {
         RegisterButton();
 
+        localFinaleIsActive = true;
         localPlayerConfirmed = false;
 
         if (finaleOverlayRoot != null)
@@ -120,7 +122,7 @@ public class FinaleOverlayManager : NetworkBehaviour
 
     private void OnCurtainClosePressed()
     {
-        if (!finaleIsActive ||
+        if (!localFinaleIsActive ||
             localPlayerConfirmed ||
             returnStarted)
         {
@@ -147,7 +149,7 @@ public class FinaleOverlayManager : NetworkBehaviour
         RpcParams rpcParams = default
     )
     {
-        if (!finaleIsActive ||
+        if (!serverFinaleIsActive ||
             returnStarted)
         {
             return;
@@ -165,7 +167,7 @@ public class FinaleOverlayManager : NetworkBehaviour
             return;
         }
 
-        finaleIsActive = false;
+        serverFinaleIsActive = false;
         returnStarted = true;
 
         ReturnToStartRpc();
@@ -204,10 +206,8 @@ public class FinaleOverlayManager : NetworkBehaviour
     [Rpc(SendTo.Everyone)]
     private void ReturnToStartRpc()
     {
-        if (!returnStarted)
-        {
-            returnStarted = true;
-        }
+        localFinaleIsActive = false;
+        returnStarted = true;
 
         StartCoroutine(
             ReturnToStartRoutine()
@@ -245,6 +245,8 @@ public class FinaleOverlayManager : NetworkBehaviour
 
     private void HideFinaleLocally()
     {
+        localFinaleIsActive = false;
+
         if (finaleOverlayRoot != null)
         {
             finaleOverlayRoot.SetActive(

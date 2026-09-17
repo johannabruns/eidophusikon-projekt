@@ -15,9 +15,19 @@ public class LightMachineController : MonoBehaviour
     public Light2D bulbGlow;
     public Light2D lightCone;
 
-    [Header("Daylight")]
+    [Header("Unfiltered Colors")]
     [ColorUsage(true, true)]
-    public Color dayConeColor = Color.white;
+    public Color twilightConeColor =
+        new Color(
+            0.55f,
+            0.35f,
+            0.45f,
+            1f
+        );
+
+    [ColorUsage(true, true)]
+    public Color dayConeColor =
+        Color.white;
 
     private void OnEnable()
     {
@@ -48,13 +58,22 @@ public class LightMachineController : MonoBehaviour
         }
 
         if (!bulbIsInserted)
+        {
+            ApplyStageTime(
+                TimeOfDay.Twilight
+            );
+
             return;
+        }
 
         TimeOfDay selectedTime =
-            TimeOfDay.Day;
+            GetUnfilteredTime();
 
         Color selectedColor =
-            dayConeColor;
+            selectedTime ==
+            TimeOfDay.Twilight
+                ? twilightConeColor
+                : dayConeColor;
 
         if (filterSocket != null &&
             filterSocket.TryGetSocketedItem(
@@ -81,6 +100,35 @@ public class LightMachineController : MonoBehaviour
                 selectedColor;
         }
 
+        ApplyStageTime(
+            selectedTime
+        );
+    }
+
+    private TimeOfDay GetUnfilteredTime()
+    {
+        if (QuestManager.Instance == null)
+        {
+            return TimeOfDay.Twilight;
+        }
+
+        int actIndex =
+            QuestManager.Instance
+                .currentAct
+                .Value;
+
+        if (actIndex <= 1)
+        {
+            return TimeOfDay.Twilight;
+        }
+
+        return TimeOfDay.Day;
+    }
+
+    private void ApplyStageTime(
+        TimeOfDay selectedTime
+    )
+    {
         if (stageLightManager == null ||
             NetworkManager.Singleton == null ||
             !NetworkManager.Singleton.IsServer)
@@ -90,11 +138,14 @@ public class LightMachineController : MonoBehaviour
 
         if (stageLightManager
                 .currentTimeOfDay
-                .Value != selectedTime)
+                .Value ==
+            selectedTime)
         {
-            stageLightManager.SetLightRpc(
-                selectedTime
-            );
+            return;
         }
+
+        stageLightManager.SetLightRpc(
+            selectedTime
+        );
     }
 }

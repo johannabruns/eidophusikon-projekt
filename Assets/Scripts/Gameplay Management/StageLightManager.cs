@@ -5,50 +5,132 @@ using UnityEngine.Rendering.Universal;
 public class StageLightManager : NetworkBehaviour
 {
     [HideInInspector]
-    public NetworkVariable<TimeOfDay> currentTimeOfDay = new NetworkVariable<TimeOfDay>(TimeOfDay.Morning);
-    public TimeOfDay initialTimeOfDay;
+    public NetworkVariable<TimeOfDay>
+        currentTimeOfDay =
+            new NetworkVariable<TimeOfDay>(
+                TimeOfDay.Twilight
+            );
 
+    public TimeOfDay initialTimeOfDay =
+        TimeOfDay.Twilight;
+
+    [Header("Lights")]
+    public Light2D twilightLight;
     public Light2D morningLight;
     public Light2D dayLight;
     public Light2D eveningLight;
     public Light2D nightLight;
 
-    private void Awake()
-    {
-        currentTimeOfDay.Value = initialTimeOfDay;
-    }
+    [Header("Morning Ambience")]
+    public AudioSource morningBirds;
 
     public override void OnNetworkSpawn()
     {
-        currentTimeOfDay.OnValueChanged += OnTimeOfDayChanged;
-        SetLight(currentTimeOfDay.Value);
+        currentTimeOfDay.OnValueChanged +=
+            OnTimeOfDayChanged;
+
+        if (IsServer)
+        {
+            currentTimeOfDay.Value =
+                initialTimeOfDay;
+        }
+
+        SetLight(
+            currentTimeOfDay.Value
+        );
     }
 
     public override void OnNetworkDespawn()
     {
-        currentTimeOfDay.OnValueChanged -= OnTimeOfDayChanged;
+        currentTimeOfDay.OnValueChanged -=
+            OnTimeOfDayChanged;
     }
 
-    private void OnTimeOfDayChanged(TimeOfDay previous, TimeOfDay current)
+    private void OnTimeOfDayChanged(
+        TimeOfDay previous,
+        TimeOfDay current
+    )
     {
         SetLight(current);
-        Debug.Log($"Time of day is now {current}");
-        QuestManager.Instance.CheckQuestCompletion();
+
+        if (QuestManager.Instance != null)
+        {
+            QuestManager.Instance
+                .CheckQuestCompletion();
+        }
     }
 
-    [Rpc(SendTo.Server)]
-    public void SetLightRpc(TimeOfDay time)
+    [Rpc(
+        SendTo.Server,
+        InvokePermission =
+            RpcInvokePermission.Everyone
+    )]
+    public void SetLightRpc(
+        TimeOfDay time
+    )
     {
-        if (!IsServer) return;
-        currentTimeOfDay.Value = time;
+        if (!IsServer)
+            return;
+
+        currentTimeOfDay.Value =
+            time;
     }
 
-    private void SetLight(TimeOfDay time)
+    private void SetLight(
+        TimeOfDay time
+    )
     {
-        morningLight.enabled = time == TimeOfDay.Morning;
-        dayLight.enabled = time == TimeOfDay.Day;
-        eveningLight.enabled = time == TimeOfDay.Evening;
-        nightLight.enabled = time == TimeOfDay.Night;
+        if (twilightLight != null)
+        {
+            twilightLight.enabled =
+                time ==
+                TimeOfDay.Twilight;
+        }
+
+        if (morningLight != null)
+        {
+            morningLight.enabled =
+                time ==
+                TimeOfDay.Morning;
+        }
+
+        if (dayLight != null)
+        {
+            dayLight.enabled =
+                time ==
+                TimeOfDay.Day;
+        }
+
+        if (eveningLight != null)
+        {
+            eveningLight.enabled =
+                time ==
+                TimeOfDay.Evening;
+        }
+
+        if (nightLight != null)
+        {
+            nightLight.enabled =
+                time ==
+                TimeOfDay.Night;
+        }
+
+        if (morningBirds == null)
+            return;
+
+        bool shouldPlayBirds =
+            time ==
+            TimeOfDay.Morning;
+
+        if (shouldPlayBirds &&
+            !morningBirds.isPlaying)
+        {
+            morningBirds.Play();
+        }
+        else if (!shouldPlayBirds &&
+                 morningBirds.isPlaying)
+        {
+            morningBirds.Stop();
+        }
     }
-    
 }

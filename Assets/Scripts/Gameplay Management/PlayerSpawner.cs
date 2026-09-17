@@ -14,6 +14,9 @@ public class PlayerSpawner : MonoBehaviour
     [Header("Finale")]
     public Transform mechanicFinaleSpawnPoint;
 
+    [Min(0.1f)]
+    public float finaleMovementDuration = 3f;
+
     private void Start()
     {
         if (NetworkManager.Singleton != null)
@@ -64,6 +67,7 @@ public class PlayerSpawner : MonoBehaviour
                 .PrefabIdHash;
 
         response.Position = spawnPoint;
+
         response.Rotation =
             Quaternion.identity;
 
@@ -110,17 +114,18 @@ public class PlayerSpawner : MonoBehaviour
             return false;
         }
 
-        movement.TeleportToRpc(
-            mechanicFinaleSpawnPoint.position
+        movement.MoveToFinaleRpc(
+            mechanicFinaleSpawnPoint.position,
+            finaleMovementDuration
         );
 
         return true;
     }
 
     [ContextMenu(
-        "Teleport Mechanic To Finale"
+        "Move Mechanic To Finale"
     )]
-    private void TestFinaleTeleport()
+    private void TestFinaleMovement()
     {
         TeleportMechanicToFinale();
     }

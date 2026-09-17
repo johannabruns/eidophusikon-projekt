@@ -8,6 +8,7 @@ public class QuestOverlayManager : NetworkBehaviour
 {
     [Header("Canvas")]
     public GameObject overlayRoot;
+
     public GameObject[] actPages =
         new GameObject[4];
 
@@ -18,7 +19,9 @@ public class QuestOverlayManager : NetworkBehaviour
         readyClients = new();
 
     private int shownActIndex;
-    private bool overlayIsActive;
+
+    private bool serverOverlayIsActive;
+    private bool localOverlayIsActive;
     private bool buttonWasRegistered;
 
     public event Action<int>
@@ -43,7 +46,8 @@ public class QuestOverlayManager : NetworkBehaviour
             return;
 
         shownActIndex = actIndex;
-        overlayIsActive = true;
+        serverOverlayIsActive = true;
+
         readyClients.Clear();
 
         ShowActPageRpc(actIndex);
@@ -57,7 +61,7 @@ public class QuestOverlayManager : NetworkBehaviour
         RegisterButton();
 
         shownActIndex = actIndex;
-        overlayIsActive = true;
+        localOverlayIsActive = true;
 
         if (overlayRoot != null)
         {
@@ -114,10 +118,10 @@ public class QuestOverlayManager : NetworkBehaviour
 
     private void OnCloseButtonPressed()
     {
-        if (!overlayIsActive)
+        if (!localOverlayIsActive)
             return;
 
-        overlayIsActive = false;
+        localOverlayIsActive = false;
 
         if (closeButton != null)
         {
@@ -145,7 +149,7 @@ public class QuestOverlayManager : NetworkBehaviour
         RpcParams rpcParams = default
     )
     {
-        if (!overlayIsActive)
+        if (!serverOverlayIsActive)
             return;
 
         ulong senderClientId =
@@ -160,7 +164,7 @@ public class QuestOverlayManager : NetworkBehaviour
             return;
         }
 
-        overlayIsActive = false;
+        serverOverlayIsActive = false;
 
         OnAllPlayersReady?.Invoke(
             shownActIndex
@@ -169,8 +173,11 @@ public class QuestOverlayManager : NetworkBehaviour
 
     private bool AreAllConnectedPlayersReady()
     {
-        if (NetworkManager.Singleton == null ||
-            NetworkManager.Singleton
+        NetworkManager networkManager =
+            NetworkManager.Singleton;
+
+        if (networkManager == null ||
+            networkManager
                 .ConnectedClientsIds
                 .Count == 0)
         {
@@ -179,13 +186,13 @@ public class QuestOverlayManager : NetworkBehaviour
 
         foreach (
             ulong clientId
-            in NetworkManager.Singleton
+            in networkManager
                 .ConnectedClientsIds
         )
         {
             if (!readyClients.Contains(
-                clientId
-            ))
+                    clientId
+                ))
             {
                 return false;
             }

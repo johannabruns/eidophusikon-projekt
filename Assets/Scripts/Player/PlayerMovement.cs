@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -33,7 +33,14 @@ public class PlayerMovement : NetworkBehaviour
         private set;
     }
 
+    public bool FinaleMovementInProgress
+    {
+        get;
+        private set;
+    }
+
     private float gravityScale;
+    private Coroutine finaleMovement;
 
     public Vector2 MovementDirection
     {
@@ -79,8 +86,11 @@ public class PlayerMovement : NetworkBehaviour
         Collider2D collision
     )
     {
-        if (!IsOwner)
+        if (!IsOwner ||
+            FinaleMovementInProgress)
+        {
             return;
+        }
 
         if (collision.gameObject.CompareTag(
                 "Ladder"
@@ -95,14 +105,18 @@ public class PlayerMovement : NetworkBehaviour
         Collider2D collision
     )
     {
-        if (!IsOwner)
+        if (!IsOwner ||
+            FinaleMovementInProgress)
+        {
             return;
+        }
 
         if (collision.gameObject.CompareTag(
                 "Ladder"
             ))
         {
             IsOnLadder = false;
+
             rigidBody.gravityScale =
                 gravityScale;
         }
@@ -112,6 +126,15 @@ public class PlayerMovement : NetworkBehaviour
     {
         if (!IsOwner)
             return;
+
+        if (FinaleMovementInProgress)
+        {
+            MovementDirection =
+                Vector2.zero;
+
+            LadderVertical = 0f;
+            return;
+        }
 
         MovementDirection =
             movementControls.action
@@ -129,6 +152,14 @@ public class PlayerMovement : NetworkBehaviour
     {
         if (!IsOwner)
             return;
+
+        if (FinaleMovementInProgress)
+        {
+            rigidBody.linearVelocity =
+                Vector2.zero;
+
+            return;
+        }
 
         rigidBody.linearVelocity =
             new Vector2(
@@ -153,8 +184,11 @@ public class PlayerMovement : NetworkBehaviour
         InputAction.CallbackContext obj
     )
     {
-        if (!IsOwner)
+        if (!IsOwner ||
+            FinaleMovementInProgress)
+        {
             return;
+        }
 
         if (IsGrounded &&
             !IsOnLadder)
@@ -178,21 +212,88 @@ public class PlayerMovement : NetworkBehaviour
     }
 
     [Rpc(SendTo.Everyone)]
-    public void TeleportToRpc(
-        Vector3 worldPosition
+    public void MoveToFinaleRpc(
+        Vector3 worldPosition,
+        float duration
     )
     {
         if (!IsOwner)
             return;
 
+        if (finaleMovement != null)
+        {
+            StopCoroutine(
+                finaleMovement
+            );
+        }
+
+        finaleMovement =
+            StartCoroutine(
+                MoveToFinaleRoutine(
+                    worldPosition,
+                    duration
+                )
+            );
+    }
+
+    private IEnumerator MoveToFinaleRoutine(
+        Vector3 worldPosition,
+        float duration
+    )
+    {
+        FinaleMovementInProgress = true;
+        MovementDirection = Vector2.zero;
+        LadderVertical = 0f;
         IsOnLadder = false;
-        rigidBody.gravityScale =
-            gravityScale;
 
         rigidBody.linearVelocity =
             Vector2.zero;
 
         rigidBody.angularVelocity = 0f;
+        rigidBody.gravityScale = 0f;
+        rigidBody.simulated = false;
+
+        Vector3 startPosition =
+            transform.position;
+
+        float safeDuration =
+            Mathf.Max(
+                0.01f,
+                duration
+            );
+
+        float elapsed = 0f;
+
+        while (elapsed < safeDuration)
+        {
+            elapsed +=
+                Time.unscaledDeltaTime;
+
+            float progress =
+                Mathf.Clamp01(
+                    elapsed /
+                    safeDuration
+                );
+
+            float smoothProgress =
+                progress *
+                progress *
+                (3f - 2f * progress);
+
+            transform.position =
+                Vector3.Lerp(
+                    startPosition,
+                    worldPosition,
+                    smoothProgress
+                );
+
+            yield return null;
+        }
+
+        transform.position =
+            worldPosition;
+
+        rigidBody.simulated = true;
 
         rigidBody.position =
             new Vector2(
@@ -200,8 +301,23 @@ public class PlayerMovement : NetworkBehaviour
                 worldPosition.y
             );
 
-        transform.position =
-            worldPosition;
+        rigidBody.linearVelocity =
+            Vector2.zero;
+
+        rigidBody.angularVelocity = 0f;
+        rigidBody.gravityScale =
+            gravityScale;
+
+        PlayerAnimations animations =
+            GetComponent<PlayerAnimations>();
+
+        if (animations != null)
+        {
+            animations.FaceLeft();
+        }
+
+        FinaleMovementInProgress = false;
+        finaleMovement = null;
     }
 
     private void OnDrawGizmosSelected()

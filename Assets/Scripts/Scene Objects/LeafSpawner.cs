@@ -3,37 +3,84 @@ using UnityEngine;
 
 public class LeafSpawner : NetworkBehaviour
 {
-
-    public float windResistance;
-    private bool done = false;
-
     public GameObject leafPrefab;
     public Wind windScript;
 
-    public void SpawnLeaf()
+    private bool done;
+
+    private void OnEnable()
     {
-        if(!IsServer) return;  
-        GameObject drop = Instantiate(leafPrefab, transform.position, Quaternion.Euler(0f, 0f, Random.Range(0f, 359f)));
-        drop.GetComponent<NetworkObject>().Spawn();
+        done = false;
     }
 
     private void Update()
     {
-        if (!IsServer) return;
-
-        if(!done)
+        if (!IsServer ||
+            done)
         {
-            if(windScript.currentIntensity.Value > windResistance)
-            {
-                SpawnLeaf();
-                done = true;
-            }
+            return;
         }
+
+        if (windScript == null)
+        {
+            windScript =
+                FindFirstObjectByType<Wind>(
+                    FindObjectsInactive.Include
+                );
+        }
+
+        if (windScript == null ||
+            !windScript.WindActive)
+        {
+            return;
+        }
+
+        SpawnLeaf();
+        done = true;
+    }
+
+    private void SpawnLeaf()
+    {
+        if (!IsServer ||
+            leafPrefab == null)
+        {
+            return;
+        }
+
+        GameObject spawnedLeaf =
+            Instantiate(
+                leafPrefab,
+                transform.position,
+                Quaternion.Euler(
+                    0f,
+                    0f,
+                    Random.Range(
+                        0f,
+                        359f
+                    )
+                )
+            );
+
+        NetworkObject networkObject =
+            spawnedLeaf
+                .GetComponent<NetworkObject>();
+
+        if (networkObject == null)
+        {
+            Destroy(spawnedLeaf);
+            return;
+        }
+
+        networkObject.Spawn();
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, 0.2f);
+
+        Gizmos.DrawWireSphere(
+            transform.position,
+            0.2f
+        );
     }
 }
