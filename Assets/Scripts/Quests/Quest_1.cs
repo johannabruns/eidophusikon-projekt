@@ -9,7 +9,7 @@ public class Quest_1 : Quest
 
     public override bool IsComplete()
     {
-        //TODO: Vögel
+        //TODO: Checken ob Vögel sichtbar sind?
 
         return birdcage.isOpen.Value;
     }
