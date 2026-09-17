@@ -288,7 +288,7 @@ public class PlayerItemManager : NetworkBehaviour
 
         itemObject.TrySetParent(
             socketObject.transform,
-            false
+            true
         );
 
         NetworkTransform networkTransform =

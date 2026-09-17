@@ -4,17 +4,24 @@ public class Wheel : AxisInteractible
 {
     public Transform wheelTransform;
 
-    protected override void VisualFeedback(float axisValue)
+    protected override void VisualFeedback(
+        float axisValue
+    )
     {
-        if (axisValue < 0)
+        if (target == null ||
+            wheelTransform == null ||
+            axisValue == 0f)
         {
-            if (target.transform.position != target.PointA.position)
-                wheelTransform.Rotate(0, 0, -axisValue * target.moveSpeed * Time.deltaTime * 30);
+            return;
         }
-        else if (axisValue > 0)
-        {
-            if (target.transform.position != target.PointB.position)
-                wheelTransform.Rotate(0, 0, -axisValue * target.moveSpeed * Time.deltaTime * 30);
-        }
+
+        wheelTransform.Rotate(
+            0f,
+            0f,
+            -axisValue *
+            target.moveSpeed *
+            Time.deltaTime *
+            30f
+        );
     }
 }
