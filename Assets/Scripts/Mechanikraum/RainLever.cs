@@ -9,12 +9,15 @@ public class RainLever : SimpleInteractible
     public Movable stageCloud;
     public Rain stageRain;
 
+    [Header("Cloud Rain Zone")]
+    public Transform cloudRainStartPoint;
+
+    [Min(0.01f)]
+    public float rainZoneTolerance = 0.15f;
+
     [Header("Drain")]
     [Min(0.1f)]
     public float drainInterval = 1f;
-
-    [Min(0.01f)]
-    public float cloudTargetTolerance = 0.05f;
 
     [Header("Lever Visuals")]
     public GameObject leverOffVisual;
@@ -80,13 +83,14 @@ public class RainLever : SimpleInteractible
     {
         if (funnel == null ||
             stageCloud == null ||
-            stageRain == null)
+            stageRain == null ||
+            cloudRainStartPoint == null)
         {
             return;
         }
 
         if (!funnel.IsFull ||
-            !IsCloudOnStage())
+            !IsCloudInsideRainZone())
         {
             return;
         }
@@ -111,14 +115,14 @@ public class RainLever : SimpleInteractible
     {
         while (isActive.Value &&
                funnel.HasWater &&
-               IsCloudOnStage())
+               IsCloudInsideRainZone())
         {
             yield return new WaitForSeconds(
                 drainInterval
             );
 
             if (!isActive.Value ||
-                !IsCloudOnStage())
+                !IsCloudInsideRainZone())
             {
                 break;
             }
@@ -152,18 +156,57 @@ public class RainLever : SimpleInteractible
         }
     }
 
-    private bool IsCloudOnStage()
+    private bool IsCloudInsideRainZone()
     {
         if (stageCloud == null ||
-            stageCloud.PointB == null)
+            stageCloud.PointB == null ||
+            cloudRainStartPoint == null)
         {
             return false;
         }
 
-        return Vector3.Distance(
-            stageCloud.transform.position,
-            stageCloud.PointB.position
-        ) <= cloudTargetTolerance;
+        Vector2 cloudPosition =
+            stageCloud.transform.position;
+
+        Vector2 zoneStart =
+            cloudRainStartPoint.position;
+
+        Vector2 zoneEnd =
+            stageCloud.PointB.position;
+
+        Vector2 zoneDirection =
+            zoneEnd - zoneStart;
+
+        float zoneLengthSquared =
+            zoneDirection.sqrMagnitude;
+
+        if (zoneLengthSquared <= 0.0001f)
+            return false;
+
+        float progress =
+            Vector2.Dot(
+                cloudPosition - zoneStart,
+                zoneDirection
+            ) / zoneLengthSquared;
+
+        if (progress < 0f ||
+            progress > 1f)
+        {
+            return false;
+        }
+
+        Vector2 closestPoint =
+            zoneStart +
+            zoneDirection * progress;
+
+        float distanceFromZone =
+            Vector2.Distance(
+                cloudPosition,
+                closestPoint
+            );
+
+        return distanceFromZone <=
+               rainZoneTolerance;
     }
 
     private void HandleActiveChanged(
