@@ -31,6 +31,8 @@ public class ConstellationManager : NetworkBehaviour
         );
 
     public Transform currentStarIndicator;
+    public Animator constellationAnim;
+
     public AxisInteractible axisInteractible;
     public UnityEvent OnConstellationAligned;
 
@@ -268,6 +270,7 @@ public class ConstellationManager : NetworkBehaviour
     )
     {
         ApplyWheelLock(current);
+        constellationAnim.SetBool("IsAligned", current);
 
         if (current)
         {

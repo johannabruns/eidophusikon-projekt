@@ -47,6 +47,9 @@ TagManager:
   - name: Middleground
     uniqueID: 440035835
     locked: 0
+  - name: NotLit
+    uniqueID: 3270977441
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

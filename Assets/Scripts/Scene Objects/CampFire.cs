@@ -8,7 +8,8 @@ public class CampFire : NetworkBehaviour
     public SpriteRenderer wood;
     public Sprite[] woodSprites;
     public GameObject fire;
-    public SpriteRenderer[] stones;
+    public SpriteRenderer stones;
+    public Sprite[] stoneSprites;
 
     public AudioSource audioSource;
 
@@ -43,7 +44,7 @@ public class CampFire : NetworkBehaviour
 
     public bool IsReady()
     {
-        return woodCount.Value >= woodSprites.Length - 1 && stoneCount.Value >= stones.Length - 1;
+        return woodCount.Value >= woodSprites.Length - 1 && stoneCount.Value >= stoneSprites.Length - 1;
     }
 
     private void OnIsReadyChanged(bool previousValue, bool newValue)
@@ -117,12 +118,18 @@ public class CampFire : NetworkBehaviour
 
     private void SetStoneSprite(int index)
     {
-        if (index >= woodSprites.Length) return;
+        if (index >= stoneSprites.Length)
+            return;
 
-        for (int i = 0; i < stones.Length; i++)
+        if (index < 0)
         {
-            stones[i].enabled = i <= index;
+            stones.sprite = null;
+            return;
         }
+
+        inactiveFire.enabled = index < 0;
+
+        stones.sprite = stoneSprites[index];
     }
 
     /*----------------------------Flame----------------------------*/
