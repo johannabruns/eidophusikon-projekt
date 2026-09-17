@@ -48,11 +48,7 @@ public class WindDrum : Interactible
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
-
-        if (rubMalletVisual != null)
-        {
-            rubMalletVisual.SetActive(false);
-        }
+        SetRubMalletVisualVisible(false);
     }
 
     private void Update()
@@ -216,6 +212,7 @@ public class WindDrum : Interactible
     )
     {
         isRubbing = true;
+
         activeCarriedItem =
             itemManager.CarriedItem;
 
@@ -225,8 +222,7 @@ public class WindDrum : Interactible
         lastMovementTime = Time.time;
 
         HideCarriedMallet();
-
-        rubMalletVisual.SetActive(true);
+        SetRubMalletVisualVisible(true);
     }
 
     private void UpdateMalletVisual(
@@ -317,6 +313,13 @@ public class WindDrum : Interactible
             in renderers
         )
         {
+            if (BelongsToRubMalletVisual(
+                spriteRenderer
+            ))
+            {
+                continue;
+            }
+
             hiddenRenderers.Add(
                 spriteRenderer
             );
@@ -327,6 +330,24 @@ public class WindDrum : Interactible
 
             spriteRenderer.enabled = false;
         }
+    }
+
+    private bool BelongsToRubMalletVisual(
+        SpriteRenderer spriteRenderer
+    )
+    {
+        if (rubMalletVisual == null ||
+            spriteRenderer == null)
+        {
+            return false;
+        }
+
+        return
+            spriteRenderer.gameObject ==
+            rubMalletVisual ||
+            spriteRenderer.transform.IsChildOf(
+                rubMalletVisual.transform
+            );
     }
 
     private void RestoreCarriedMallet()
@@ -348,6 +369,32 @@ public class WindDrum : Interactible
         previousRendererStates.Clear();
     }
 
+    private void SetRubMalletVisualVisible(
+        bool visible
+    )
+    {
+        if (rubMalletVisual == null)
+            return;
+
+        rubMalletVisual.SetActive(visible);
+
+        if (!visible)
+            return;
+
+        SpriteRenderer[] renderers =
+            rubMalletVisual
+                .GetComponentsInChildren
+                    <SpriteRenderer>(true);
+
+        foreach (
+            SpriteRenderer spriteRenderer
+            in renderers
+        )
+        {
+            spriteRenderer.enabled = true;
+        }
+    }
+
     private void EndRubbing()
     {
         if (!isRubbing &&
@@ -363,11 +410,7 @@ public class WindDrum : Interactible
         }
 
         RestoreCarriedMallet();
-
-        if (rubMalletVisual != null)
-        {
-            rubMalletVisual.SetActive(false);
-        }
+        SetRubMalletVisualVisible(false);
 
         isRubbing = false;
         windRequested = false;
@@ -379,10 +422,12 @@ public class WindDrum : Interactible
     private void OnDisable()
     {
         RestoreCarriedMallet();
+        SetRubMalletVisualVisible(false);
 
-        if (rubMalletVisual != null)
-        {
-            rubMalletVisual.SetActive(false);
-        }
+        isRubbing = false;
+        windRequested = false;
+        hasLastMalletPosition = false;
+        accumulatedDistance = 0f;
+        activeCarriedItem = null;
     }
 }
