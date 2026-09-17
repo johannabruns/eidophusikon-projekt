@@ -3713,6 +3713,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 950363476}
     m_Modifications:
+    - target: {fileID: 527852844852137602, guid: 125ac45e3f587c24f9ac889d58063f44, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2360704750155357112, guid: 125ac45e3f587c24f9ac889d58063f44, type: 3}
       propertyPath: m_LocalScale.x
       value: 21.854475
@@ -3729,6 +3733,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 4.5778
       objectReference: {fileID: 0}
+    - target: {fileID: 2373192324905266201, guid: 125ac45e3f587c24f9ac889d58063f44, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.769989
+      objectReference: {fileID: 0}
+    - target: {fileID: 2562550776778735013, guid: 125ac45e3f587c24f9ac889d58063f44, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4717465342979593971, guid: 125ac45e3f587c24f9ac889d58063f44, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 3224384381
@@ -3740,6 +3752,10 @@ PrefabInstance:
     - target: {fileID: 5636057147823933406, guid: 125ac45e3f587c24f9ac889d58063f44, type: 3}
       propertyPath: m_Name
       value: Wind
+      objectReference: {fileID: 0}
+    - target: {fileID: 6404091803744945931, guid: 125ac45e3f587c24f9ac889d58063f44, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.77
       objectReference: {fileID: 0}
     - target: {fileID: 7405341519646697908, guid: 125ac45e3f587c24f9ac889d58063f44, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8530,7 +8546,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 440035835
-  m_SortingLayer: -1
+  m_SortingLayer: -2
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.41960788, g: 0.3529412, b: 0.23137257, a: 1}
@@ -11286,7 +11302,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 440035835
-  m_SortingLayer: -1
+  m_SortingLayer: -2
   m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.18039216, g: 0.14901961, b: 0.1254902, a: 1}
@@ -15572,7 +15588,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 440035835
-  m_SortingLayer: -1
+  m_SortingLayer: -2
   m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.18431373, g: 0.14901961, b: 0.10588236, a: 1}
@@ -27786,6 +27802,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 0546df2596bbff44c982f7a333b92247, type: 2}
+    - target: {fileID: 389659191877558816, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 391965253658987947, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 4048517806
@@ -27797,6 +27817,26 @@ PrefabInstance:
     - target: {fileID: 500354001851142431, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
       propertyPath: releaseConfirmationDelay
       value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 740776574341605601, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.82
+      objectReference: {fileID: 0}
+    - target: {fileID: 740776574341605601, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.82
+      objectReference: {fileID: 0}
+    - target: {fileID: 740776574341605601, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.82
+      objectReference: {fileID: 0}
+    - target: {fileID: 740776574341605601, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 740776574341605601, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 813238164446223415, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
       propertyPath: m_IsActive
@@ -27841,6 +27881,10 @@ PrefabInstance:
     - target: {fileID: 2021751048274911877, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
       propertyPath: InScenePlacedSourceGlobalObjectIdHash
       value: 3868907832
+      objectReference: {fileID: 0}
+    - target: {fileID: 2374003358103322776, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2463569130586145458, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
       propertyPath: OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -27942,6 +27986,10 @@ PrefabInstance:
       propertyPath: InScenePlacedSourceGlobalObjectIdHash
       value: 3868907832
       objectReference: {fileID: 0}
+    - target: {fileID: 7085125988996950291, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7136629245839835447, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
       propertyPath: TransitionStateInfoList.Array.size
       value: 1
@@ -27961,6 +28009,14 @@ PrefabInstance:
     - target: {fileID: 7136629245839835447, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
       propertyPath: TransitionStateInfoList.Array.data[0].TransitionDuration
       value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7156605896826368739, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
+      propertyPath: m_PointLightInnerAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 7156605896826368739, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
+      propertyPath: m_PointLightOuterAngle
+      value: 360
       objectReference: {fileID: 0}
     - target: {fileID: 7227811767985173879, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
       propertyPath: GlobalObjectIdHash
