@@ -20,11 +20,10 @@ public class StopMotionRope : Interactible
 
     [Header("Curtain")]
     public TheaterManager theaterManager;
-
     public bool longestStateOpensCurtain = true;
 
     public NetworkVariable<int> currentFrame =
-        new(
+        new NetworkVariable<int>(
             0,
             NetworkVariableReadPermission.Everyone,
             NetworkVariableWritePermission.Server
@@ -76,6 +75,14 @@ public class StopMotionRope : Interactible
             Mouse.current == null ||
             Camera.main == null ||
             rayTargetCollider == null)
+        {
+            return;
+        }
+
+        if (theaterManager != null &&
+            QuestManager.Instance != null &&
+            !QuestManager.Instance
+                .CurtainControlEnabled)
         {
             return;
         }
@@ -161,6 +168,14 @@ public class StopMotionRope : Interactible
         if (ropeFrames.Length == 0)
             return;
 
+        if (theaterManager != null &&
+            QuestManager.Instance != null &&
+            !QuestManager.Instance
+                .CurtainControlEnabled)
+        {
+            return;
+        }
+
         int nextFrame =
             Mathf.Clamp(
                 currentFrame.Value +
@@ -186,7 +201,9 @@ public class StopMotionRope : Interactible
         }
     }
 
-    private void UpdateCurtain(int frame)
+    private void UpdateCurtain(
+        int frame
+    )
     {
         if (theaterManager == null ||
             ropeFrames.Length == 0)
@@ -225,7 +242,9 @@ public class StopMotionRope : Interactible
         }
     }
 
-    private void ApplyFrame(int frame)
+    private void ApplyFrame(
+        int frame
+    )
     {
         if (ropeFrames.Length == 0)
             return;
@@ -237,11 +256,9 @@ public class StopMotionRope : Interactible
                 ropeFrames.Length - 1
             );
 
-        for (
-            int i = 0;
-            i < ropeFrames.Length;
-            i++
-        )
+        for (int i = 0;
+             i < ropeFrames.Length;
+             i++)
         {
             if (ropeFrames[i] != null)
             {

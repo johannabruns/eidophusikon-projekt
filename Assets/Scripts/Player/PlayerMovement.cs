@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Cinemachine;
 
-public class PlayerMovement : NetworkBehaviour 
+public class PlayerMovement : NetworkBehaviour
 {
     [Header("Stats")]
     public float moveSpeed = 5f;
@@ -21,94 +21,196 @@ public class PlayerMovement : NetworkBehaviour
     public Vector2 groundCheckSize;
     public LayerMask groundLayer;
 
-    public bool IsGrounded { get; private set; }
-    public bool IsOnLadder { get; private set; }
+    public bool IsGrounded
+    {
+        get;
+        private set;
+    }
+
+    public bool IsOnLadder
+    {
+        get;
+        private set;
+    }
+
     private float gravityScale;
 
-    public Vector2 MovementDirection { get; private set; }
-    public float LadderVertical { get; private set; }
+    public Vector2 MovementDirection
+    {
+        get;
+        private set;
+    }
+
+    public float LadderVertical
+    {
+        get;
+        private set;
+    }
 
     public override void OnNetworkSpawn()
     {
-        gravityScale = rigidBody.gravityScale;
+        gravityScale =
+            rigidBody.gravityScale;
 
         if (IsOwner)
         {
-            // Set the camera to follow this player
-            CameraScript camScript = Camera.main.GetComponent<CameraScript>();
-            camScript.EnterPlayerFollowMode(transform);
+            CameraScript camScript =
+                Camera.main.GetComponent<CameraScript>();
+
+            camScript.EnterPlayerFollowMode(
+                transform
+            );
         }
     }
 
     private void OnEnable()
     {
-        jumpControls.action.performed += Jump;
+        jumpControls.action.performed +=
+            Jump;
     }
+
     private void OnDisable()
     {
-        jumpControls.action.performed -= Jump;
+        jumpControls.action.performed -=
+            Jump;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(
+        Collider2D collision
+    )
     {
-        if (!IsOwner) return;
+        if (!IsOwner)
+            return;
 
-        if (collision.gameObject.CompareTag("Ladder"))
+        if (collision.gameObject.CompareTag(
+                "Ladder"
+            ))
         {
             IsOnLadder = true;
             rigidBody.gravityScale = 0f;
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(
+        Collider2D collision
+    )
     {
-        if (!IsOwner) return;
+        if (!IsOwner)
+            return;
 
-        if (collision.gameObject.CompareTag("Ladder"))
+        if (collision.gameObject.CompareTag(
+                "Ladder"
+            ))
         {
             IsOnLadder = false;
-            rigidBody.gravityScale = gravityScale;
+            rigidBody.gravityScale =
+                gravityScale;
         }
     }
 
     private void Update()
     {
-        if (!IsOwner) return;
+        if (!IsOwner)
+            return;
 
-        MovementDirection = movementControls.action.ReadValue<Vector2>();
-        LadderVertical = ladderControls.action.ReadValue<float>();
-        IsGrounded = GroundCheck();
+        MovementDirection =
+            movementControls.action
+                .ReadValue<Vector2>();
+
+        LadderVertical =
+            ladderControls.action
+                .ReadValue<float>();
+
+        IsGrounded =
+            GroundCheck();
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        if (!IsOwner) return;
+        if (!IsOwner)
+            return;
 
-        rigidBody.linearVelocity = new Vector2(MovementDirection.x * moveSpeed, rigidBody.linearVelocity.y);
+        rigidBody.linearVelocity =
+            new Vector2(
+                MovementDirection.x *
+                moveSpeed,
+                rigidBody.linearVelocity.y
+            );
 
         if (IsOnLadder)
         {
-            rigidBody.linearVelocity = new Vector2(rigidBody.linearVelocity.x, LadderVertical * moveSpeed * 0.75f);
+            rigidBody.linearVelocity =
+                new Vector2(
+                    rigidBody.linearVelocity.x,
+                    LadderVertical *
+                    moveSpeed *
+                    0.75f
+                );
         }
     }
 
-    private void Jump(InputAction.CallbackContext obj)
+    private void Jump(
+        InputAction.CallbackContext obj
+    )
     {
-        if (IsOwner)
+        if (!IsOwner)
+            return;
+
+        if (IsGrounded &&
+            !IsOnLadder)
         {
-            if (IsGrounded && !IsOnLadder)
-                rigidBody.linearVelocity = new Vector2(rigidBody.linearVelocity.x, jumpForce);
+            rigidBody.linearVelocity =
+                new Vector2(
+                    rigidBody.linearVelocity.x,
+                    jumpForce
+                );
         }
     }
 
     public bool GroundCheck()
     {
-        return Physics2D.OverlapBox(groundCheckPoint.position, groundCheckSize, 0f, groundLayer);
+        return Physics2D.OverlapBox(
+            groundCheckPoint.position,
+            groundCheckSize,
+            0f,
+            groundLayer
+        );
+    }
+
+    [Rpc(SendTo.Everyone)]
+    public void TeleportToRpc(
+        Vector3 worldPosition
+    )
+    {
+        if (!IsOwner)
+            return;
+
+        IsOnLadder = false;
+        rigidBody.gravityScale =
+            gravityScale;
+
+        rigidBody.linearVelocity =
+            Vector2.zero;
+
+        rigidBody.angularVelocity = 0f;
+
+        rigidBody.position =
+            new Vector2(
+                worldPosition.x,
+                worldPosition.y
+            );
+
+        transform.position =
+            worldPosition;
     }
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(groundCheckPoint.position, groundCheckSize);
+
+        Gizmos.DrawWireCube(
+            groundCheckPoint.position,
+            groundCheckSize
+        );
     }
 }

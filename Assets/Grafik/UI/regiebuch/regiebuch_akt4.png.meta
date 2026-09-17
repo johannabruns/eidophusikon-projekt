@@ -1,0 +1,676 @@
+fileFormatVersion: 2
+guid: cd850203914b9154aa0d1e0bbb1fcf3e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8310974129820016125
+    second: regiebuch_5_0
+  - first:
+      213: -7645395902613491991
+    second: regiebuch_5_1
+  - first:
+      213: 8311421457195435075
+    second: regiebuch_5_2
+  - first:
+      213: -573565109959438120
+    second: regiebuch_5_3
+  - first:
+      213: -5458048974664753699
+    second: regiebuch_5_4
+  - first:
+      213: 3811762503697787291
+    second: regiebuch_5_5
+  - first:
+      213: -141025105353853983
+    second: regiebuch_5_6
+  - first:
+      213: -1258571569294985881
+    second: regiebuch_5_7
+  - first:
+      213: 2722223601558770010
+    second: regiebuch_5_8
+  - first:
+      213: -6156521231370424405
+    second: regiebuch_5_9
+  - first:
+      213: -6317760524273311150
+    second: regiebuch_5_10
+  - first:
+      213: -2661630521357007797
+    second: regiebuch_5_11
+  - first:
+      213: -7635033392538060359
+    second: regiebuch_5_12
+  - first:
+      213: 5139220814390773894
+    second: regiebuch_5_13
+  - first:
+      213: 6590494949925904865
+    second: regiebuch_5_14
+  - first:
+      213: 1684388123498726039
+    second: regiebuch_5_15
+  - first:
+      213: 7387118496811742216
+    second: regiebuch_5_16
+  - first:
+      213: -4450748930091767236
+    second: regiebuch_5_17
+  - first:
+      213: 5159170740409088076
+    second: regiebuch_5_18
+  - first:
+      213: 301692231266483712
+    second: regiebuch_5_19
+  - first:
+      213: -6237822007782706107
+    second: regiebuch_5_20
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: regiebuch_5_0
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 38
+        width: 1308
+        height: 1042
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 302ed96ff0d79ac80800000000000000
+      internalID: -8310974129820016125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_5_1
+      rect:
+        serializedVersion: 2
+        x: 1666
+        y: 985
+        width: 61
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9eeee710fe816e590800000000000000
+      internalID: -7645395902613491991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_5_2
+      rect:
+        serializedVersion: 2
+        x: 1566
+        y: 962
+        width: 9
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34481be87c9185370800000000000000
+      internalID: 8311421457195435075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_5_3
+      rect:
+        serializedVersion: 2
+        x: 1566
+        y: 890
+        width: 12
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d05f4542994a08f0800000000000000
+      internalID: -573565109959438120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_5_4
+      rect:
+        serializedVersion: 2
+        x: 1566
+        y: 811
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ddd1c62206d1144b0800000000000000
+      internalID: -5458048974664753699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_5_5
+      rect:
+        serializedVersion: 2
+        x: 1577
+        y: 604
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b996f013dc916e430800000000000000
+      internalID: 3811762503697787291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_5_6
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 291
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e3b8f2f96afa0ef0800000000000000
+      internalID: -141025105353853983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_5_7
+      rect:
+        serializedVersion: 2
+        x: 281
+        y: 188
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76534cf63d7a88ee0800000000000000
+      internalID: -1258571569294985881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_5_8
+      rect:
+        serializedVersion: 2
+        x: 475
+        y: 39
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a51581251f747c520800000000000000
+      internalID: 2722223601558770010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_5_9
+      rect:
+        serializedVersion: 2
+        x: 493
+        y: 42
+        width: 27
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bafe3080f84af8aa0800000000000000
+      internalID: -6156521231370424405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_5_10
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 42
+        width: 19
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25224bea64ec258a0800000000000000
+      internalID: -6317760524273311150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_5_11
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 43
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b448d2b842dff0bd0800000000000000
+      internalID: -2661630521357007797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_5_12
+      rect:
+        serializedVersion: 2
+        x: 774
+        y: 42
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b9f585e499ea0690800000000000000
+      internalID: -7635033392538060359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_5_13
+      rect:
+        serializedVersion: 2
+        x: 856
+        y: 43
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6884e081a1e225740800000000000000
+      internalID: 5139220814390773894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_5_14
+      rect:
+        serializedVersion: 2
+        x: 1108
+        y: 38
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e1e6503d34267b50800000000000000
+      internalID: 6590494949925904865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_5_15
+      rect:
+        serializedVersion: 2
+        x: 1130
+        y: 43
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7924705f216206710800000000000000
+      internalID: 1684388123498726039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_5_16
+      rect:
+        serializedVersion: 2
+        x: 1254
+        y: 43
+        width: 20
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8047e2c5221548660800000000000000
+      internalID: 7387118496811742216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_5_17
+      rect:
+        serializedVersion: 2
+        x: 1308
+        y: 42
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3a2e6ddd63cb32c0800000000000000
+      internalID: -4450748930091767236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_5_18
+      rect:
+        serializedVersion: 2
+        x: 1318
+        y: 39
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c483ca5347e099740800000000000000
+      internalID: 5159170740409088076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_5_19
+      rect:
+        serializedVersion: 2
+        x: 1467
+        y: 39
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00e32246c73df2400800000000000000
+      internalID: 301692231266483712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regiebuch_5_20
+      rect:
+        serializedVersion: 2
+        x: 1516
+        y: 42
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5447ffdeeedce69a0800000000000000
+      internalID: -6237822007782706107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      regiebuch_5_0: -8310974129820016125
+      regiebuch_5_1: -7645395902613491991
+      regiebuch_5_10: -6317760524273311150
+      regiebuch_5_11: -2661630521357007797
+      regiebuch_5_12: -7635033392538060359
+      regiebuch_5_13: 5139220814390773894
+      regiebuch_5_14: 6590494949925904865
+      regiebuch_5_15: 1684388123498726039
+      regiebuch_5_16: 7387118496811742216
+      regiebuch_5_17: -4450748930091767236
+      regiebuch_5_18: 5159170740409088076
+      regiebuch_5_19: 301692231266483712
+      regiebuch_5_2: 8311421457195435075
+      regiebuch_5_20: -6237822007782706107
+      regiebuch_5_3: -573565109959438120
+      regiebuch_5_4: -5458048974664753699
+      regiebuch_5_5: 3811762503697787291
+      regiebuch_5_6: -141025105353853983
+      regiebuch_5_7: -1258571569294985881
+      regiebuch_5_8: 2722223601558770010
+      regiebuch_5_9: -6156521231370424405
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

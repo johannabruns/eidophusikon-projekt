@@ -15,25 +15,50 @@ public class QuestManager : NetworkBehaviour
     [Header("Manager")]
     public TheaterManager theaterManager;
     public GameManager gameManager;
+    public PlayerSpawner playerSpawner;
 
     [Header("Vorhang")]
     public StopMotionRope curtainRope;
 
+    [Header("Regiebuch")]
+    public QuestOverlayManager overlayManager;
+
     [Header("Quests")]
     public List<Quest> quests;
+
+    [Header("Finale")]
+    [Min(0f)]
+    public float finaleTeleportDelay = 0.35f;
+
+    [Min(0f)]
+    public float finalAnimationDuration = 4f;
+
+    [Header("Debug")]
+    public bool startWithOnePlayerForDebug;
 
     [HideInInspector]
     public NetworkVariable<int> currentAct =
         new NetworkVariable<int>(0);
 
+    public NetworkVariable<bool>
+        curtainControlEnabled =
+            new NetworkVariable<bool>(false);
+
     private Quest currentQuest;
     private Coroutine actTransition;
+    private Coroutine finaleSequence;
 
+    private bool initialFlowStarted;
     private bool curtainWasOpenedForCurrentQuest;
     private bool questCompletionInProgress;
     private bool gameFinished;
+    private bool finaleStarted;
 
     public static Action<int> OnQuestComplete;
+    public static Action OnFinaleComplete;
+
+    public bool CurtainControlEnabled =>
+        curtainControlEnabled.Value;
 
     public override void OnNetworkSpawn()
     {
@@ -44,10 +69,24 @@ public class QuestManager : NetworkBehaviour
         }
 
         Instance = this;
+
+        if (IsServer &&
+            overlayManager != null)
+        {
+            overlayManager.OnAllPlayersReady +=
+                HandleAllPlayersReady;
+        }
     }
 
     public override void OnNetworkDespawn()
     {
+        if (IsServer &&
+            overlayManager != null)
+        {
+            overlayManager.OnAllPlayersReady -=
+                HandleAllPlayersReady;
+        }
+
         if (Instance == this)
         {
             Instance = null;
@@ -56,10 +95,15 @@ public class QuestManager : NetworkBehaviour
 
     private void Update()
     {
-        if (!IsServer ||
-            currentQuest == null ||
+        if (!IsServer)
+            return;
+
+        TryStartInitialFlow();
+
+        if (currentQuest == null ||
             questCompletionInProgress ||
-            gameFinished)
+            gameFinished ||
+            !curtainControlEnabled.Value)
         {
             return;
         }
@@ -75,10 +119,124 @@ public class QuestManager : NetworkBehaviour
             return;
         }
 
+        if (IsFinalQuest())
+        {
+            if (AreCurrentQuestGoalsComplete())
+            {
+                StartFinale();
+            }
+
+            return;
+        }
+
         if (IsCurtainClosed())
         {
             CheckQuestCompletion();
         }
+    }
+
+    private void TryStartInitialFlow()
+    {
+        if (initialFlowStarted ||
+            currentAct.Value != 0 ||
+            NetworkManager.Singleton == null)
+        {
+            return;
+        }
+
+        int requiredPlayers =
+            startWithOnePlayerForDebug
+                ? 1
+                : 2;
+
+        if (NetworkManager.Singleton
+                .ConnectedClientsIds
+                .Count <
+            requiredPlayers)
+        {
+            return;
+        }
+
+        PrepareFirstQuest();
+    }
+
+    private void PrepareFirstQuest()
+    {
+        if (!IsServer ||
+            initialFlowStarted ||
+            quests == null ||
+            quests.Count == 0)
+        {
+            return;
+        }
+
+        initialFlowStarted = true;
+
+        if (theaterManager != null)
+        {
+            theaterManager.LongApplause();
+        }
+
+        ActivateQuest(1);
+        StartActBriefing(1);
+    }
+
+    private void StartActBriefing(
+        int actIndex
+    )
+    {
+        curtainControlEnabled.Value =
+            false;
+
+        curtainWasOpenedForCurrentQuest =
+            false;
+
+        questCompletionInProgress =
+            true;
+
+        if (overlayManager != null)
+        {
+            overlayManager.ShowActPage(
+                actIndex
+            );
+        }
+        else
+        {
+            ReleaseAct(actIndex);
+        }
+    }
+
+    private void HandleAllPlayersReady(
+        int actIndex
+    )
+    {
+        if (!IsServer ||
+            actIndex != currentAct.Value)
+        {
+            return;
+        }
+
+        ReleaseAct(actIndex);
+    }
+
+    private void ReleaseAct(
+        int actIndex
+    )
+    {
+        if (!IsServer ||
+            actIndex != currentAct.Value)
+        {
+            return;
+        }
+
+        curtainWasOpenedForCurrentQuest =
+            false;
+
+        questCompletionInProgress =
+            false;
+
+        curtainControlEnabled.Value =
+            true;
     }
 
     public void CheckQuestCompletion()
@@ -87,13 +245,24 @@ public class QuestManager : NetworkBehaviour
             currentQuest == null ||
             questCompletionInProgress ||
             gameFinished ||
-            !curtainWasOpenedForCurrentQuest ||
-            !IsCurtainClosed())
+            !curtainControlEnabled.Value ||
+            !curtainWasOpenedForCurrentQuest)
         {
             return;
         }
 
         if (!AreCurrentQuestGoalsComplete())
+        {
+            return;
+        }
+
+        if (IsFinalQuest())
+        {
+            StartFinale();
+            return;
+        }
+
+        if (!IsCurtainClosed())
         {
             return;
         }
@@ -127,23 +296,18 @@ public class QuestManager : NetworkBehaviour
         if (questCompletionInProgress)
             return;
 
+        if (!HasNextQuest())
+        {
+            StartFinale();
+            return;
+        }
+
         questCompletionInProgress = true;
+        curtainControlEnabled.Value = false;
 
         OnQuestComplete?.Invoke(
             currentAct.Value
         );
-
-        if (!HasNextQuest())
-        {
-            gameFinished = true;
-
-            if (theaterManager != null)
-            {
-                theaterManager.LongApplause();
-            }
-
-            return;
-        }
 
         float delay =
             Mathf.Max(
@@ -174,8 +338,8 @@ public class QuestManager : NetworkBehaviour
             currentAct.Value + 1;
 
         ActivateQuest(nextAct);
+        StartActBriefing(nextAct);
 
-        questCompletionInProgress = false;
         actTransition = null;
     }
 
@@ -191,6 +355,7 @@ public class QuestManager : NetworkBehaviour
         }
 
         currentAct.Value = actIndex;
+
         currentQuest =
             quests[actIndex - 1];
 
@@ -200,28 +365,89 @@ public class QuestManager : NetworkBehaviour
         gameManager.LoadAct(actIndex);
     }
 
-    [Rpc(SendTo.Server)]
-    public void StartFirstQuestRpc()
+    private void StartFinale()
     {
-        if (currentAct.Value != 0 ||
-            quests == null ||
-            quests.Count == 0)
+        if (!IsServer ||
+            finaleStarted ||
+            currentQuest == null)
         {
             return;
         }
+
+        finaleStarted = true;
+        gameFinished = true;
+        questCompletionInProgress = true;
+
+        curtainControlEnabled.Value =
+            false;
+
+        finaleSequence =
+            StartCoroutine(
+                PlayFinaleSequence()
+            );
+    }
+
+    private IEnumerator PlayFinaleSequence()
+    {
+        if (theaterManager != null)
+        {
+            theaterManager.OpenCurtains();
+        }
+
+        if (playerSpawner != null)
+        {
+            playerSpawner
+                .TeleportMechanicToFinale();
+        }
+
+        yield return new WaitForSeconds(
+            finaleTeleportDelay
+        );
+
+        OnQuestComplete?.Invoke(
+            currentAct.Value
+        );
+
+        yield return new WaitForSeconds(
+            finalAnimationDuration
+        );
 
         if (theaterManager != null)
         {
             theaterManager.LongApplause();
         }
 
-        ActivateQuest(1);
+        OnFinaleComplete?.Invoke();
+
+        finaleSequence = null;
+    }
+
+    [Rpc(
+        SendTo.Server,
+        InvokePermission =
+            RpcInvokePermission.Everyone
+    )]
+    public void StartFirstQuestRpc()
+    {
+        if (currentAct.Value != 0)
+            return;
+
+        PrepareFirstQuest();
     }
 
     public bool HasNextQuest()
     {
         return
             currentAct.Value <
+            quests.Count;
+    }
+
+    private bool IsFinalQuest()
+    {
+        return
+            quests != null &&
+            quests.Count > 0 &&
+            currentAct.Value ==
             quests.Count;
     }
 
