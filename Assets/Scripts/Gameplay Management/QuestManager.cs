@@ -3,114 +3,249 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class QuestManager : NetworkBehaviour
 {
-    public static QuestManager Instance { get; private set; }
+    public static QuestManager Instance
+    {
+        get;
+        private set;
+    }
 
+    [Header("Manager")]
     public TheaterManager theaterManager;
     public GameManager gameManager;
 
-    [HideInInspector]
-    public NetworkVariable<int> currentAct = new NetworkVariable<int>(0);
-    public List<Quest> quests;
-    private Quest currentQuest;
+    [Header("Vorhang")]
+    public StopMotionRope curtainRope;
 
+    [Header("Quests")]
+    public List<Quest> quests;
+
+    [HideInInspector]
+    public NetworkVariable<int> currentAct =
+        new NetworkVariable<int>(0);
+
+    private Quest currentQuest;
     private Coroutine actTransition;
+
+    private bool curtainWasOpenedForCurrentQuest;
+    private bool questCompletionInProgress;
+    private bool gameFinished;
+
     public static Action<int> OnQuestComplete;
 
     public override void OnNetworkSpawn()
     {
-        if (Instance != null && Instance != this)
+        if (Instance != null &&
+            Instance != this)
+        {
             return;
-       
+        }
+
         Instance = this;
     }
 
     public override void OnNetworkDespawn()
     {
         if (Instance == this)
+        {
             Instance = null;
+        }
+    }
+
+    private void Update()
+    {
+        if (!IsServer ||
+            currentQuest == null ||
+            questCompletionInProgress ||
+            gameFinished)
+        {
+            return;
+        }
+
+        if (!curtainWasOpenedForCurrentQuest)
+        {
+            if (IsCurtainOpen())
+            {
+                curtainWasOpenedForCurrentQuest =
+                    true;
+            }
+
+            return;
+        }
+
+        if (IsCurtainClosed())
+        {
+            CheckQuestCompletion();
+        }
     }
 
     public void CheckQuestCompletion()
     {
-        bool isComplete = true;
-
-        //check if the correct time of day is set for the current quest
-        if (currentQuest.timeOfDay != theaterManager.lights.currentTimeOfDay.Value)
-            isComplete = false;
-
-        //check if all requirements for the current quest are complete
-        if (!currentQuest.IsComplete())
-            isComplete = false;
-
-        //TODO: Check if curtains are closed?
-
-        if (isComplete)
+        if (!IsServer ||
+            currentQuest == null ||
+            questCompletionInProgress ||
+            gameFinished ||
+            !curtainWasOpenedForCurrentQuest ||
+            !IsCurtainClosed())
         {
-            Debug.Log($"Invoke Event for index {currentAct.Value}!");
-            OnQuestComplete.Invoke(currentAct.Value);
-            StartNextQuest();
-        }
-          
-    }
-
-    private void StartNextQuest()
-    {
-        if (!IsServer) return;
-
-        //special case if this is the final quest
-        if (!HasNextQuest())
-        {
-            theaterManager.LongApplause();
             return;
         }
 
-        float delay = 0f;
-        if (currentQuest != null)
-            delay = currentQuest.nextQuestDelay;
-
-        currentAct.Value++;
-        currentQuest = quests[currentAct.Value - 1];
-
-        actTransition = StartCoroutine(QuestTransition(currentAct.Value, delay));
-    }
-
-    private IEnumerator QuestTransition(int index, float delay)
-    {
-        if (actTransition != null) yield break;
-
-        //this block only executes if this is NOT the first quest
-        if (currentAct.Value > 1)
+        if (!AreCurrentQuestGoalsComplete())
         {
-            theaterManager.ShortApplause();
-            yield return new WaitForSeconds(delay);
-
-            theaterManager.CloseCurtains();
-            yield return new WaitForSeconds(3f);
+            return;
         }
 
-        gameManager.LoadAct(index);
-        theaterManager.OpenCurtains();
+        CompleteCurrentQuest();
+    }
 
+    private bool AreCurrentQuestGoalsComplete()
+    {
+        if (theaterManager == null ||
+            theaterManager.lights == null ||
+            currentQuest == null)
+        {
+            return false;
+        }
+
+        bool correctTimeOfDay =
+            currentQuest.timeOfDay ==
+            theaterManager
+                .lights
+                .currentTimeOfDay
+                .Value;
+
+        return
+            correctTimeOfDay &&
+            currentQuest.IsComplete();
+    }
+
+    private void CompleteCurrentQuest()
+    {
+        if (questCompletionInProgress)
+            return;
+
+        questCompletionInProgress = true;
+
+        OnQuestComplete?.Invoke(
+            currentAct.Value
+        );
+
+        if (!HasNextQuest())
+        {
+            gameFinished = true;
+
+            if (theaterManager != null)
+            {
+                theaterManager.LongApplause();
+            }
+
+            return;
+        }
+
+        float delay =
+            Mathf.Max(
+                0f,
+                currentQuest.nextQuestDelay
+            );
+
+        actTransition =
+            StartCoroutine(
+                QuestTransition(delay)
+            );
+    }
+
+    private IEnumerator QuestTransition(
+        float delay
+    )
+    {
+        if (theaterManager != null)
+        {
+            theaterManager.ShortApplause();
+        }
+
+        yield return new WaitForSeconds(
+            delay
+        );
+
+        int nextAct =
+            currentAct.Value + 1;
+
+        ActivateQuest(nextAct);
+
+        questCompletionInProgress = false;
         actTransition = null;
     }
 
-    //Special case for the first quest, since it is not triggered by a quest completion but by the player entering the stage for the first time
+    private void ActivateQuest(
+        int actIndex
+    )
+    {
+        if (!IsServer ||
+            actIndex < 1 ||
+            actIndex > quests.Count)
+        {
+            return;
+        }
+
+        currentAct.Value = actIndex;
+        currentQuest =
+            quests[actIndex - 1];
+
+        curtainWasOpenedForCurrentQuest =
+            false;
+
+        gameManager.LoadAct(actIndex);
+    }
+
     [Rpc(SendTo.Server)]
     public void StartFirstQuestRpc()
     {
-        //confirm this is indeed the first quest
-        if (currentAct.Value != 0) return;
+        if (currentAct.Value != 0 ||
+            quests == null ||
+            quests.Count == 0)
+        {
+            return;
+        }
 
-        theaterManager.LongApplause();
-        StartNextQuest();
+        if (theaterManager != null)
+        {
+            theaterManager.LongApplause();
+        }
+
+        ActivateQuest(1);
     }
 
     public bool HasNextQuest()
     {
-        return currentAct.Value < quests.Count;
-    }  
+        return
+            currentAct.Value <
+            quests.Count;
+    }
+
+    private bool IsCurtainOpen()
+    {
+        if (curtainRope == null)
+            return false;
+
+        return
+            curtainRope
+                .longestStateOpensCurtain
+                ? curtainRope.IsLongest
+                : curtainRope.IsShortest;
+    }
+
+    private bool IsCurtainClosed()
+    {
+        if (curtainRope == null)
+            return false;
+
+        return
+            curtainRope
+                .longestStateOpensCurtain
+                ? curtainRope.IsShortest
+                : curtainRope.IsLongest;
+    }
 }

@@ -2537,7 +2537,6 @@ GameObject:
   m_Component:
   - component: {fileID: 198417359}
   - component: {fileID: 198417361}
-  - component: {fileID: 198417360}
   m_Layer: 0
   m_Name: MechanikManager
   m_TagString: Untagged
@@ -2560,69 +2559,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2111907853}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &198417360
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 198417358}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8db9eeacf02731544877447d98b23b57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RopeController
-  ShowTopMostFoldoutHeaderGroup: 1
-  seilSysteme:
-  - vertikalesSeil: {fileID: 560205364}
-    seilEnde: {fileID: 399441853}
-    horizontalesSeil: {fileID: 758167489}
-    buehnenSeil: {fileID: 709841912}
-    buehnenSeilEnde: {fileID: 681786172}
-  - vertikalesSeil: {fileID: 1747817943}
-    seilEnde: {fileID: 1553360666}
-    horizontalesSeil: {fileID: 111049960}
-    buehnenSeil: {fileID: 383029984}
-    buehnenSeilEnde: {fileID: 1871327592}
-  - vertikalesSeil: {fileID: 291070311}
-    seilEnde: {fileID: 1413512147}
-    horizontalesSeil: {fileID: 1350078636}
-    buehnenSeil: {fileID: 354447991}
-    buehnenSeilEnde: {fileID: 1984729517}
-  scrollGeschwindigkeit: 0.5
-  minLaenge: 1
-  maxLaenge: 20
-  horizontalesScrollTempo: 0.5
-  seil1Laenge:
-    UpdateTraits:
-      MinSecondsBetweenUpdates: 0
-      MaxSecondsBetweenUpdates: 0
-    m_InternalValue: 1
-  seil2Laenge:
-    UpdateTraits:
-      MinSecondsBetweenUpdates: 0
-      MaxSecondsBetweenUpdates: 0
-    m_InternalValue: 1
-  seil3Laenge:
-    UpdateTraits:
-      MinSecondsBetweenUpdates: 0
-      MaxSecondsBetweenUpdates: 0
-    m_InternalValue: 1
-  seil1Offset:
-    UpdateTraits:
-      MinSecondsBetweenUpdates: 0
-      MaxSecondsBetweenUpdates: 0
-    m_InternalValue: 0
-  seil2Offset:
-    UpdateTraits:
-      MinSecondsBetweenUpdates: 0
-      MaxSecondsBetweenUpdates: 0
-    m_InternalValue: 0
-  seil3Offset:
-    UpdateTraits:
-      MinSecondsBetweenUpdates: 0
-      MaxSecondsBetweenUpdates: 0
-    m_InternalValue: 0
 --- !u!114 &198417361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2888,6 +2824,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 230997152}
+  - component: {fileID: 230997153}
+  - component: {fileID: 230997154}
   m_Layer: 0
   m_Name: "Seilz\xFCge_Links"
   m_TagString: Untagged
@@ -2913,6 +2851,116 @@ Transform:
   - {fileID: 1373049830}
   m_Father: {fileID: 2111907853}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &230997153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 230997151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8db9eeacf02731544877447d98b23b57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RopeController
+  ShowTopMostFoldoutHeaderGroup: 1
+  seilSysteme:
+  - vertikalesSeil: {fileID: 560205364}
+    seilEnde: {fileID: 399441853}
+    horizontalesSeil: {fileID: 758167489}
+    buehnenSeil: {fileID: 709841912}
+    buehnenSeilEnde: {fileID: 681786172}
+    buehnenZielpunkt: {fileID: 2083484398}
+    zielToleranz: 0.5
+  - vertikalesSeil: {fileID: 1747817943}
+    seilEnde: {fileID: 1553360666}
+    horizontalesSeil: {fileID: 111049960}
+    buehnenSeil: {fileID: 383029984}
+    buehnenSeilEnde: {fileID: 1871327592}
+    buehnenZielpunkt: {fileID: 926037678}
+    zielToleranz: 0.5
+  - vertikalesSeil: {fileID: 291070311}
+    seilEnde: {fileID: 1413512147}
+    horizontalesSeil: {fileID: 1350078636}
+    buehnenSeil: {fileID: 354447991}
+    buehnenSeilEnde: {fileID: 1984729517}
+    buehnenZielpunkt: {fileID: 1409714432}
+    zielToleranz: 0.5
+  scrollGeschwindigkeit: 1
+  minLaenge: 1
+  maxLaenge: 10
+  horizontalesScrollTempo: 0.5
+  alleBuehnenSeileImZiel: 0
+  seil1Laenge:
+    UpdateTraits:
+      MinSecondsBetweenUpdates: 0
+      MaxSecondsBetweenUpdates: 0
+    m_InternalValue: 1
+  seil2Laenge:
+    UpdateTraits:
+      MinSecondsBetweenUpdates: 0
+      MaxSecondsBetweenUpdates: 0
+    m_InternalValue: 1
+  seil3Laenge:
+    UpdateTraits:
+      MinSecondsBetweenUpdates: 0
+      MaxSecondsBetweenUpdates: 0
+    m_InternalValue: 1
+  seil1Offset:
+    UpdateTraits:
+      MinSecondsBetweenUpdates: 0
+      MaxSecondsBetweenUpdates: 0
+    m_InternalValue: 0
+  seil2Offset:
+    UpdateTraits:
+      MinSecondsBetweenUpdates: 0
+      MaxSecondsBetweenUpdates: 0
+    m_InternalValue: 0
+  seil3Offset:
+    UpdateTraits:
+      MinSecondsBetweenUpdates: 0
+      MaxSecondsBetweenUpdates: 0
+    m_InternalValue: 0
+  seil1Eingerastet:
+    UpdateTraits:
+      MinSecondsBetweenUpdates: 0
+      MaxSecondsBetweenUpdates: 0
+    m_InternalValue: 0
+  seil2Eingerastet:
+    UpdateTraits:
+      MinSecondsBetweenUpdates: 0
+      MaxSecondsBetweenUpdates: 0
+    m_InternalValue: 0
+  seil3Eingerastet:
+    UpdateTraits:
+      MinSecondsBetweenUpdates: 0
+      MaxSecondsBetweenUpdates: 0
+    m_InternalValue: 0
+--- !u!114 &230997154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 230997151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 1399245548
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &231976297
 GameObject:
   m_ObjectHideFlags: 0
@@ -6279,6 +6327,7 @@ Transform:
   - {fileID: 415196676}
   - {fileID: 386281831}
   - {fileID: 1049946484}
+  - {fileID: 2099255741}
   m_Father: {fileID: 950363476}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &500547729
@@ -7156,6 +7205,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Quest_1
   ShowTopMostFoldoutHeaderGroup: 1
   birdcage: {fileID: 454224241}
+  ropeController: {fileID: 230997153}
+  zielErreicht: 0
 --- !u!1 &560205362
 GameObject:
   m_ObjectHideFlags: 0
@@ -8216,7 +8267,7 @@ Transform:
   m_GameObject: {fileID: 609107055}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -11.39, y: 8.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9950,16 +10001,17 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   theaterManager: {fileID: 1736983380}
   gameManager: {fileID: 413524002}
-  currentAct:
-    UpdateTraits:
-      MinSecondsBetweenUpdates: 0
-      MaxSecondsBetweenUpdates: 0
-    m_InternalValue: 0
+  curtainRope: {fileID: 1326580457}
   quests:
   - {fileID: 556214901}
   - {fileID: 1617692339}
   - {fileID: 1342749582}
   - {fileID: 1897489915}
+  currentAct:
+    UpdateTraits:
+      MinSecondsBetweenUpdates: 0
+      MaxSecondsBetweenUpdates: 0
+    m_InternalValue: 0
 --- !u!4 &689767144
 Transform:
   m_ObjectHideFlags: 0
@@ -12188,6 +12240,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b59dcfb655b36614fb3058e187e2df23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageObjectWrapper
+--- !u!1 &926037677
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 926037678}
+  m_Layer: 0
+  m_Name: EndPoint2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &926037678
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 926037677}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: 0.3541564, w: 0.9351862}
+  m_LocalPosition: {x: -623.24, y: -289.04, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2099255741}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &934398843 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9030919890674075157, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
@@ -18363,6 +18446,37 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0.106765985, y: 0.028213298}
   m_Radius: 0.74357706
+--- !u!1 &1409714431
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1409714432}
+  m_Layer: 0
+  m_Name: EndPoint3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1409714432
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1409714431}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: 0.3541564, w: 0.9351862}
+  m_LocalPosition: {x: -621.96155, y: -289.3911, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2099255741}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1413512146
 GameObject:
   m_ObjectHideFlags: 0
@@ -26751,6 +26865,37 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 17.570835, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &2083484397
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2083484398}
+  m_Layer: 0
+  m_Name: EndPoint1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2083484398
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2083484397}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: 0.3541564, w: 0.9351862}
+  m_LocalPosition: {x: -624.32336, y: -289.079, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2099255741}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2084357564
 GameObject:
   m_ObjectHideFlags: 0
@@ -27005,6 +27150,40 @@ MonoBehaviour:
   - {x: 0.11078088, y: -0.022778362, z: 0}
   - {x: 0.15826873, y: 0.544378, z: 0}
   - {x: -0.07947225, y: 0.56836563, z: 0}
+--- !u!1 &2099255740
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2099255741}
+  m_Layer: 0
+  m_Name: RopeEndPoints
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2099255741
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2099255740}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2083484398}
+  - {fileID: 926037678}
+  - {fileID: 1409714432}
+  m_Father: {fileID: 499916159}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2105353199
 GameObject:
   m_ObjectHideFlags: 0
