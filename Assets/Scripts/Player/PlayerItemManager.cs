@@ -121,10 +121,40 @@ public class PlayerItemManager : NetworkBehaviour
             carryable.RequestDropServerRpc();
         }
 
+        ClearLocalCarriedItem();
+    }
+
+    private void ClearLocalCarriedItem()
+    {
         carriedItemScript = null;
         carriedItemRigidbody = null;
         CarriedItem = null;
         hasSyncedCarryPosition = false;
+    }
+
+    [Rpc(SendTo.Owner)]
+    public void ClearReturnedCarryableRpc(
+        ulong itemId
+    )
+    {
+        if (!IsOwner ||
+            CarriedItem == null)
+        {
+            return;
+        }
+
+        NetworkObject carriedNetworkObject =
+            CarriedItem.GetComponent<NetworkObject>();
+
+        if (carriedNetworkObject == null ||
+            carriedNetworkObject.NetworkObjectId !=
+            itemId)
+        {
+            return;
+        }
+
+        itemsInRange.Remove(CarriedItem);
+        ClearLocalCarriedItem();
     }
 
     private void UseItem(
@@ -209,10 +239,7 @@ public class PlayerItemManager : NetworkBehaviour
             socketNetworkObject.NetworkObjectId
         );
 
-        carriedItemScript = null;
-        carriedItemRigidbody = null;
-        CarriedItem = null;
-        hasSyncedCarryPosition = false;
+        ClearLocalCarriedItem();
     }
 
     [Rpc(

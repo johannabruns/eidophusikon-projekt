@@ -1,12 +1,12 @@
-using System.Collections;
 using Unity.Netcode;
+using Unity.Netcode.Components;
 using UnityEngine;
 
-public class RainFunnel : ItemSocket
+public class RainFunnel : SimpleInteractible
 {
     [Header("Water")]
     [Min(1)]
-    public int requiredDrops = 3;
+    public int requiredDrops = 5;
 
     public NetworkVariable<int> currentDrops =
         new(
@@ -15,12 +15,15 @@ public class RainFunnel : ItemSocket
             NetworkVariableWritePermission.Server
         );
 
-    [Header("Visuals")]
-    public GameObject emptyVisual;
-    public GameObject fullVisual;
+    [Header("Stop Motion Visuals")]
+    public GameObject[] dropVisuals;
+
+    [Header("Reusable Water Item")]
+    public Transform waterSourceReturnPoint;
 
     public bool IsFull =>
-        currentDrops.Value >= requiredDrops;
+        currentDrops.Value >=
+        Mathf.Max(1, requiredDrops);
 
     public bool HasWater =>
         currentDrops.Value > 0;
@@ -29,7 +32,11 @@ public class RainFunnel : ItemSocket
     {
         base.OnNetworkSpawn();
 
-        ItemChanged += HandleSocketItemChanged;
+        if (IsServer)
+        {
+            currentDrops.Value = 0;
+        }
+
         currentDrops.OnValueChanged +=
             HandleWaterLevelChanged;
 
@@ -38,34 +45,55 @@ public class RainFunnel : ItemSocket
 
     public override void OnNetworkDespawn()
     {
-        ItemChanged -= HandleSocketItemChanged;
         currentDrops.OnValueChanged -=
             HandleWaterLevelChanged;
 
         base.OnNetworkDespawn();
     }
 
-    private void HandleSocketItemChanged(
-        ulong previousItem,
-        ulong currentItem
-    )
+    public bool AcceptsItem(GameObject item)
     {
-        if (!IsServer ||
-            currentItem == EmptyItemId)
+        if (item == null)
+            return false;
+
+        Carryable carryable =
+            item.GetComponent<Carryable>();
+
+        return carryable != null &&
+               carryable.itemCategory ==
+               ItemCategory.Wassertropfen;
+    }
+
+    public void TryDeposit(GameObject item)
+    {
+        if (!AcceptsItem(item) ||
+            IsFull)
         {
             return;
         }
 
-        StartCoroutine(
-            ConsumeDropNextFrame(currentItem)
+        NetworkObject itemNetworkObject =
+            item.GetComponent<NetworkObject>();
+
+        if (itemNetworkObject == null)
+            return;
+
+        DepositDropServerRpc(
+            itemNetworkObject.NetworkObjectId
         );
     }
 
-    private IEnumerator ConsumeDropNextFrame(
-        ulong itemId
+    [Rpc(
+        SendTo.Server,
+        InvokePermission = RpcInvokePermission.Everyone
+    )]
+    private void DepositDropServerRpc(
+        ulong itemId,
+        RpcParams rpcParams = default
     )
     {
-        yield return null;
+        if (IsFull)
+            return;
 
         if (!NetworkManager
                 .SpawnManager
@@ -75,10 +103,7 @@ public class RainFunnel : ItemSocket
                     out NetworkObject itemObject
                 ))
         {
-            eingeklinktesItem.Value =
-                EmptyItemId;
-
-            yield break;
+            return;
         }
 
         Carryable carryable =
@@ -88,10 +113,17 @@ public class RainFunnel : ItemSocket
             carryable.itemCategory !=
             ItemCategory.Wassertropfen)
         {
-            eingeklinktesItem.Value =
-                EmptyItemId;
+            return;
+        }
 
-            yield break;
+        ulong requestingClientId =
+            rpcParams.Receive.SenderClientId;
+
+        if (!carryable.isCarried.Value ||
+            carryable.carrierClientId.Value !=
+            requestingClientId)
+        {
+            return;
         }
 
         currentDrops.Value =
@@ -100,12 +132,74 @@ public class RainFunnel : ItemSocket
                 requiredDrops
             );
 
-        eingeklinktesItem.Value =
-            EmptyItemId;
-
-        if (itemObject.IsSpawned)
+        if (IsFull)
         {
-            itemObject.Despawn(true);
+            ReturnWaterItemToSource(
+                itemObject,
+                carryable,
+                requestingClientId
+            );
+        }
+    }
+
+    private void ReturnWaterItemToSource(
+        NetworkObject itemObject,
+        Carryable carryable,
+        ulong requestingClientId
+    )
+    {
+        carryable.isCarried.Value = false;
+        carryable.isSocketed.Value = false;
+        carryable.carrierClientId.Value =
+            ulong.MaxValue;
+
+        if (itemObject.OwnerClientId !=
+            NetworkManager.ServerClientId)
+        {
+            itemObject.RemoveOwnership();
+        }
+
+        if (itemObject.TryGetComponent(
+                out Rigidbody2D rb
+            ))
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+        }
+
+        if (waterSourceReturnPoint != null &&
+            itemObject.TryGetComponent(
+                out NetworkTransform networkTransform
+            ))
+        {
+            networkTransform.Teleport(
+                waterSourceReturnPoint.position,
+                waterSourceReturnPoint.rotation,
+                itemObject.transform.localScale
+            );
+        }
+
+        if (NetworkManager
+                .ConnectedClients
+                .TryGetValue(
+                    requestingClientId,
+                    out NetworkClient networkClient
+                ) &&
+            networkClient.PlayerObject != null)
+        {
+            PlayerItemManager itemManager =
+                networkClient.PlayerObject
+                    .GetComponentInChildren<
+                        PlayerItemManager
+                    >(true);
+
+            if (itemManager != null)
+            {
+                itemManager
+                    .ClearReturnedCarryableRpc(
+                        itemObject.NetworkObjectId
+                    );
+            }
         }
     }
 
@@ -119,21 +213,29 @@ public class RainFunnel : ItemSocket
 
     private void RefreshVisuals()
     {
-        if (emptyVisual != null)
-        {
-            emptyVisual.SetActive(!IsFull);
-        }
+        if (dropVisuals == null)
+            return;
 
-        if (fullVisual != null)
+        for (int i = 0;
+             i < dropVisuals.Length;
+             i++)
         {
-            fullVisual.SetActive(IsFull);
+            if (dropVisuals[i] != null)
+            {
+                dropVisuals[i].SetActive(
+                    i < currentDrops.Value
+                );
+            }
         }
     }
 
     public bool ConsumeWater()
     {
-        if (!IsServer || currentDrops.Value <= 0)
+        if (!IsServer ||
+            currentDrops.Value <= 0)
+        {
             return false;
+        }
 
         currentDrops.Value--;
         return true;
@@ -145,5 +247,9 @@ public class RainFunnel : ItemSocket
             return;
 
         currentDrops.Value = 0;
+    }
+
+    public override void OnInteract()
+    {
     }
 }

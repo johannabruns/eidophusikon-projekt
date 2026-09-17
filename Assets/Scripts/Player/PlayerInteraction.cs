@@ -79,6 +79,21 @@ public class PlayerInteraction : NetworkBehaviour
             return;
         }
 
+        RainFunnel rainFunnel =
+            FindRainFunnel();
+
+        if (rainFunnel != null &&
+            rainFunnel.AcceptsItem(
+                itemManager.CarriedItem
+            ))
+        {
+            rainFunnel.TryDeposit(
+                itemManager.CarriedItem
+            );
+
+            return;
+        }
+
         if (itemManager.CarriedItem != null)
         {
             itemManager.DropItem();
@@ -163,6 +178,27 @@ public class PlayerInteraction : NetworkBehaviour
         }
 
         return !socket.IstLeer;
+    }
+
+    private RainFunnel FindRainFunnel()
+    {
+        if (CurrentInteractible
+            is RainFunnel currentFunnel)
+        {
+            return currentFunnel;
+        }
+
+        foreach (Interactible interactible
+                 in interactiblesInRange)
+        {
+            if (interactible
+                is RainFunnel funnel)
+            {
+                return funnel;
+            }
+        }
+
+        return null;
     }
 
     private void TryPointClickPickup()
