@@ -1,52 +1,96 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class StartScreenManager : MonoBehaviour
 {
-    [Header("Canvas 1 - Story")]
+    [Header("Canvas 1 – Brief")]
     public GameObject canvas1;
-    public GameObject regiebuchClosed;
-    public GameObject regiebuchStory;
-    public Button rightClickButton;
-    public AudioSource storyAudioSource;
+    public Button letterButton;
+    public Button skipButton;
+    public GameObject[] letterFrames;
 
-    [Header("Hintergrundmusik (Audio Ducking)")]
+    [Header("Stop Motion")]
+    [Min(0f)]
+    public float firstFrameHold = 0.25f;
+
+    [Min(0.01f)]
+    public float frameDuration = 0.45f;
+
+    [Min(0f)]
+    public float finalFrameHold = 0.4f;
+
+    [Header("Brief-Audio")]
+    public AudioSource letterAudioSource;
+
+    [Header("Hintergrundmusik")]
     public AudioSource backgroundAudioSource;
-    [Range(0f, 1f)] public float normalVolume = 0.5f;
-    [Range(0f, 1f)] public float duckedVolume = 0.1f;
-    public float fadeSpeed = 1.5f; 
 
-    [Header("UI Sounds (NEU)")]
-    public AudioSource sfxAudioSource; 
+    [Range(0f, 1f)]
+    public float normalVolume = 0.5f;
+
+    [Range(0f, 1f)]
+    public float duckedVolume = 0.1f;
+
+    [Min(0.01f)]
+    public float fadeSpeed = 1.5f;
+
+    [Header("UI-Sounds")]
+    public AudioSource sfxAudioSource;
     public AudioClip clickSound;
 
-    [Header("Canvas 2 - Weiterleitung")]
+    [Header("Canvas 2 – Vorhang auf")]
     public GameObject canvas2;
     public Button canvas2Button;
 
-    [Header("Timings (in Sekunden)")]
-    public float audioStartVerzoegerung = 1.0f;
-    public float pufferNachAudio = 0.5f;
+    [Header("Übergang")]
+    [Min(0f)]
+    public float delayAfterAudio = 0.5f;
 
-    [Header("Ziel-Szene")]
     public string mainSceneName = "MainScene";
 
-    private bool isStoryActive = false;
     private Coroutine storyRoutine;
     private Coroutine fadeRoutine;
 
-    void Start()
+    private bool sequenceStarted;
+    private bool transitionStarted;
+
+    private void Start()
     {
-        canvas1.SetActive(true);
-        canvas2.SetActive(false);
+        if (canvas1 != null)
+        {
+            canvas1.SetActive(true);
+        }
 
-        regiebuchClosed.SetActive(true);
-        regiebuchStory.SetActive(false);
+        if (canvas2 != null)
+        {
+            canvas2.SetActive(false);
+        }
 
-        rightClickButton.onClick.AddListener(OnRightClickAction);
-        canvas2Button.onClick.AddListener(LoadMainScene);
+        ShowOnlyFrame(0);
+
+        if (letterButton != null)
+        {
+            letterButton.interactable = true;
+            letterButton.onClick.AddListener(StartLetterSequence);
+        }
+
+        if (skipButton != null)
+        {
+            skipButton.gameObject.SetActive(false);
+            skipButton.onClick.AddListener(SkipLetterSequence);
+        }
+
+        if (canvas2Button != null)
+        {
+            canvas2Button.onClick.AddListener(LoadMainScene);
+        }
+
+        if (letterAudioSource != null)
+        {
+            letterAudioSource.Stop();
+        }
 
         if (backgroundAudioSource != null)
         {
@@ -54,104 +98,212 @@ public class StartScreenManager : MonoBehaviour
         }
     }
 
-    private void OnRightClickAction()
+    private void OnDestroy()
     {
-        // Klick-Sound abspielen!
-        if (sfxAudioSource != null && clickSound != null)
+        if (letterButton != null)
         {
-            sfxAudioSource.PlayOneShot(clickSound);
+            letterButton.onClick.RemoveListener(StartLetterSequence);
         }
 
-        if (!isStoryActive)
+        if (skipButton != null)
         {
-            isStoryActive = true;
-            
-            regiebuchClosed.SetActive(false);
-            regiebuchStory.SetActive(true);
-
-            storyRoutine = StartCoroutine(StorySequenceRoutine());
+            skipButton.onClick.RemoveListener(SkipLetterSequence);
         }
-        else
+
+        if (canvas2Button != null)
         {
-            SkipStory();
+            canvas2Button.onClick.RemoveListener(LoadMainScene);
         }
     }
 
-    private IEnumerator StorySequenceRoutine()
+    private void StartLetterSequence()
     {
-        yield return new WaitForSeconds(audioStartVerzoegerung);
-
-        if (storyAudioSource != null && storyAudioSource.clip != null)
+        if (sequenceStarted || transitionStarted)
         {
-            FadeToVolume(duckedVolume);
-            
-            storyAudioSource.Play();
+            return;
+        }
 
-            while (storyAudioSource.isPlaying)
+        sequenceStarted = true;
+
+        if (letterButton != null)
+        {
+            letterButton.interactable = false;
+        }
+
+        if (skipButton != null)
+        {
+            skipButton.gameObject.SetActive(true);
+        }
+
+        PlayClickSound();
+
+        storyRoutine = StartCoroutine(
+            LetterSequenceRoutine()
+        );
+    }
+
+    private IEnumerator LetterSequenceRoutine()
+    {
+        yield return new WaitForSecondsRealtime(
+            firstFrameHold
+        );
+
+        for (int i = 1; i < letterFrames.Length; i++)
+        {
+            ShowOnlyFrame(i);
+
+            if (i < letterFrames.Length - 1)
+            {
+                yield return new WaitForSecondsRealtime(
+                    frameDuration
+                );
+            }
+        }
+
+        yield return new WaitForSecondsRealtime(
+            finalFrameHold
+        );
+
+        if (letterAudioSource != null &&
+            letterAudioSource.clip != null)
+        {
+            FadeBackgroundTo(duckedVolume);
+            letterAudioSource.Play();
+
+            while (letterAudioSource.isPlaying)
             {
                 yield return null;
             }
         }
 
-        FadeToVolume(normalVolume);
+        FadeBackgroundTo(normalVolume);
 
-        yield return new WaitForSeconds(pufferNachAudio);
+        yield return new WaitForSecondsRealtime(
+            delayAfterAudio
+        );
 
         TransitionToCanvas2();
     }
 
-    private void SkipStory()
+    private void ShowOnlyFrame(int activeFrameIndex)
     {
+        if (letterFrames == null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < letterFrames.Length; i++)
+        {
+            if (letterFrames[i] != null)
+            {
+                letterFrames[i].SetActive(
+                    i == activeFrameIndex
+                );
+            }
+        }
+    }
+
+    public void SkipLetterSequence()
+    {
+        if (transitionStarted)
+        {
+            return;
+        }
+
+        PlayClickSound();
+
         if (storyRoutine != null)
         {
             StopCoroutine(storyRoutine);
+            storyRoutine = null;
         }
 
-        if (storyAudioSource != null && storyAudioSource.isPlaying)
+        if (letterAudioSource != null)
         {
-            storyAudioSource.Stop();
+            letterAudioSource.Stop();
         }
 
-        FadeToVolume(normalVolume);
-
+        FadeBackgroundTo(normalVolume);
         TransitionToCanvas2();
-    }
-
-    private void FadeToVolume(float targetVolume)
-    {
-        if (backgroundAudioSource == null) return;
-        
-        if (fadeRoutine != null)
-        {
-            StopCoroutine(fadeRoutine);
-        }
-        fadeRoutine = StartCoroutine(FadeRoutine(targetVolume));
-    }
-
-    private IEnumerator FadeRoutine(float targetVolume)
-    {
-        while (Mathf.Abs(backgroundAudioSource.volume - targetVolume) > 0.01f)
-        {
-            backgroundAudioSource.volume = Mathf.MoveTowards(backgroundAudioSource.volume, targetVolume, fadeSpeed * Time.deltaTime);
-            yield return null; 
-        }
-        backgroundAudioSource.volume = targetVolume;
     }
 
     private void TransitionToCanvas2()
     {
-        canvas1.SetActive(false);
-        canvas2.SetActive(true);
+        if (transitionStarted)
+        {
+            return;
+        }
+
+        transitionStarted = true;
+
+        if (skipButton != null)
+        {
+            skipButton.gameObject.SetActive(false);
+        }
+
+        if (canvas1 != null)
+        {
+            canvas1.SetActive(false);
+        }
+
+        if (canvas2 != null)
+        {
+            canvas2.SetActive(true);
+        }
+    }
+
+    private void FadeBackgroundTo(float targetVolume)
+    {
+        if (backgroundAudioSource == null)
+        {
+            return;
+        }
+
+        if (fadeRoutine != null)
+        {
+            StopCoroutine(fadeRoutine);
+        }
+
+        fadeRoutine = StartCoroutine(
+            FadeBackgroundRoutine(targetVolume)
+        );
+    }
+
+    private IEnumerator FadeBackgroundRoutine(
+        float targetVolume
+    )
+    {
+        while (Mathf.Abs(
+                   backgroundAudioSource.volume -
+                   targetVolume
+               ) > 0.01f)
+        {
+            backgroundAudioSource.volume =
+                Mathf.MoveTowards(
+                    backgroundAudioSource.volume,
+                    targetVolume,
+                    fadeSpeed * Time.unscaledDeltaTime
+                );
+
+            yield return null;
+        }
+
+        backgroundAudioSource.volume = targetVolume;
+        fadeRoutine = null;
     }
 
     private void LoadMainScene()
     {
-        // Optional: Auch hier beim Szenenwechsel den Sound abspielen, falls gewollt
-        if (sfxAudioSource != null && clickSound != null)
+        PlayClickSound();
+        SceneManager.LoadScene(mainSceneName);
+    }
+
+    private void PlayClickSound()
+    {
+        if (sfxAudioSource != null &&
+            clickSound != null)
         {
             sfxAudioSource.PlayOneShot(clickSound);
         }
-        
-        SceneManager.LoadScene(mainSceneName);
     }
 }

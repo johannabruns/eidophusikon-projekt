@@ -129,6 +129,7 @@ public class QuestOverlayManager : NetworkBehaviour
         }
 
         HideOverlayLocally();
+        AudioListener.pause = false;
         ConfirmPageClosedRpc();
     }
 
