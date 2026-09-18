@@ -103,6 +103,12 @@ public class QuestOverlayManager : NetworkBehaviour
             pageAudioSource = GetComponent<AudioSource>();
         }
 
+        if (pageAudioSource == null)
+        {
+            pageAudioSource =
+                gameObject.AddComponent<AudioSource>();
+        }
+
         if (pageAudioSource != null)
         {
             pageAudioSource.ignoreListenerPause = true;
