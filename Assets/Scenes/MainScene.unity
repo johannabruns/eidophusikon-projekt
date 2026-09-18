@@ -10631,6 +10631,9 @@ MonoBehaviour:
   - {fileID: 1746926289}
   - {fileID: 2061547557}
   closeButton: {fileID: 944040332}
+  pageAudioSource: {fileID: 0}
+  pageTurnSound: {fileID: 8300000, guid: 8f9e8a89986c27041820c506304e84f9, type: 3}
+  pageTurnVolume: 1
 --- !u!114 &689767146
 MonoBehaviour:
   m_ObjectHideFlags: 0

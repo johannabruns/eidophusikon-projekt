@@ -15,6 +15,13 @@ public class QuestOverlayManager : NetworkBehaviour
     [Header("Button")]
     public Button closeButton;
 
+    [Header("Audio")]
+    public AudioSource pageAudioSource;
+    public AudioClip pageTurnSound;
+
+    [Range(0f, 1f)]
+    public float pageTurnVolume = 1f;
+
     private readonly HashSet<ulong>
         readyClients = new();
 
@@ -30,6 +37,7 @@ public class QuestOverlayManager : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         RegisterButton();
+        PrepareAudioSource();
         HideOverlayLocally();
     }
 
@@ -84,6 +92,42 @@ public class QuestOverlayManager : NetworkBehaviour
         {
             closeButton.interactable = true;
         }
+
+        PlayPageTurnSound();
+    }
+
+    private void PrepareAudioSource()
+    {
+        if (pageAudioSource == null)
+        {
+            pageAudioSource = GetComponent<AudioSource>();
+        }
+
+        if (pageAudioSource == null)
+        {
+            pageAudioSource =
+                gameObject.AddComponent<AudioSource>();
+        }
+
+        if (pageAudioSource != null)
+        {
+            pageAudioSource.ignoreListenerPause = true;
+            pageAudioSource.playOnAwake = false;
+        }
+    }
+
+    private void PlayPageTurnSound()
+    {
+        if (pageAudioSource == null ||
+            pageTurnSound == null)
+        {
+            return;
+        }
+
+        pageAudioSource.PlayOneShot(
+            pageTurnSound,
+            pageTurnVolume
+        );
     }
 
     private void RegisterButton()
@@ -128,6 +172,7 @@ public class QuestOverlayManager : NetworkBehaviour
             closeButton.interactable = false;
         }
 
+        PlayPageTurnSound();
         HideOverlayLocally();
         AudioListener.pause = false;
         ConfirmPageClosedRpc();

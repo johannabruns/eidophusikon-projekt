@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class TheaterManager : NetworkBehaviour
 {
-    private NetworkVariable<bool> initialStateActive = new NetworkVariable<bool>(true);
+    private bool initialAudienceChatterActive = true;
 
     public StageLightManager lights;
 
@@ -24,13 +24,25 @@ public class TheaterManager : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
+        initialAudienceChatterActive = true;
+        soundEffects.Clear();
+
+        soundEffects["ShortApplause"] = shortApplause;
+        soundEffects["LongApplause"] = longApplause;
+
+        if (audioSource == null)
+        {
+            return;
+        }
+
         audioSource.loop = true;
         audioSource.clip = audienceChatter;
         audioSource.volume = 0.02f;
-        audioSource.Play();
 
-        soundEffects.Add("ShortApplause", shortApplause);
-        soundEffects.Add("LongApplause", longApplause);
+        if (audienceChatter != null)
+        {
+            audioSource.Play();
+        }
     }
 
     public void ShortApplause()     
@@ -56,18 +68,25 @@ public class TheaterManager : NetworkBehaviour
     [Rpc(SendTo.Everyone)]
     private void PlaySoundRpc(string sound)
     {
-        if (initialStateActive.Value)
+        if (audioSource == null)
         {
-            initialStateActive.Value = false;
+            return;
+        }
+
+        if (initialAudienceChatterActive)
+        {
+            initialAudienceChatterActive = false;
             audioSource.loop = false;
             audioSource.clip = null;
             audioSource.volume = 0.1f;
             audioSource.Stop();
         }
 
-        AudioClip clip = soundEffects[sound];
-
-        if (clip != null)
+        if (soundEffects.TryGetValue(
+                sound,
+                out AudioClip clip
+            ) &&
+            clip != null)
         {
             audioSource.PlayOneShot(clip);
         }
