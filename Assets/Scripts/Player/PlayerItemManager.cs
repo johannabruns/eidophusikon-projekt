@@ -7,50 +7,76 @@ using UnityEngine.InputSystem;
 public class PlayerItemManager : NetworkBehaviour
 {
     public InputActionReference useControls;
-    public Vector2 carryOffset = new(1f, 0f);
+    public Vector2 carryOffset =
+        new Vector2(1f, 0f);
 
     public PlayerMovement playerMovement;
     public PlayerAnimations playerAnimations;
 
-    public List<GameObject> itemsInRange = new();
+    public List<GameObject> itemsInRange =
+        new List<GameObject>();
 
-    public GameObject CarriedItem { get; private set; }
+    public GameObject CarriedItem
+    {
+        get;
+        private set;
+    }
 
     private Carryable carriedItemScript;
     private Rigidbody2D carriedItemRigidbody;
     private bool hasSyncedCarryPosition;
 
+    [Header("Audio")]
     public AudioSource audioSource;
     public AudioClip pickupSound;
+    public AudioClip dropSound;
 
     private void OnEnable()
     {
-        useControls.action.performed += UseItem;
+        useControls.action.performed +=
+            UseItem;
     }
 
     private void OnDisable()
     {
-        useControls.action.performed -= UseItem;
+        useControls.action.performed -=
+            UseItem;
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(
+        Collider2D other
+    )
     {
-        if (other.gameObject.CompareTag("Carryable") &&
-            !itemsInRange.Contains(other.gameObject))
+        if (other.gameObject.CompareTag(
+                "Carryable"
+            ) &&
+            !itemsInRange.Contains(
+                other.gameObject
+            ))
         {
-            itemsInRange.Add(other.gameObject);
+            itemsInRange.Add(
+                other.gameObject
+            );
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    private void OnTriggerExit2D(
+        Collider2D other
+    )
     {
-        if (other.gameObject.CompareTag("Carryable"))
+        if (other.gameObject.CompareTag(
+                "Carryable"
+            ))
         {
-            itemsInRange.Remove(other.gameObject);
+            itemsInRange.Remove(
+                other.gameObject
+            );
         }
     }
 
-    public void PickUpItem(GameObject obj)
+    public void PickUpItem(
+        GameObject obj
+    )
     {
         if (!IsOwner ||
             CarriedItem != null ||
@@ -105,14 +131,27 @@ public class PlayerItemManager : NetworkBehaviour
             audioSource != null &&
             pickupSound != null)
         {
-            audioSource.PlayOneShot(pickupSound);
+            audioSource.PlayOneShot(
+                pickupSound
+            );
         }
     }
 
     public void DropItem()
     {
-        if (!IsOwner || CarriedItem == null)
+        if (!IsOwner ||
+            CarriedItem == null)
+        {
             return;
+        }
+
+        if (audioSource != null &&
+            dropSound != null)
+        {
+            audioSource.PlayOneShot(
+                dropSound
+            );
+        }
 
         if (CarriedItem.TryGetComponent(
                 out Carryable carryable
@@ -144,16 +183,22 @@ public class PlayerItemManager : NetworkBehaviour
         }
 
         NetworkObject carriedNetworkObject =
-            CarriedItem.GetComponent<NetworkObject>();
+            CarriedItem.GetComponent<
+                NetworkObject
+            >();
 
         if (carriedNetworkObject == null ||
-            carriedNetworkObject.NetworkObjectId !=
+            carriedNetworkObject
+                .NetworkObjectId !=
             itemId)
         {
             return;
         }
 
-        itemsInRange.Remove(CarriedItem);
+        itemsInRange.Remove(
+            CarriedItem
+        );
+
         ClearLocalCarriedItem();
     }
 
@@ -161,8 +206,11 @@ public class PlayerItemManager : NetworkBehaviour
         InputAction.CallbackContext context
     )
     {
-        if (!IsOwner || CarriedItem == null)
+        if (!IsOwner ||
+            CarriedItem == null)
+        {
             return;
+        }
 
         if (CarriedItem.TryGetComponent(
                 out Usable usable
@@ -174,8 +222,11 @@ public class PlayerItemManager : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        if (!IsOwner || CarriedItem == null)
+        if (!IsOwner ||
+            CarriedItem == null)
+        {
             return;
+        }
 
         Vector2 currentCarryOffset =
             playerAnimations.isFlipped.Value
@@ -195,24 +246,33 @@ public class PlayerItemManager : NetworkBehaviour
         if (!hasSyncedCarryPosition)
         {
             CarriedItem
-                .GetComponent<NetworkTransform>()
+                .GetComponent<
+                    NetworkTransform
+                >()
                 .Teleport(
                     carryPosition,
-                    CarriedItem.transform.rotation,
-                    CarriedItem.transform.localScale
+                    CarriedItem
+                        .transform
+                        .rotation,
+                    CarriedItem
+                        .transform
+                        .localScale
                 );
 
             hasSyncedCarryPosition = true;
         }
         else
         {
-            carriedItemRigidbody.MovePosition(
-                carryPosition
-            );
+            carriedItemRigidbody
+                .MovePosition(
+                    carryPosition
+                );
         }
     }
 
-    public void InsertIntoSocket(ItemSocket socket)
+    public void InsertIntoSocket(
+        ItemSocket socket
+    )
     {
         if (!IsOwner ||
             CarriedItem == null ||
@@ -223,10 +283,14 @@ public class PlayerItemManager : NetworkBehaviour
         }
 
         NetworkObject itemNetworkObject =
-            CarriedItem.GetComponent<NetworkObject>();
+            CarriedItem.GetComponent<
+                NetworkObject
+            >();
 
         NetworkObject socketNetworkObject =
-            socket.GetComponent<NetworkObject>();
+            socket.GetComponent<
+                NetworkObject
+            >();
 
         if (itemNetworkObject == null ||
             socketNetworkObject == null)
@@ -235,8 +299,10 @@ public class PlayerItemManager : NetworkBehaviour
         }
 
         InsertIntoSocketServerRpc(
-            itemNetworkObject.NetworkObjectId,
-            socketNetworkObject.NetworkObjectId
+            itemNetworkObject
+                .NetworkObjectId,
+            socketNetworkObject
+                .NetworkObjectId
         );
 
         ClearLocalCarriedItem();
@@ -244,7 +310,8 @@ public class PlayerItemManager : NetworkBehaviour
 
     [Rpc(
         SendTo.Server,
-        InvokePermission = RpcInvokePermission.Owner
+        InvokePermission =
+            RpcInvokePermission.Owner
     )]
     private void InsertIntoSocketServerRpc(
         ulong itemId,
@@ -275,10 +342,14 @@ public class PlayerItemManager : NetworkBehaviour
         }
 
         ItemSocket socket =
-            socketObject.GetComponent<ItemSocket>();
+            socketObject.GetComponent<
+                ItemSocket
+            >();
 
         Carryable carryable =
-            itemObject.GetComponent<Carryable>();
+            itemObject.GetComponent<
+                Carryable
+            >();
 
         if (socket == null ||
             carryable == null ||
@@ -289,7 +360,8 @@ public class PlayerItemManager : NetworkBehaviour
         }
 
         ulong requestingClientId =
-            rpcParams.Receive.SenderClientId;
+            rpcParams.Receive
+                .SenderClientId;
 
         if (!carryable.isCarried.Value ||
             carryable.carrierClientId.Value !=
@@ -302,6 +374,7 @@ public class PlayerItemManager : NetworkBehaviour
 
         carryable.isSocketed.Value = true;
         carryable.isCarried.Value = false;
+
         carryable.carrierClientId.Value =
             ulong.MaxValue;
 
@@ -311,7 +384,8 @@ public class PlayerItemManager : NetworkBehaviour
             itemObject.RemoveOwnership();
         }
 
-        socket.eingeklinktesItem.Value = itemId;
+        socket.eingeklinktesItem.Value =
+            itemId;
 
         itemObject.TrySetParent(
             socketObject.transform,
@@ -319,16 +393,22 @@ public class PlayerItemManager : NetworkBehaviour
         );
 
         NetworkTransform networkTransform =
-            itemObject.GetComponent<NetworkTransform>();
+            itemObject.GetComponent<
+                NetworkTransform
+            >();
 
         networkTransform.Teleport(
             socket.snapPoint.position,
             socket.snapPoint.rotation,
-            itemObject.transform.localScale
+            itemObject
+                .transform
+                .localScale
         );
     }
 
-    public void TakeFromSocket(ItemSocket socket)
+    public void TakeFromSocket(
+        ItemSocket socket
+    )
     {
         if (!IsOwner ||
             CarriedItem != null ||
@@ -339,19 +419,25 @@ public class PlayerItemManager : NetworkBehaviour
         }
 
         NetworkObject socketNetworkObject =
-            socket.GetComponent<NetworkObject>();
+            socket.GetComponent<
+                NetworkObject
+            >();
 
         if (socketNetworkObject == null)
+        {
             return;
+        }
 
         TakeFromSocketServerRpc(
-            socketNetworkObject.NetworkObjectId
+            socketNetworkObject
+                .NetworkObjectId
         );
     }
 
     [Rpc(
         SendTo.Server,
-        InvokePermission = RpcInvokePermission.Owner
+        InvokePermission =
+            RpcInvokePermission.Owner
     )]
     private void TakeFromSocketServerRpc(
         ulong socketId,
@@ -370,10 +456,15 @@ public class PlayerItemManager : NetworkBehaviour
         }
 
         ItemSocket socket =
-            socketObject.GetComponent<ItemSocket>();
+            socketObject.GetComponent<
+                ItemSocket
+            >();
 
-        if (socket == null || socket.IstLeer)
+        if (socket == null ||
+            socket.IstLeer)
+        {
             return;
+        }
 
         ulong itemId =
             socket.eingeklinktesItem.Value;
@@ -390,7 +481,9 @@ public class PlayerItemManager : NetworkBehaviour
         }
 
         Carryable carryable =
-            itemObject.GetComponent<Carryable>();
+            itemObject.GetComponent<
+                Carryable
+            >();
 
         if (carryable == null ||
             !carryable.isSocketed.Value)
@@ -399,7 +492,8 @@ public class PlayerItemManager : NetworkBehaviour
         }
 
         ulong requestingClientId =
-            rpcParams.Receive.SenderClientId;
+            rpcParams.Receive
+                .SenderClientId;
 
         itemObject.TryRemoveParent();
 
@@ -408,6 +502,7 @@ public class PlayerItemManager : NetworkBehaviour
 
         carryable.isCarried.Value = true;
         carryable.isSocketed.Value = false;
+
         carryable.carrierClientId.Value =
             requestingClientId;
 
@@ -434,8 +529,11 @@ public class PlayerItemManager : NetworkBehaviour
         RpcParams rpcParams = default
     )
     {
-        if (!IsOwner || CarriedItem != null)
+        if (!IsOwner ||
+            CarriedItem != null)
+        {
             return;
+        }
 
         if (!NetworkManager
                 .SpawnManager
@@ -462,9 +560,12 @@ public class PlayerItemManager : NetworkBehaviour
             return;
         }
 
-        float rotation = carryable.flip.Value
-            ? -carryable.rotationOnPickup
-            : carryable.rotationOnPickup;
+        float rotation =
+            carryable.flip.Value
+                ? -carryable
+                    .rotationOnPickup
+                : carryable
+                    .rotationOnPickup;
 
         itemObject.transform.rotation =
             Quaternion.Euler(

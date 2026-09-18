@@ -7,8 +7,6 @@ public class BackgroundMusicPlayer : NetworkBehaviour
     public QuestManager questManager;
 
     public AudioSource primaryAudioSource;
-    public AudioSource secondaryAudioSource;
-    private float volume;
 
     public AudioClip act1Music;
     public AudioClip act2Music;
@@ -16,97 +14,164 @@ public class BackgroundMusicPlayer : NetworkBehaviour
     public AudioClip act4Music;
     public AudioClip finalMusic;
 
-    public AudioClip birdSounds;
-    public AudioClip owlSounds;
+    [Min(0f)]
+    public float transitionDuration = 3f;
 
-
-    private Coroutine musicTransitionCoroutine = null;
+    private Coroutine musicTransitionCoroutine;
+    private float normalVolume;
 
     public override void OnNetworkSpawn()
     {
-        questManager.currentAct.OnValueChanged += OnActChanged;
+        if (questManager != null)
+        {
+            questManager.currentAct.OnValueChanged +=
+                OnActChanged;
+        }
 
-        QuestManager.OnQuestComplete += PlayFinalMusicRpc;
-        volume = primaryAudioSource.volume;
+        QuestManager.OnQuestComplete +=
+            PlayFinalMusicRpc;
+
+        if (primaryAudioSource != null)
+        {
+            normalVolume =
+                primaryAudioSource.volume;
+        }
+
+        if (questManager != null &&
+            questManager.currentAct.Value > 0)
+        {
+            SetTrack(
+                questManager.currentAct.Value
+            );
+        }
     }
 
     public override void OnNetworkDespawn()
     {
-        questManager.currentAct.OnValueChanged -= OnActChanged;
-        QuestManager.OnQuestComplete -= PlayFinalMusicRpc;         
+        if (questManager != null)
+        {
+            questManager.currentAct.OnValueChanged -=
+                OnActChanged;
+        }
+
+        QuestManager.OnQuestComplete -=
+            PlayFinalMusicRpc;
+
+        if (musicTransitionCoroutine != null)
+        {
+            StopCoroutine(
+                musicTransitionCoroutine
+            );
+
+            musicTransitionCoroutine = null;
+        }
     }
 
-
-
-    private void OnActChanged(int previous, int current)
+    private void OnActChanged(
+        int previous,
+        int current
+    )
     {
         SetTrack(current);
     }
 
-    private void SetTrack(int index)
+    private void SetTrack(int actIndex)
     {
-        if (musicTransitionCoroutine != null)
+        if (primaryAudioSource == null)
         {
-            StopCoroutine(musicTransitionCoroutine);
-            primaryAudioSource.volume = volume;
+            return;
         }
 
-        musicTransitionCoroutine = StartCoroutine(MusicTransitionCoroutine(index));
+        AudioClip nextClip =
+            GetClipByAct(actIndex);
+
+        if (nextClip == null)
+        {
+            return;
+        }
+
+        if (musicTransitionCoroutine != null)
+        {
+            StopCoroutine(
+                musicTransitionCoroutine
+            );
+
+            primaryAudioSource.volume =
+                normalVolume;
+        }
+
+        musicTransitionCoroutine =
+            StartCoroutine(
+                TransitionMusic(nextClip)
+            );
     }
 
     [Rpc(SendTo.Everyone)]
-    private void PlayFinalMusicRpc(int index)
+    private void PlayFinalMusicRpc(int actIndex)
     {
-        if (index != 4) return;
+        if (actIndex != 4 ||
+            primaryAudioSource == null ||
+            finalMusic == null)
+        {
+            return;
+        }
 
         if (musicTransitionCoroutine != null)
         {
-            StopCoroutine(musicTransitionCoroutine);
-            primaryAudioSource.volume = volume;
+            StopCoroutine(
+                musicTransitionCoroutine
+            );
+
+            musicTransitionCoroutine = null;
         }
 
         primaryAudioSource.Stop();
-        secondaryAudioSource.Stop();
+        primaryAudioSource.volume =
+            normalVolume;
 
-        primaryAudioSource.clip = finalMusic;
+        primaryAudioSource.clip =
+            finalMusic;
+
         primaryAudioSource.Play();
     }
 
-    private IEnumerator MusicTransitionCoroutine(int index)
+    private IEnumerator TransitionMusic(
+        AudioClip nextClip
+    )
     {
-        Debug.Log($"Transitioning to music for act {index}");
-
-        yield return StartCoroutine(AudioFader.FadeOut(primaryAudioSource, 3f));
-        yield return StartCoroutine(AudioFader.FadeOut(secondaryAudioSource, 3f));
-        primaryAudioSource.clip = GetClipBySceneIndex(index)[0];
-        secondaryAudioSource.clip = GetClipBySceneIndex(index)[1];
-        yield return StartCoroutine(AudioFader.FadeIn(primaryAudioSource, 3f));
-        yield return StartCoroutine(AudioFader.FadeIn(secondaryAudioSource, 3f));
-    }
-
-    private AudioClip[] GetClipBySceneIndex(int index)
-    {
-        AudioClip[] clip;
-
-        switch (index)
+        if (primaryAudioSource.isPlaying)
         {
-            case 1:
-                clip = new[] { act1Music, birdSounds };
-                break;
-            case 2:
-                clip = new[] { act2Music, birdSounds };
-                break;
-            case 3:
-                clip = new[] { act3Music, birdSounds };
-                break;
-            case 4:
-                clip = new[] { act4Music, owlSounds };
-                break;
-            default:
-                clip = null;
-                break;
+            yield return StartCoroutine(
+                AudioFader.FadeOut(
+                    primaryAudioSource,
+                    transitionDuration
+                )
+            );
         }
 
-        return clip;
+        primaryAudioSource.clip =
+            nextClip;
+
+        yield return StartCoroutine(
+            AudioFader.FadeIn(
+                primaryAudioSource,
+                transitionDuration,
+                normalVolume
+            )
+        );
+
+        musicTransitionCoroutine = null;
+    }
+
+    private AudioClip GetClipByAct(int actIndex)
+    {
+        return actIndex switch
+        {
+            1 => act1Music,
+            2 => act2Music,
+            3 => act3Music,
+            4 => act4Music,
+            _ => null
+        };
     }
 }

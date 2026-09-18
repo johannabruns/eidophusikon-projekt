@@ -15,6 +15,12 @@ public class LightMachineController : MonoBehaviour
     public Light2D bulbGlow;
     public Light2D lightCone;
 
+    [Header("Audio")]
+    public AudioSource switchAudioSource;
+    public AudioClip lightOnSound;
+    public AudioClip lightOffSound;
+    public AudioSource electricityLoopSource;
+
     [Header("Unfiltered Colors")]
     [ColorUsage(true, true)]
     public Color twilightConeColor =
@@ -29,9 +35,21 @@ public class LightMachineController : MonoBehaviour
     public Color dayConeColor =
         Color.white;
 
+    private bool audioStateInitialized;
+    private bool previousBulbState;
+
     private void OnEnable()
     {
+        audioStateInitialized = false;
         RefreshMachine();
+    }
+
+    private void OnDisable()
+    {
+        if (electricityLoopSource != null)
+        {
+            electricityLoopSource.Stop();
+        }
     }
 
     private void Update()
@@ -44,6 +62,10 @@ public class LightMachineController : MonoBehaviour
         bool bulbIsInserted =
             bulbSocket != null &&
             !bulbSocket.IstLeer;
+
+        UpdateBulbAudio(
+            bulbIsInserted
+        );
 
         if (bulbGlow != null)
         {
@@ -103,6 +125,76 @@ public class LightMachineController : MonoBehaviour
         ApplyStageTime(
             selectedTime
         );
+    }
+
+    private void UpdateBulbAudio(
+        bool bulbIsInserted
+    )
+    {
+        if (!audioStateInitialized)
+        {
+            audioStateInitialized = true;
+            previousBulbState =
+                bulbIsInserted;
+
+            SetElectricityLoop(
+                bulbIsInserted
+            );
+
+            return;
+        }
+
+        if (previousBulbState ==
+            bulbIsInserted)
+        {
+            return;
+        }
+
+        previousBulbState =
+            bulbIsInserted;
+
+        if (switchAudioSource != null)
+        {
+            AudioClip selectedSound =
+                bulbIsInserted
+                    ? lightOnSound
+                    : lightOffSound;
+
+            if (selectedSound != null)
+            {
+                switchAudioSource.PlayOneShot(
+                    selectedSound
+                );
+            }
+        }
+
+        SetElectricityLoop(
+            bulbIsInserted
+        );
+    }
+
+    private void SetElectricityLoop(
+        bool shouldPlay
+    )
+    {
+        if (electricityLoopSource == null)
+        {
+            return;
+        }
+
+        if (shouldPlay)
+        {
+            if (!electricityLoopSource
+                    .isPlaying)
+            {
+                electricityLoopSource.Play();
+            }
+        }
+        else if (electricityLoopSource
+                     .isPlaying)
+        {
+            electricityLoopSource.Stop();
+        }
     }
 
     private TimeOfDay GetUnfilteredTime()

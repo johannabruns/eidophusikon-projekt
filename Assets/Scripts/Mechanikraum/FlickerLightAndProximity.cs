@@ -24,6 +24,9 @@ public class FlickerLight2D : MonoBehaviour
     [Min(0.01f)]
     public float flickerSpeed = 8f;
 
+    [Header("Audio")]
+    public AudioSource electricityLoopSource;
+
     private readonly HashSet<Collider2D>
         playersInside = new();
 
@@ -32,28 +35,38 @@ public class FlickerLight2D : MonoBehaviour
 
     private void Awake()
     {
-        if (targetLight == null)
-            return;
+        if (targetLight != null)
+        {
+            baseIntensity =
+                targetLight.intensity;
 
-        baseIntensity =
-            targetLight.intensity;
+            flickerSeed =
+                Random.Range(
+                    0f,
+                    1000f
+                );
 
-        flickerSeed =
-            Random.Range(0f, 1000f);
-
-        targetLight.intensity = 0f;
-        targetLight.enabled = false;
+            targetLight.intensity = 0f;
+            targetLight.enabled = false;
+        }
 
         if (litVisual != null)
         {
             litVisual.SetActive(false);
+        }
+
+        if (electricityLoopSource != null)
+        {
+            electricityLoopSource.Stop();
         }
     }
 
     private void Update()
     {
         if (targetLight == null)
+        {
             return;
+        }
 
         playersInside.RemoveWhere(
             playerCollider =>
@@ -62,6 +75,10 @@ public class FlickerLight2D : MonoBehaviour
 
         bool shouldBeActive =
             playersInside.Count > 0;
+
+        UpdateElectricitySound(
+            shouldBeActive
+        );
 
         float targetIntensity = 0f;
 
@@ -89,10 +106,7 @@ public class FlickerLight2D : MonoBehaviour
             targetIntensity =
                 baseIntensity *
                 flickerMultiplier;
-        }
 
-        if (shouldBeActive)
-        {
             targetLight.enabled = true;
         }
 
@@ -119,6 +133,30 @@ public class FlickerLight2D : MonoBehaviour
             litVisual.SetActive(
                 shouldBeActive
             );
+        }
+    }
+
+    private void UpdateElectricitySound(
+        bool shouldPlay
+    )
+    {
+        if (electricityLoopSource == null)
+        {
+            return;
+        }
+
+        if (shouldPlay)
+        {
+            if (!electricityLoopSource
+                    .isPlaying)
+            {
+                electricityLoopSource.Play();
+            }
+        }
+        else if (electricityLoopSource
+                     .isPlaying)
+        {
+            electricityLoopSource.Stop();
         }
     }
 
@@ -155,6 +193,11 @@ public class FlickerLight2D : MonoBehaviour
         if (litVisual != null)
         {
             litVisual.SetActive(false);
+        }
+
+        if (electricityLoopSource != null)
+        {
+            electricityLoopSource.Stop();
         }
     }
 }

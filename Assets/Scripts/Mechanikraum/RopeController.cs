@@ -40,7 +40,19 @@ public class RopeController : NetworkBehaviour
     [SerializeField]
     private bool alleBuehnenSeileImZiel;
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip ropeMoveSound;
+
+    [Min(0f)]
+    public float soundCooldown = 0.08f;
+
     private int aktivesSeilIndex = -1;
+
+    private float lastSoundTime =
+        float.NegativeInfinity;
+
+    private bool audioReady;
 
     public NetworkVariable<float> seil1Laenge =
         new NetworkVariable<float>(1f);
@@ -71,6 +83,52 @@ public class RopeController : NetworkBehaviour
 
     public bool AlleBuehnenSeileImZiel =>
         alleBuehnenSeileImZiel;
+
+    public override void OnNetworkSpawn()
+    {
+        seil1Laenge.OnValueChanged +=
+            HandleRopeMovement;
+
+        seil2Laenge.OnValueChanged +=
+            HandleRopeMovement;
+
+        seil3Laenge.OnValueChanged +=
+            HandleRopeMovement;
+
+        seil1Offset.OnValueChanged +=
+            HandleRopeMovement;
+
+        seil2Offset.OnValueChanged +=
+            HandleRopeMovement;
+
+        seil3Offset.OnValueChanged +=
+            HandleRopeMovement;
+
+        audioReady = true;
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        audioReady = false;
+
+        seil1Laenge.OnValueChanged -=
+            HandleRopeMovement;
+
+        seil2Laenge.OnValueChanged -=
+            HandleRopeMovement;
+
+        seil3Laenge.OnValueChanged -=
+            HandleRopeMovement;
+
+        seil1Offset.OnValueChanged -=
+            HandleRopeMovement;
+
+        seil2Offset.OnValueChanged -=
+            HandleRopeMovement;
+
+        seil3Offset.OnValueChanged -=
+            HandleRopeMovement;
+    }
 
     private void Update()
     {
@@ -133,6 +191,37 @@ public class RopeController : NetworkBehaviour
             seil1Eingerastet.Value &&
             seil2Eingerastet.Value &&
             seil3Eingerastet.Value;
+    }
+
+    private void HandleRopeMovement(
+        float previous,
+        float current
+    )
+    {
+        if (!audioReady ||
+            Mathf.Approximately(
+                previous,
+                current
+            ))
+        {
+            return;
+        }
+
+        if (audioSource == null ||
+            ropeMoveSound == null ||
+            Time.unscaledTime -
+            lastSoundTime <
+            soundCooldown)
+        {
+            return;
+        }
+
+        lastSoundTime =
+            Time.unscaledTime;
+
+        audioSource.PlayOneShot(
+            ropeMoveSound
+        );
     }
 
     [Rpc(
@@ -232,7 +321,9 @@ public class RopeController : NetworkBehaviour
              index++)
         {
             if (IsRopeLocked(index))
+            {
                 continue;
+            }
 
             TrySnapRopeByWorldPosition(
                 index
@@ -267,7 +358,9 @@ public class RopeController : NetworkBehaviour
             );
 
         if (distance > tolerance)
+        {
             return;
+        }
 
         if (TryGetTargetLength(
             index,
@@ -531,7 +624,9 @@ public class RopeController : NetworkBehaviour
             seilSysteme[index];
 
         if (aktiv == null)
+        {
             return;
+        }
 
         if (aktiv.vertikalesSeil != null)
         {
@@ -566,7 +661,7 @@ public class RopeController : NetworkBehaviour
             aktiv.horizontalesSeil
                 .material
                 .mainTextureOffset =
-                currentOffset;
+                    currentOffset;
         }
 
         if (aktiv.buehnenSeil != null)
@@ -583,11 +678,11 @@ public class RopeController : NetworkBehaviour
             {
                 aktiv.buehnenSeilEnde
                     .localPosition =
-                    new Vector3(
-                        0f,
-                        -laenge,
-                        0f
-                    );
+                        new Vector3(
+                            0f,
+                            -laenge,
+                            0f
+                        );
             }
         }
     }

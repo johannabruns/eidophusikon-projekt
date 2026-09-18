@@ -21,6 +21,16 @@ public class StartScreenManager : MonoBehaviour
     [Min(0f)]
     public float finalFrameHold = 0.4f;
 
+    [Header("Stop-Motion-Sounds")]
+    public AudioSource stopMotionAudioSource;
+    public AudioClip[] letterFrameSounds;
+
+    [Range(0.8f, 1.2f)]
+    public float minimumFramePitch = 0.98f;
+
+    [Range(0.8f, 1.2f)]
+    public float maximumFramePitch = 1.02f;
+
     [Header("Brief-Audio")]
     public AudioSource letterAudioSource;
 
@@ -73,18 +83,28 @@ public class StartScreenManager : MonoBehaviour
         if (letterButton != null)
         {
             letterButton.interactable = true;
-            letterButton.onClick.AddListener(StartLetterSequence);
+
+            letterButton.onClick.AddListener(
+                StartLetterSequence
+            );
         }
 
         if (skipButton != null)
         {
-            skipButton.gameObject.SetActive(false);
-            skipButton.onClick.AddListener(SkipLetterSequence);
+            skipButton.gameObject.SetActive(
+                false
+            );
+
+            skipButton.onClick.AddListener(
+                SkipLetterSequence
+            );
         }
 
         if (canvas2Button != null)
         {
-            canvas2Button.onClick.AddListener(LoadMainScene);
+            canvas2Button.onClick.AddListener(
+                LoadMainScene
+            );
         }
 
         if (letterAudioSource != null)
@@ -92,9 +112,15 @@ public class StartScreenManager : MonoBehaviour
             letterAudioSource.Stop();
         }
 
+        if (stopMotionAudioSource != null)
+        {
+            stopMotionAudioSource.Stop();
+        }
+
         if (backgroundAudioSource != null)
         {
-            backgroundAudioSource.volume = normalVolume;
+            backgroundAudioSource.volume =
+                normalVolume;
         }
     }
 
@@ -102,23 +128,30 @@ public class StartScreenManager : MonoBehaviour
     {
         if (letterButton != null)
         {
-            letterButton.onClick.RemoveListener(StartLetterSequence);
+            letterButton.onClick.RemoveListener(
+                StartLetterSequence
+            );
         }
 
         if (skipButton != null)
         {
-            skipButton.onClick.RemoveListener(SkipLetterSequence);
+            skipButton.onClick.RemoveListener(
+                SkipLetterSequence
+            );
         }
 
         if (canvas2Button != null)
         {
-            canvas2Button.onClick.RemoveListener(LoadMainScene);
+            canvas2Button.onClick.RemoveListener(
+                LoadMainScene
+            );
         }
     }
 
     private void StartLetterSequence()
     {
-        if (sequenceStarted || transitionStarted)
+        if (sequenceStarted ||
+            transitionStarted)
         {
             return;
         }
@@ -132,10 +165,13 @@ public class StartScreenManager : MonoBehaviour
 
         if (skipButton != null)
         {
-            skipButton.gameObject.SetActive(true);
+            skipButton.gameObject.SetActive(
+                true
+            );
         }
 
         PlayClickSound();
+        PlayFrameSound(0);
 
         storyRoutine = StartCoroutine(
             LetterSequenceRoutine()
@@ -148,15 +184,20 @@ public class StartScreenManager : MonoBehaviour
             firstFrameHold
         );
 
-        for (int i = 1; i < letterFrames.Length; i++)
+        for (int i = 1;
+             i < letterFrames.Length;
+             i++)
         {
             ShowOnlyFrame(i);
+            PlayFrameSound(i);
 
-            if (i < letterFrames.Length - 1)
+            if (i <
+                letterFrames.Length - 1)
             {
-                yield return new WaitForSecondsRealtime(
-                    frameDuration
-                );
+                yield return
+                    new WaitForSecondsRealtime(
+                        frameDuration
+                    );
             }
         }
 
@@ -164,10 +205,18 @@ public class StartScreenManager : MonoBehaviour
             finalFrameHold
         );
 
+        if (stopMotionAudioSource != null)
+        {
+            stopMotionAudioSource.pitch = 1f;
+        }
+
         if (letterAudioSource != null &&
             letterAudioSource.clip != null)
         {
-            FadeBackgroundTo(duckedVolume);
+            FadeBackgroundTo(
+                duckedVolume
+            );
+
             letterAudioSource.Play();
 
             while (letterAudioSource.isPlaying)
@@ -176,7 +225,9 @@ public class StartScreenManager : MonoBehaviour
             }
         }
 
-        FadeBackgroundTo(normalVolume);
+        FadeBackgroundTo(
+            normalVolume
+        );
 
         yield return new WaitForSecondsRealtime(
             delayAfterAudio
@@ -185,22 +236,59 @@ public class StartScreenManager : MonoBehaviour
         TransitionToCanvas2();
     }
 
-    private void ShowOnlyFrame(int activeFrameIndex)
+    private void ShowOnlyFrame(
+        int activeFrameIndex
+    )
     {
         if (letterFrames == null)
         {
             return;
         }
 
-        for (int i = 0; i < letterFrames.Length; i++)
+        for (int i = 0;
+             i < letterFrames.Length;
+             i++)
         {
             if (letterFrames[i] != null)
             {
                 letterFrames[i].SetActive(
-                    i == activeFrameIndex
+                    i ==
+                    activeFrameIndex
                 );
             }
         }
+    }
+
+    private void PlayFrameSound(
+        int frameIndex
+    )
+    {
+        if (stopMotionAudioSource == null ||
+            letterFrameSounds == null ||
+            frameIndex < 0 ||
+            frameIndex >=
+            letterFrameSounds.Length)
+        {
+            return;
+        }
+
+        AudioClip frameSound =
+            letterFrameSounds[frameIndex];
+
+        if (frameSound == null)
+        {
+            return;
+        }
+
+        stopMotionAudioSource.pitch =
+            Random.Range(
+                minimumFramePitch,
+                maximumFramePitch
+            );
+
+        stopMotionAudioSource.PlayOneShot(
+            frameSound
+        );
     }
 
     public void SkipLetterSequence()
@@ -214,7 +302,10 @@ public class StartScreenManager : MonoBehaviour
 
         if (storyRoutine != null)
         {
-            StopCoroutine(storyRoutine);
+            StopCoroutine(
+                storyRoutine
+            );
+
             storyRoutine = null;
         }
 
@@ -223,7 +314,16 @@ public class StartScreenManager : MonoBehaviour
             letterAudioSource.Stop();
         }
 
-        FadeBackgroundTo(normalVolume);
+        if (stopMotionAudioSource != null)
+        {
+            stopMotionAudioSource.Stop();
+            stopMotionAudioSource.pitch = 1f;
+        }
+
+        FadeBackgroundTo(
+            normalVolume
+        );
+
         TransitionToCanvas2();
     }
 
@@ -238,7 +338,9 @@ public class StartScreenManager : MonoBehaviour
 
         if (skipButton != null)
         {
-            skipButton.gameObject.SetActive(false);
+            skipButton.gameObject.SetActive(
+                false
+            );
         }
 
         if (canvas1 != null)
@@ -252,7 +354,9 @@ public class StartScreenManager : MonoBehaviour
         }
     }
 
-    private void FadeBackgroundTo(float targetVolume)
+    private void FadeBackgroundTo(
+        float targetVolume
+    )
     {
         if (backgroundAudioSource == null)
         {
@@ -261,11 +365,15 @@ public class StartScreenManager : MonoBehaviour
 
         if (fadeRoutine != null)
         {
-            StopCoroutine(fadeRoutine);
+            StopCoroutine(
+                fadeRoutine
+            );
         }
 
         fadeRoutine = StartCoroutine(
-            FadeBackgroundRoutine(targetVolume)
+            FadeBackgroundRoutine(
+                targetVolume
+            )
         );
     }
 
@@ -282,20 +390,26 @@ public class StartScreenManager : MonoBehaviour
                 Mathf.MoveTowards(
                     backgroundAudioSource.volume,
                     targetVolume,
-                    fadeSpeed * Time.unscaledDeltaTime
+                    fadeSpeed *
+                    Time.unscaledDeltaTime
                 );
 
             yield return null;
         }
 
-        backgroundAudioSource.volume = targetVolume;
+        backgroundAudioSource.volume =
+            targetVolume;
+
         fadeRoutine = null;
     }
 
     private void LoadMainScene()
     {
         PlayClickSound();
-        SceneManager.LoadScene(mainSceneName);
+
+        SceneManager.LoadScene(
+            mainSceneName
+        );
     }
 
     private void PlayClickSound()
@@ -303,7 +417,9 @@ public class StartScreenManager : MonoBehaviour
         if (sfxAudioSource != null &&
             clickSound != null)
         {
-            sfxAudioSource.PlayOneShot(clickSound);
+            sfxAudioSource.PlayOneShot(
+                clickSound
+            );
         }
     }
 }

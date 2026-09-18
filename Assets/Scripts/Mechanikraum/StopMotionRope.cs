@@ -22,6 +22,13 @@ public class StopMotionRope : Interactible
     public TheaterManager theaterManager;
     public bool longestStateOpensCurtain = true;
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip ropeMoveSound;
+
+    [Min(0f)]
+    public float soundCooldown = 0.08f;
+
     public NetworkVariable<int> currentFrame =
         new NetworkVariable<int>(
             0,
@@ -30,6 +37,10 @@ public class StopMotionRope : Interactible
         );
 
     private float lastScrollTime;
+    private float lastSoundTime =
+        float.NegativeInfinity;
+
+    private bool audioReady;
 
     public bool IsShortest =>
         currentFrame.Value == 0;
@@ -58,10 +69,13 @@ public class StopMotionRope : Interactible
         }
 
         ApplyFrame(currentFrame.Value);
+        audioReady = true;
     }
 
     public override void OnNetworkDespawn()
     {
+        audioReady = false;
+
         currentFrame.OnValueChanged -=
             OnFrameChanged;
 
@@ -113,7 +127,9 @@ public class StopMotionRope : Interactible
         }
 
         if (!IsMouseOverTarget())
+        {
             return;
+        }
 
         int direction =
             scrollValue > 0f
@@ -166,7 +182,9 @@ public class StopMotionRope : Interactible
     )
     {
         if (ropeFrames.Length == 0)
+        {
             return;
+        }
 
         if (theaterManager != null &&
             QuestManager.Instance != null &&
@@ -184,6 +202,12 @@ public class StopMotionRope : Interactible
                 ropeFrames.Length - 1
             );
 
+        if (nextFrame ==
+            currentFrame.Value)
+        {
+            return;
+        }
+
         currentFrame.Value =
             nextFrame;
     }
@@ -195,10 +219,34 @@ public class StopMotionRope : Interactible
     {
         ApplyFrame(current);
 
+        if (audioReady)
+        {
+            PlayRopeSound();
+        }
+
         if (IsServer)
         {
             UpdateCurtain(current);
         }
+    }
+
+    private void PlayRopeSound()
+    {
+        if (audioSource == null ||
+            ropeMoveSound == null ||
+            Time.unscaledTime -
+            lastSoundTime <
+            soundCooldown)
+        {
+            return;
+        }
+
+        lastSoundTime =
+            Time.unscaledTime;
+
+        audioSource.PlayOneShot(
+            ropeMoveSound
+        );
     }
 
     private void UpdateCurtain(
@@ -247,7 +295,9 @@ public class StopMotionRope : Interactible
     )
     {
         if (ropeFrames.Length == 0)
+        {
             return;
+        }
 
         int safeFrame =
             Mathf.Clamp(

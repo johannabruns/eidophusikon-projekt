@@ -5,11 +5,10 @@ using UnityEngine.Rendering.Universal;
 public class StageLightManager : NetworkBehaviour
 {
     [HideInInspector]
-    public NetworkVariable<TimeOfDay>
-        currentTimeOfDay =
-            new NetworkVariable<TimeOfDay>(
-                TimeOfDay.Twilight
-            );
+    public NetworkVariable<TimeOfDay> currentTimeOfDay =
+        new NetworkVariable<TimeOfDay>(
+            TimeOfDay.Twilight
+        );
 
     public TimeOfDay initialTimeOfDay =
         TimeOfDay.Twilight;
@@ -21,8 +20,9 @@ public class StageLightManager : NetworkBehaviour
     public Light2D eveningLight;
     public Light2D nightLight;
 
-    [Header("Morning Ambience")]
+    [Header("Stage Ambience")]
     public AudioSource morningBirds;
+    public AudioSource nightOwls;
 
     public override void OnNetworkSpawn()
     {
@@ -35,9 +35,7 @@ public class StageLightManager : NetworkBehaviour
                 initialTimeOfDay;
         }
 
-        SetLight(
-            currentTimeOfDay.Value
-        );
+        SetLight(currentTimeOfDay.Value);
     }
 
     public override void OnNetworkDespawn()
@@ -65,72 +63,79 @@ public class StageLightManager : NetworkBehaviour
         InvokePermission =
             RpcInvokePermission.Everyone
     )]
-    public void SetLightRpc(
-        TimeOfDay time
-    )
+    public void SetLightRpc(TimeOfDay time)
     {
         if (!IsServer)
+        {
             return;
+        }
 
-        currentTimeOfDay.Value =
-            time;
+        currentTimeOfDay.Value = time;
     }
 
-    private void SetLight(
-        TimeOfDay time
-    )
+    private void SetLight(TimeOfDay time)
     {
         if (twilightLight != null)
         {
             twilightLight.enabled =
-                time ==
-                TimeOfDay.Twilight;
+                time == TimeOfDay.Twilight;
         }
 
         if (morningLight != null)
         {
             morningLight.enabled =
-                time ==
-                TimeOfDay.Morning;
+                time == TimeOfDay.Morning;
         }
 
         if (dayLight != null)
         {
             dayLight.enabled =
-                time ==
-                TimeOfDay.Day;
+                time == TimeOfDay.Day;
         }
 
         if (eveningLight != null)
         {
             eveningLight.enabled =
-                time ==
-                TimeOfDay.Evening;
+                time == TimeOfDay.Evening;
         }
 
         if (nightLight != null)
         {
             nightLight.enabled =
-                time ==
-                TimeOfDay.Night;
+                time == TimeOfDay.Night;
         }
 
-        if (morningBirds == null)
+        SetAmbientSound(
+            morningBirds,
+            time == TimeOfDay.Morning
+        );
+
+        SetAmbientSound(
+            nightOwls,
+            time == TimeOfDay.Night
+        );
+    }
+
+    private void SetAmbientSound(
+        AudioSource source,
+        bool shouldPlay
+    )
+    {
+        if (source == null)
+        {
             return;
-
-        bool shouldPlayBirds =
-            time ==
-            TimeOfDay.Morning;
-
-        if (shouldPlayBirds &&
-            !morningBirds.isPlaying)
-        {
-            morningBirds.Play();
         }
-        else if (!shouldPlayBirds &&
-                 morningBirds.isPlaying)
+
+        if (shouldPlay)
         {
-            morningBirds.Stop();
+            if (!source.isPlaying)
+            {
+                source.Play();
+            }
+        }
+        else if (source.isPlaying)
+        {
+            source.Stop();
         }
     }
 }
