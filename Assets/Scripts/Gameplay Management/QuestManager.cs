@@ -243,11 +243,6 @@ public class QuestManager : NetworkBehaviour
 
         initialFlowStarted = true;
 
-        if (theaterManager != null)
-        {
-            theaterManager.LongApplause();
-        }
-
         ActivateQuest(1);
         StartActBriefing(1);
     }
@@ -308,6 +303,12 @@ public class QuestManager : NetworkBehaviour
 
         curtainControlEnabled.Value =
             true;
+
+        if (actIndex == 1 &&
+            theaterManager != null)
+        {
+            theaterManager.LongApplause();
+        }
     }
 
     public void CheckQuestCompletion()
