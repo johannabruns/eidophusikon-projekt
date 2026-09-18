@@ -28775,6 +28775,10 @@ PrefabInstance:
       propertyPath: windScript
       value: 
       objectReference: {fileID: 1232469580}
+    - target: {fileID: 3451175867352636082, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
+      propertyPath: spawnManually
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3514511844016697902, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 670345564
@@ -28829,7 +28833,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6584395600378228155, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6585458745900050411, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
       propertyPath: m_IsActive
@@ -28972,6 +28976,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 567180272}
     - target: {fileID: 8809008177550413084, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
+      propertyPath: beesWrapper
+      value: 
+      objectReference: {fileID: 283056567}
+    - target: {fileID: 8809008177550413084, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
       propertyPath: beesAnimator
       value: 
       objectReference: {fileID: 1809302946}
@@ -28980,7 +28988,6 @@ PrefabInstance:
       value: -16.75
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 5375777142049474596, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
     - {fileID: 7136629245839835447, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
     - {fileID: 2791186796260808921, guid: d2e213d5c6006c5489e6385a3755b9e8, type: 3}
     m_RemovedGameObjects: []

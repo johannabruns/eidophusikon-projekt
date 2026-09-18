@@ -103,7 +103,6 @@ GameObject:
   - component: {fileID: 2805277460317119577}
   - component: {fileID: 1715213129845446451}
   - component: {fileID: 5943492187237273309}
-  - component: {fileID: 8929362693318690766}
   m_Layer: 0
   m_Name: Bees Obj
   m_TagString: Untagged
@@ -305,21 +304,6 @@ MonoBehaviour:
       Synchronize: 1
       ParameterType: 9
   AnimatorParametersExpanded: 0
---- !u!114 &8929362693318690766
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3461100189399241555}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d49afe0d2a7cf04db509b6814a2c61c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BeeSwarm
-  ShowTopMostFoldoutHeaderGroup: 1
-  animator: {fileID: 5345046671945211645}
-  audioSource: {fileID: 2805277460317119577}
 --- !u!1 &4873526377937203300
 GameObject:
   m_ObjectHideFlags: 0

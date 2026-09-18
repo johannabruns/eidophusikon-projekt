@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
@@ -7,29 +8,38 @@ public class FlowerObserver : NetworkBehaviour
     [Header("Flowers")]
     private BoolStateObject[] flowers;
 
-    public NetworkVariable<bool>
-        allFlowersActive =
-            new NetworkVariable<bool>(false);
+    public NetworkVariable<bool> allFlowersActive =
+        new NetworkVariable<bool>(false);
 
     public UnityEvent OnAllFlowersActive;
 
     [Header("Bees")]
-    public GameObject beesObject;
+    public StageObjectWrapper beesWrapper;
     public Animator beesAnimator;
     public string beesTriggerName = "Enter";
+
+    private Coroutine beeAnimationRoutine;
 
     public override void OnNetworkSpawn()
     {
         allFlowersActive.OnValueChanged +=
             OnAllFlowersStateChanged;
 
-        ApplyBeeState(
-            allFlowersActive.Value
-        );
-
         if (IsServer)
         {
             FindFlowers();
+
+            if (beesWrapper != null)
+            {
+                beesWrapper.SetActive(
+                    allFlowersActive.Value
+                );
+            }
+        }
+
+        if (allFlowersActive.Value)
+        {
+            StartBeeAnimation();
         }
     }
 
@@ -37,6 +47,12 @@ public class FlowerObserver : NetworkBehaviour
     {
         allFlowersActive.OnValueChanged -=
             OnAllFlowersStateChanged;
+
+        if (beeAnimationRoutine != null)
+        {
+            StopCoroutine(beeAnimationRoutine);
+            beeAnimationRoutine = null;
+        }
     }
 
     private void FindFlowers()
@@ -66,10 +82,7 @@ public class FlowerObserver : NetworkBehaviour
             return;
         }
 
-        foreach (
-            BoolStateObject flower
-            in flowers
-        )
+        foreach (BoolStateObject flower in flowers)
         {
             if (flower == null ||
                 !flower.isActive.Value)
@@ -94,33 +107,51 @@ public class FlowerObserver : NetworkBehaviour
         bool current
     )
     {
-        ApplyBeeState(current);
-    }
-
-    private void ApplyBeeState(
-        bool active
-    )
-    {
-        if (beesObject == null)
-            return;
-
-        beesObject.SetActive(active);
-
-        if (!active ||
-            beesAnimator == null ||
-            string.IsNullOrEmpty(
-                beesTriggerName
-            ))
+        if (IsServer &&
+            beesWrapper != null)
         {
-            return;
+            beesWrapper.SetActive(current);
         }
 
-        beesAnimator.ResetTrigger(
-            beesTriggerName
-        );
+        if (current)
+        {
+            StartBeeAnimation();
+        }
+    }
 
-        beesAnimator.SetTrigger(
-            beesTriggerName
-        );
+    private void StartBeeAnimation()
+    {
+        if (beeAnimationRoutine != null)
+        {
+            StopCoroutine(beeAnimationRoutine);
+        }
+
+        beeAnimationRoutine =
+            StartCoroutine(
+                PlayBeeAnimationWhenVisible()
+            );
+    }
+
+    private IEnumerator PlayBeeAnimationWhenVisible()
+    {
+        while (beesAnimator != null &&
+               !beesAnimator.gameObject.activeInHierarchy)
+        {
+            yield return null;
+        }
+
+        if (beesAnimator != null &&
+            !string.IsNullOrEmpty(beesTriggerName))
+        {
+            beesAnimator.ResetTrigger(
+                beesTriggerName
+            );
+
+            beesAnimator.SetTrigger(
+                beesTriggerName
+            );
+        }
+
+        beeAnimationRoutine = null;
     }
 }
