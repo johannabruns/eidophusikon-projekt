@@ -116,7 +116,15 @@ public class RelayManager : MonoBehaviour
                     joinAllocation.ToRelayServerData("dtls")
                 );
 
-            NetworkManager.Singleton.StartClient();
+            bool clientStarted =
+                NetworkManager.Singleton.StartClient();
+
+            if (clientStarted)
+            {
+                StartCoroutine(
+                    WaitForLocalConnectionAndStart()
+                );
+            }
         }
         catch (RelayServiceException exception)
         {
@@ -146,6 +154,32 @@ public class RelayManager : MonoBehaviour
             clientId == NetworkManager.Singleton.LocalClientId;
 
         if (!hostCanStart && !clientCanStart)
+        {
+            return;
+        }
+
+        TryStartGameSequence();
+    }
+
+    private IEnumerator WaitForLocalConnectionAndStart()
+    {
+        while (NetworkManager.Singleton != null &&
+               NetworkManager.Singleton.IsClient &&
+               !NetworkManager.Singleton.IsConnectedClient)
+        {
+            yield return null;
+        }
+
+        if (NetworkManager.Singleton != null &&
+            NetworkManager.Singleton.IsConnectedClient)
+        {
+            TryStartGameSequence();
+        }
+    }
+
+    private void TryStartGameSequence()
+    {
+        if (isStarting)
         {
             return;
         }
