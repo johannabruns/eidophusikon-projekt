@@ -20,7 +20,12 @@ public class RelayManager : MonoBehaviour
 
     [Header("Lade-Sequenz")]
     public LoadingScreen loadingScreen;
-    [Min(0f)] public float loadingDuration = 3f;
+
+    [Min(0f)]
+    public float loadingDuration = 3f;
+
+    [Min(1f)]
+    public float connectionTimeout = 20f;
 
     [Header("Regiebuch")]
     public GameObject zweiterCanvas;
@@ -45,12 +50,14 @@ public class RelayManager : MonoBehaviour
 
         if (!AuthenticationService.Instance.IsSignedIn)
         {
-            await AuthenticationService.Instance.SignInAnonymouslyAsync();
+            await AuthenticationService.Instance
+                .SignInAnonymouslyAsync();
         }
 
         if (NetworkManager.Singleton != null)
         {
-            NetworkManager.Singleton.OnClientConnectedCallback +=
+            NetworkManager.Singleton
+                .OnClientConnectedCallback +=
                 OnPlayerConnected;
         }
     }
@@ -61,39 +68,80 @@ public class RelayManager : MonoBehaviour
 
         if (NetworkManager.Singleton != null)
         {
-            NetworkManager.Singleton.OnClientConnectedCallback -=
+            NetworkManager.Singleton
+                .OnClientConnectedCallback -=
                 OnPlayerConnected;
         }
     }
 
     public async void CreateRelayAndStartHost()
     {
-        codeAnzeigeText.text = "Erstelle Server...";
+        if (isStarting)
+        {
+            return;
+        }
+
+        if (codeAnzeigeText != null)
+        {
+            codeAnzeigeText.text =
+                "Erstelle Server...";
+        }
 
         try
         {
             Allocation allocation =
-                await RelayService.Instance.CreateAllocationAsync(3);
+                await RelayService.Instance
+                    .CreateAllocationAsync(3);
 
             string joinCode =
-                await RelayService.Instance.GetJoinCodeAsync(
-                    allocation.AllocationId
+                await RelayService.Instance
+                    .GetJoinCodeAsync(
+                        allocation.AllocationId
+                    );
+
+            if (codeAnzeigeText != null)
+            {
+                codeAnzeigeText.text =
+                    "Code: " + joinCode;
+            }
+
+            NetworkManager networkManager =
+                NetworkManager.Singleton;
+
+            if (networkManager == null)
+            {
+                Debug.LogError(
+                    "Kein NetworkManager gefunden."
                 );
 
-            codeAnzeigeText.text = "Code: " + joinCode;
+                return;
+            }
 
-            NetworkManager.Singleton
+            networkManager
                 .GetComponent<UnityTransport>()
                 .SetRelayServerData(
-                    allocation.ToRelayServerData("dtls")
+                    allocation.ToRelayServerData(
+                        "dtls"
+                    )
                 );
 
-            NetworkManager.Singleton.StartHost();
+            bool hostStarted =
+                networkManager.StartHost();
+
+            if (!hostStarted)
+            {
+                Debug.LogError(
+                    "Der Host konnte nicht gestartet werden."
+                );
+            }
         }
         catch (RelayServiceException exception)
         {
-            codeAnzeigeText.text =
-                "Fehler bei der Verbindung!";
+            if (codeAnzeigeText != null)
+            {
+                codeAnzeigeText.text =
+                    "Fehler bei der Verbindung!";
+            }
 
             Debug.LogError(exception);
         }
@@ -101,83 +149,108 @@ public class RelayManager : MonoBehaviour
 
     public async void JoinRelayAndStartClient()
     {
-        codeEingabeFeld.interactable = false;
-
-        try
-        {
-            JoinAllocation joinAllocation =
-                await RelayService.Instance.JoinAllocationAsync(
-                    codeEingabeFeld.text
-                );
-
-            NetworkManager.Singleton
-                .GetComponent<UnityTransport>()
-                .SetRelayServerData(
-                    joinAllocation.ToRelayServerData("dtls")
-                );
-
-            bool clientStarted =
-                NetworkManager.Singleton.StartClient();
-
-            if (clientStarted)
-            {
-                StartCoroutine(
-                    WaitForLocalConnectionAndStart()
-                );
-            }
-        }
-        catch (RelayServiceException exception)
-        {
-            Debug.LogError(
-                "Falscher Code oder Verbindung fehlgeschlagen: " +
-                exception
-            );
-
-            codeEingabeFeld.interactable = true;
-        }
-    }
-
-    private void OnPlayerConnected(ulong clientId)
-    {
         if (isStarting)
         {
             return;
         }
 
-        bool hostCanStart =
-            NetworkManager.Singleton.IsHost &&
-            clientId != NetworkManager.Singleton.LocalClientId;
+        if (codeEingabeFeld != null)
+        {
+            codeEingabeFeld.interactable =
+                false;
+        }
 
-        bool clientCanStart =
-            NetworkManager.Singleton.IsClient &&
-            !NetworkManager.Singleton.IsHost &&
-            clientId == NetworkManager.Singleton.LocalClientId;
+        try
+        {
+            JoinAllocation joinAllocation =
+                await RelayService.Instance
+                    .JoinAllocationAsync(
+                        codeEingabeFeld.text
+                    );
 
-        if (!hostCanStart && !clientCanStart)
+            NetworkManager networkManager =
+                NetworkManager.Singleton;
+
+            if (networkManager == null)
+            {
+                Debug.LogError(
+                    "Kein NetworkManager gefunden."
+                );
+
+                RestoreClientMenu();
+                return;
+            }
+
+            networkManager
+                .GetComponent<UnityTransport>()
+                .SetRelayServerData(
+                    joinAllocation
+                        .ToRelayServerData(
+                            "dtls"
+                        )
+                );
+
+            bool clientStarted =
+                networkManager.StartClient();
+
+            if (!clientStarted)
+            {
+                Debug.LogError(
+                    "Der Client konnte nicht gestartet werden."
+                );
+
+                RestoreClientMenu();
+                return;
+            }
+
+            // Der Client zeigt den Ladescreen sofort.
+            // Er ist dadurch nicht mehr von einem
+            // möglicherweise verpassten Callback abhängig.
+            TryStartGameSequence(
+                waitForLocalConnection: true
+            );
+        }
+        catch (RelayServiceException exception)
+        {
+            Debug.LogError(
+                "Falscher Code oder Verbindung " +
+                "fehlgeschlagen: " +
+                exception
+            );
+
+            RestoreClientMenu();
+        }
+    }
+
+    private void OnPlayerConnected(
+        ulong clientId
+    )
+    {
+        NetworkManager networkManager =
+            NetworkManager.Singleton;
+
+        if (networkManager == null ||
+            !networkManager.IsHost)
         {
             return;
         }
 
-        TryStartGameSequence();
-    }
-
-    private IEnumerator WaitForLocalConnectionAndStart()
-    {
-        while (NetworkManager.Singleton != null &&
-               NetworkManager.Singleton.IsClient &&
-               !NetworkManager.Singleton.IsConnectedClient)
+        // Der Host soll erst starten, wenn ein
+        // anderer Spieler beigetreten ist.
+        if (clientId ==
+            networkManager.LocalClientId)
         {
-            yield return null;
+            return;
         }
 
-        if (NetworkManager.Singleton != null &&
-            NetworkManager.Singleton.IsConnectedClient)
-        {
-            TryStartGameSequence();
-        }
+        TryStartGameSequence(
+            waitForLocalConnection: false
+        );
     }
 
-    private void TryStartGameSequence()
+    private void TryStartGameSequence(
+        bool waitForLocalConnection
+    )
     {
         if (isStarting)
         {
@@ -185,10 +258,17 @@ public class RelayManager : MonoBehaviour
         }
 
         isStarting = true;
-        StartCoroutine(StartGameSequence());
+
+        StartCoroutine(
+            StartGameSequence(
+                waitForLocalConnection
+            )
+        );
     }
 
-    private IEnumerator StartGameSequence()
+    private IEnumerator StartGameSequence(
+        bool waitForLocalConnection
+    )
     {
         if (buttonContainer != null)
         {
@@ -207,19 +287,64 @@ public class RelayManager : MonoBehaviour
             loadingScreen.ShowLoadingScreen();
         }
 
-        float elapsedTime = 0f;
+        float safeLoadingDuration =
+            Mathf.Max(
+                0.01f,
+                loadingDuration
+            );
 
-        while (elapsedTime < loadingDuration)
+        float elapsedTime = 0f;
+        float totalWaitTime = 0f;
+
+        while (true)
         {
-            elapsedTime += Time.unscaledDeltaTime;
+            float deltaTime =
+                Time.unscaledDeltaTime;
+
+            elapsedTime += deltaTime;
+            totalWaitTime += deltaTime;
 
             if (loadingScreen != null)
             {
                 loadingScreen.UpdateProgress(
                     Mathf.Clamp01(
-                        elapsedTime / loadingDuration
+                        elapsedTime /
+                        safeLoadingDuration
                     )
                 );
+            }
+
+            bool minimumDurationFinished =
+                elapsedTime >=
+                safeLoadingDuration;
+
+            bool connectionReady =
+                !waitForLocalConnection ||
+                (
+                    NetworkManager.Singleton !=
+                    null &&
+                    NetworkManager.Singleton
+                        .IsConnectedClient
+                );
+
+            if (minimumDurationFinished &&
+                connectionReady)
+            {
+                break;
+            }
+
+            if (waitForLocalConnection &&
+                !connectionReady &&
+                totalWaitTime >=
+                connectionTimeout)
+            {
+                Debug.LogError(
+                    "Zeitüberschreitung beim " +
+                    "Verbinden mit dem Host."
+                );
+
+                RestoreClientMenu();
+                yield break;
             }
 
             yield return null;
@@ -230,7 +355,10 @@ public class RelayManager : MonoBehaviour
             loadingScreen.UpdateProgress(1f);
         }
 
-        yield return new WaitForSecondsRealtime(0.25f);
+        yield return
+            new WaitForSecondsRealtime(
+                0.25f
+            );
 
         if (startMenuPanel != null)
         {
@@ -245,6 +373,28 @@ public class RelayManager : MonoBehaviour
         if (zweiterCanvas != null)
         {
             zweiterCanvas.SetActive(true);
+        }
+    }
+
+    private void RestoreClientMenu()
+    {
+        AudioListener.pause = false;
+        isStarting = false;
+
+        if (loadingScreen != null)
+        {
+            loadingScreen.HideLoadingScreen();
+        }
+
+        if (buttonContainer != null)
+        {
+            buttonContainer.SetActive(true);
+        }
+
+        if (codeEingabeFeld != null)
+        {
+            codeEingabeFeld.interactable =
+                true;
         }
     }
 }

@@ -4,10 +4,17 @@ using UnityEngine;
 
 public abstract class Usable : Carryable
 {
-    [SerializeField] protected float range = 1f;
-    [SerializeField] protected Animator anim;
-    [SerializeField] protected AudioSource audioSource;
-    [SerializeField] protected AudioClip onUseSound;
+    [SerializeField]
+    protected float range = 1f;
+
+    [SerializeField]
+    protected Animator anim;
+
+    [SerializeField]
+    protected AudioSource audioSource;
+
+    [SerializeField]
+    protected AudioClip onUseSound;
 
     private bool consumptionStarted;
 
@@ -50,31 +57,12 @@ public abstract class Usable : Carryable
             RpcInvokePermission.Everyone
     )]
     protected void RequestObjectDestructionRpc(
-        float delay,
-        RpcParams rpcParams = default
+        float delay
     )
     {
         if (consumptionStarted ||
             NetworkObject == null ||
             !NetworkObject.IsSpawned)
-        {
-            return;
-        }
-
-        ulong senderClientId =
-            rpcParams.Receive.SenderClientId;
-
-        bool senderCarriesItem =
-            isCarried.Value &&
-            carrierClientId.Value ==
-            senderClientId;
-
-        bool senderOwnsItem =
-            NetworkObject.OwnerClientId ==
-            senderClientId;
-
-        if (!senderCarriesItem &&
-            !senderOwnsItem)
         {
             return;
         }
@@ -93,34 +81,47 @@ public abstract class Usable : Carryable
     [Rpc(SendTo.Everyone)]
     private void HideConsumedObjectRpc()
     {
-        foreach (
-            SpriteRenderer renderer
-            in GetComponentsInChildren<
+        SpriteRenderer[] renderers =
+            GetComponentsInChildren<
                 SpriteRenderer
-            >(true)
+            >(true);
+
+        foreach (
+            SpriteRenderer spriteRenderer
+            in renderers
         )
         {
-            renderer.enabled = false;
+            spriteRenderer.enabled = false;
         }
+
+        Collider2D[] colliders =
+            GetComponentsInChildren<
+                Collider2D
+            >(true);
 
         foreach (
             Collider2D itemCollider
-            in GetComponentsInChildren<
-                Collider2D
-            >(true)
+            in colliders
         )
         {
             itemCollider.enabled = false;
         }
 
-        foreach (
-            Rigidbody2D itemBody
-            in GetComponentsInChildren<
+        Rigidbody2D[] rigidbodies =
+            GetComponentsInChildren<
                 Rigidbody2D
-            >(true)
+            >(true);
+
+        foreach (
+            Rigidbody2D itemRigidbody
+            in rigidbodies
         )
         {
-            itemBody.simulated = false;
+            itemRigidbody.linearVelocity =
+                Vector2.zero;
+
+            itemRigidbody.angularVelocity = 0f;
+            itemRigidbody.simulated = false;
         }
     }
 
@@ -130,9 +131,10 @@ public abstract class Usable : Carryable
     {
         if (delay > 0f)
         {
-            yield return new WaitForSecondsRealtime(
-                delay
-            );
+            yield return
+                new WaitForSecondsRealtime(
+                    delay
+                );
         }
 
         if (NetworkObject != null &&
@@ -145,6 +147,7 @@ public abstract class Usable : Carryable
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
+
         Gizmos.DrawWireSphere(
             transform.position,
             range
